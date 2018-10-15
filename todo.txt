@@ -1,0 +1,3 @@
+Picture:
+  Bisher nur S, 9, A, V umgesetzt
+  99, PPP999, ... werden noch nicht beherrscht
