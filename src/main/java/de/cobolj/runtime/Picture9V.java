@@ -72,7 +72,10 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public String toString() {
-		String sign = value.floatValue() < 0 ? "-" : "+";
+		String sign = "";
+		if (this.signed) {
+			sign = value.floatValue() < 0 ? "-" : "+";
+		}
 		DecimalFormat df = new DecimalFormat();
 		df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.US));
 		df.setMinimumFractionDigits(scale);
@@ -101,6 +104,5 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 	public int getPrrecession() {
 		return this.precession;
 	}
-
 
 }

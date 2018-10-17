@@ -24,6 +24,7 @@ import de.cobolj.runtime.NumericPicture;
 @NodeInfo(shortName = "AddToStatement")
 public class AddToStatementNode extends AddImplNode {
 	/** Liste der Summanden, die auf die To-Clause angewendet werden. */
+	@Children
 	private final ExpressionNode[] addFrom;
 	/** Liste der ElementItem, die durch die Operation bearbeitet werden. */
 	private final FrameSlot[] addTo;

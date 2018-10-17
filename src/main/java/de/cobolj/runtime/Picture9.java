@@ -90,7 +90,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	@Override
 	public void setValue(Object object) {
-		setValue(Long.parseLong(object.toString()));
+		setValue(new BigDecimal(object.toString()).longValue());
 	}
 	
 	@Override
