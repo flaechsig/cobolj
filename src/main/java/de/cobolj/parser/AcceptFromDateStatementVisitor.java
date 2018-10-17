@@ -3,8 +3,8 @@ package de.cobolj.parser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import de.cobolj.statements.accept.DateTimeInputNode;
-import de.cobolj.statements.accept.InputNode;
 import de.cobolj.statements.accept.DateTimeInputNode.DateTimePattern;
+import de.cobolj.statements.accept.InputNode;
 
 /**
  * acceptFromDateStatement: FROM ( DATE YYYYMMDD? | DAY YYYYDDD? | DAY_OF_WEEK |
@@ -18,7 +18,6 @@ public class AcceptFromDateStatementVisitor extends Cobol85BaseVisitor<InputNode
 
 	public InputNode visitAcceptFromDateStatement(Cobol85Parser.AcceptFromDateStatementContext ctx) {
 		DateTimePattern pattern = null;
-		InputNode result = null;
 
 		TerminalNode term = (TerminalNode) ctx.getChild(1);
 		switch (term.getSymbol().getType()) {

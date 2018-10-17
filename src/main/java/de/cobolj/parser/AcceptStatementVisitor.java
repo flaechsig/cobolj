@@ -24,7 +24,6 @@ public class AcceptStatementVisitor extends Cobol85BaseVisitor<AcceptStatementNo
 	public AcceptStatementNode visitAcceptStatement(Cobol85Parser.AcceptStatementContext ctx) {
 		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 
-		Cobol85BaseVisitor<InputNode> visitor = null;
 		InputNode input = null;
 		if(ctx.acceptFromDateStatement() != null) {
 			input = ctx.acceptFromDateStatement().accept(new AcceptFromDateStatementVisitor());

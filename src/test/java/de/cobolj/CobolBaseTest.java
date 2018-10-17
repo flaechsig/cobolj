@@ -3,6 +3,7 @@ package de.cobolj;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
@@ -37,11 +38,11 @@ public abstract class CobolBaseTest {
 
 			// Expected Result
 			InputStream expectedStream = this.getClass().getResourceAsStream(input + ".out");
-			String expected = IOUtils.toString(expectedStream);
+			String expected = IOUtils.toString(expectedStream, Charset.defaultCharset());
 
 			// Error-Message
 			InputStream errorStream = this.getClass().getResourceAsStream(input + ".err");
-			String error = IOUtils.toString(errorStream);
+			String error = IOUtils.toString(errorStream, Charset.defaultCharset());
 			
 			InputStream inputStream = this.getClass().getResourceAsStream(input + ".in");
 			if(inputStream == null) {
