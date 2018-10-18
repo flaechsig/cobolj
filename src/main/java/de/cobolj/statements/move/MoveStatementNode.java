@@ -22,7 +22,7 @@ public class MoveStatementNode extends StatementNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		return moveStatement;
+		return moveStatement.executeGeneric(frame);
 	}
 
 }
