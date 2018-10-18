@@ -7781,7 +7781,7 @@ IDENTIFIER
 
 NEWLINE
 :
-    '\r'? '\n' -> channel ( HIDDEN )
+    '\r'? '\n' -> skip
 ;
 
 EXECCICSLINE
@@ -7821,17 +7821,17 @@ COMMENTENTRYLINE
 
 COMMENTLINE
 :
-    COMMENTTAG WS ~( '\n' | '\r' )* -> channel ( HIDDEN )
+    COMMENTTAG WS ~( '\n' | '\r' )* -> skip
 ;
 
 WS
 :
-    [ \t\f;]+ -> channel ( HIDDEN )
+    [ \t\f;]+ -> skip
 ;
 
 SEPARATOR
 :
-    ', ' -> channel ( HIDDEN )
+    ', ' -> skip
 ;
 
 // case insensitive chars
