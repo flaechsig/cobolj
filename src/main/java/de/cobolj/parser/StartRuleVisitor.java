@@ -1,5 +1,7 @@
 package de.cobolj.parser;
 
+import java.util.LinkedList;
+
 import com.oracle.truffle.api.frame.FrameDescriptor;
 
 import de.cobolj.CobolLanguage;
@@ -19,6 +21,24 @@ public class StartRuleVisitor extends Cobol85BaseVisitor<StartRuleNode>{
 	
 	/** Wird bereits beim Aufbau des AST benötigt */
 	public static FrameDescriptor descriptor = new FrameDescriptor();
+	
+	/**
+	 * Stack über Level einer Storage-Beschreibung. Wenn der Level eines 
+	 * DataEntry größer ist als der aktuelle Level, dann handelt sich um
+	 * ein Kind-Element und der Stack muss um diesen Level vergrößert werden. Dadurch
+	 * muss ggf. eine weitere Gruppe aufgebaut werden.
+	 * 
+	 * Hat der Level denselben Wert, dann handelt es sich um einen Geschwister-Knoten und er muss
+	 * dem selben Parent zugeordnet werden.
+	 * 
+	 * Letztendlich signalisiert ein kleinerer Level den Abbau einer Hierarchieebene an und der
+	 * Stack muss wieder verkleinert werden. Die Reduzierung kann dabei mehrere Level überspringen. Der Stack muss
+	 * daher soweit abgebaut werden bis dieselbe Level-Nummer erreicht wird wie beim akuell untersuchten Element.
+	 * 
+	 * Nach dieser Beschreibung ist klar, dass sich ausschließlich Picture-Group-Elemente durch diesen 
+	 * Stack beschrieben werden.
+	 */
+	public static LinkedList<Integer> PICTURE_GROUP_LEVEL = new LinkedList<>();
 	
 	public StartRuleVisitor(CobolLanguage language) {
 		this.language = language;

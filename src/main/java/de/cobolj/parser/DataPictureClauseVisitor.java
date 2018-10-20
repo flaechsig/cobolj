@@ -15,7 +15,6 @@ public class DataPictureClauseVisitor extends Cobol85BaseVisitor<PictureNode> {
 	@Override
 	public PictureNode visitDataPictureClause(Cobol85Parser.DataPictureClauseContext ctx) {
 		PictureStringVisitor visitor = new PictureStringVisitor();
-//		return null;
 		return ctx.pictureString().accept(visitor); 
 	}
 

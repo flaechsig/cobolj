@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 import de.cobolj.CobolBaseTest;
 
 /**
- * Testfälle für den Working Storage
+ * Testfälle für die PictureGroup
  * 
  * @author flaechsig
  *
