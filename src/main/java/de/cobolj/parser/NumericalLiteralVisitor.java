@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import de.cobolj.nodes.BigDecimalNode;
 import de.cobolj.nodes.LongNode;
 import de.cobolj.nodes.NumberNode;
+import de.cobolj.parser.Cobol85Parser.IntegerLiteralContext;
 
 /**
  * 
@@ -28,5 +29,10 @@ public class NumericalLiteralVisitor extends Cobol85BaseVisitor<NumberNode> {
 			return new BigDecimalNode(new BigDecimal(ctx.NUMERICLITERAL().getText()));
 		}
 		throw new RuntimeException("Unerwarteter Typ");
+	}
+	
+	@Override
+	public NumberNode visitIntegerLiteral(IntegerLiteralContext ctx) {
+		return new LongNode(Long.valueOf(ctx.INTEGERLITERAL().getText()));
 	}
 }

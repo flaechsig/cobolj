@@ -4,6 +4,19 @@ import org.antlr.v4.runtime.RuleContext;
 
 import de.cobolj.nodes.LiteralNode;
 
+/**
+ * 
+ * literal
+ *   : nonNumericLiteral     
+ *   | figurativeConstant    
+ *   | numericLiteral        
+ *   | booleanLiteral        
+ *   | cicsDfhRespLiteral    
+ *   | cicsDfhValueLiteral   
+ * 
+ * @author flaechsig
+ *
+ */
 public class LiteralVisitor extends Cobol85BaseVisitor<LiteralNode> {
 	
 	public static LiteralVisitor INSTANCE = new LiteralVisitor();
