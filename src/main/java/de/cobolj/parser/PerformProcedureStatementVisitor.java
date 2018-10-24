@@ -26,6 +26,12 @@ public class PerformProcedureStatementVisitor extends Cobol85BaseVisitor<Perform
 		}
 		
 		PerformStatementNode perform = new PerformProcedureStatementNode(startFunction, endFunction);
-		return new PerformOneTimeNode(perform);
+		PerformTypeNode node;
+		if(ctx.performType() != null) {
+			node = ctx.performType().accept(new PerformTypeVisitor(perform));
+		} else {
+			node = new PerformOneTimeNode(perform);
+		}
+		return node;
 	}
 }
