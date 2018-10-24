@@ -17,7 +17,7 @@ import de.cobolj.nodes.StartRuleNode;
 public class StartRuleVisitor extends Cobol85BaseVisitor<StartRuleNode>{
 
 	/** Zugrundeliegende Sprache für den Truffle-AST */
-	private CobolLanguage language;
+	static CobolLanguage language;
 	
 	/** Wird bereits beim Aufbau des AST benötigt */
 	public static FrameDescriptor descriptor = new FrameDescriptor();

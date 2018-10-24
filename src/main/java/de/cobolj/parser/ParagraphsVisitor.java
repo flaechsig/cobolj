@@ -3,8 +3,8 @@ package de.cobolj.parser;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.ParagraphsNode;
+import de.cobolj.nodes.StructureNode;
 
 /**
  * Langsam wird es konkret. Diese Klasse bündelt Sentences und Paragraph
@@ -19,7 +19,7 @@ public class ParagraphsVisitor extends Cobol85BaseVisitor<ParagraphsNode> {
 	@Override
 	public ParagraphsNode visitParagraphs(Cobol85Parser.ParagraphsContext ctx) {
 		SentenceVisitor visitor = new SentenceVisitor();
-		List<CobolNode> paragraphOrSentence = ctx.sentence()
+		List<StructureNode> paragraphOrSentence = ctx.sentence()
 			.stream()
 			.map(sentence -> sentence.accept(visitor))
 			.collect(Collectors.toList());

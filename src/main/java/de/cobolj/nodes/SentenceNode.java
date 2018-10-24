@@ -14,7 +14,7 @@ import de.cobolj.statements.StatementNode;
  *
  */
 @NodeInfo(shortName="Sentence")
-public class SentenceNode extends CobolNode {
+public class SentenceNode extends StructureNode {
 	@Children
 	private final StatementNode statements[];
 	

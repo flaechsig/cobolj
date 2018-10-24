@@ -3,8 +3,10 @@ package de.cobolj.parser;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.nodes.PerformInlineStatementNode;
+import de.cobolj.nodes.PerformOneTimeNode;
+import de.cobolj.nodes.PerformStatementNode;
 import de.cobolj.nodes.PerformTypeNode;
-import de.cobolj.odes.PerformStatementNode;
 import de.cobolj.parser.Cobol85Parser.PerformInlineStatementContext;
 import de.cobolj.statements.StatementNode;
 
@@ -15,18 +17,20 @@ import de.cobolj.statements.StatementNode;
  * @author flaechsig
  *
  */
-public class PerformInlineStatementVisitor extends Cobol85BaseVisitor<PerformStatementNode> {
+public class PerformInlineStatementVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
 	@Override
-	public PerformStatementNode visitPerformInlineStatement(PerformInlineStatementContext ctx) {
+	public PerformTypeNode visitPerformInlineStatement(PerformInlineStatementContext ctx) {
 		PerformTypeNode node=null;
 		List<StatementNode> statements = ctx.statement()
 				.stream()
 				.map(stmt -> stmt.accept(new StatementVisitor()))
 				.collect(Collectors.toList());
-		
+		PerformStatementNode perform = new PerformInlineStatementNode(statements);
 		if(ctx.performType() != null) {
-			node = ctx.performType().accept(new PerformTypeVisitor(statements));
+			node = ctx.performType().accept(new PerformTypeVisitor(perform));
+		} else {
+			node = new PerformOneTimeNode(perform);
 		}
-		return new PerformStatementNode(node);
+		return node;
 	}
 }

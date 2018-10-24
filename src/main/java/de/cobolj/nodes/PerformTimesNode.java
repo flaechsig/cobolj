@@ -1,13 +1,11 @@
 package de.cobolj.nodes;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.runtime.NumericPicture;
-import de.cobolj.statements.StatementNode;
 
 /**
  * Implementiert das Statement PERFORM XXXX TIMES ... END PERFORM.
@@ -20,24 +18,17 @@ public class PerformTimesNode extends PerformTypeNode {
 
 	/** Schleifenzähler */
 	@Child
-	private ExpressionNode condition;
-	/** Schleifen-Anweisungen */
-	@Children
-	private final StatementNode[] statements;
-
-	public PerformTimesNode(ExpressionNode condition, List<StatementNode> statements) {
-		this.condition = condition;
-		this.statements = statements.toArray(new StatementNode[] {});
+	private ExpressionNode times;
+	public PerformTimesNode(ExpressionNode times, PerformStatementNode perform) {
+		super(perform);
+		this.times = times;
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		long counter = longValue(condition,frame);
+		long counter = longValue(times,frame);
 		for(long i = 0; i<counter; i++)  {
-			for(int j=0; j<statements.length; j++) {
-				StatementNode stmt = statements[j];
-				stmt.executeGeneric(frame);
-			}
+			perform.executeGeneric(frame);
 		}
 		return null;
 	}

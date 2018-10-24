@@ -1,6 +1,6 @@
 package de.cobolj.parser;
 
-import de.cobolj.odes.PerformStatementNode;
+import de.cobolj.nodes.PerformTypeNode;
 import de.cobolj.parser.Cobol85Parser.PerformStatementContext;
 
 /**
@@ -9,14 +9,14 @@ import de.cobolj.parser.Cobol85Parser.PerformStatementContext;
  * @author flaechsig
  *
  */
-public class PerformStatementVisitor extends Cobol85BaseVisitor<PerformStatementNode> {
+public class PerformStatementVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
 
 	@Override
-	public PerformStatementNode visitPerformStatement(PerformStatementContext ctx) {
+	public PerformTypeNode visitPerformStatement(PerformStatementContext ctx) {
 		if(ctx.performInlineStatement() != null) {
 			return ctx.performInlineStatement().accept(new PerformInlineStatementVisitor());
-		} else {
-			throw new RuntimeException("Not Implemented");
+		} else /* performProcedureStatement */ {
+			return ctx.performProcedureStatement().accept(new PerformProcedureStatementVisitor());
 		}
 	}
 }

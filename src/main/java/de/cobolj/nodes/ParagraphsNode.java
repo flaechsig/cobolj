@@ -14,7 +14,7 @@ public class ParagraphsNode extends CobolNode {
 	@Children
 	private final CobolNode[] paragraphOrSentence;
 	
-	public ParagraphsNode(Collection<? extends CobolNode> paragraphOrSentence) {
+	public ParagraphsNode(Collection<? extends StructureNode> paragraphOrSentence) {
 		this.paragraphOrSentence = paragraphOrSentence.toArray(new CobolNode[] {});
 	}
 	

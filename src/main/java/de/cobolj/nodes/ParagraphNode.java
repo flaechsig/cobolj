@@ -1,11 +1,13 @@
 package de.cobolj.nodes;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
+import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+
+import de.cobolj.CobolCallableNode;
+import de.cobolj.CobolLanguage;
 
 /**
  * Diese Klasse bildet einen einzelnen Paragraphen eines Cobol-Programms ab.
@@ -14,25 +16,15 @@ import com.oracle.truffle.api.nodes.NodeInfo;
  *
  */
 @NodeInfo(shortName = "Paragraph")
-public class ParagraphNode extends CobolNode {
-	
-	/** Sortiertes Verzeichnis aller Paragraphen. Sortiert nach der Einfügereihenfolge */
-	private static Map<String, ParagraphNode> allParagraphs = new LinkedHashMap<>();
-	
-	/** Alle Sätze des Paragraphen */
-	@Children
-	private final SentenceNode[] sentences;
-	
-	public ParagraphNode(String name, List<SentenceNode> sentences) {
-		allParagraphs.put(name.toUpperCase(), this);
-		this.sentences = sentences.toArray(new SentenceNode[] {});
+public class ParagraphNode extends StructureNode {
+	private final RootCallTarget callTarget;
+	public ParagraphNode(CobolLanguage language, String name, List<SentenceNode> sentences) {
+		CobolCallableNode callNode = new CobolCallableNode(language, name, sentences);
+		this.callTarget = CobolCallableNode.findByName(name);
 	}
 	
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		for(SentenceNode sentence : sentences) {
-			sentence.executeGeneric(frame);
-		}
-		return null;
+		return callTarget.call();
 	}
 }
