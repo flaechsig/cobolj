@@ -13,7 +13,7 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class PerformTest extends CobolBaseTest {
-	private static int ANZAHL_TESTFAELLE = 11;
+	private static int ANZAHL_TESTFAELLE = 13;
 
 	 /** 
 	 *@return Liste aller Test-Objekte

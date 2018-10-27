@@ -2,7 +2,6 @@ package de.cobolj.parser.statement.perform;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
 import de.cobolj.parser.condition.ConditionVisitor;
 import de.cobolj.statements.perform.PerformStatementNode;
@@ -17,12 +16,11 @@ import de.cobolj.statements.perform.PerformUntilNode;
  *
  */
 public class PerformUntilVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
-	
+	/** Auszuführender Perform-Block */
 	private PerformStatementNode perform;
 
 	public PerformUntilVisitor(PerformStatementNode perform) {
-		this.perform = perform;
-	}
+		this.perform = perform;	}
 
 	@Override
 	public PerformTypeNode visitPerformUntil(PerformUntilContext ctx) {

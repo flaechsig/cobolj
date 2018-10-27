@@ -1,7 +1,6 @@
 package de.cobolj.parser.statement.perform;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.PerformTypeContext;
 import de.cobolj.statements.perform.PerformStatementNode;
 import de.cobolj.statements.perform.PerformTypeNode;
@@ -27,7 +26,7 @@ public class PerformTypeVisitor extends Cobol85BaseVisitor<PerformTypeNode>{
 		} else if(ctx.performUntil() != null) {
 			return ctx.performUntil().accept(new PerformUntilVisitor(perform));
 		} else /* ctx.performVarying() */{
-			throw new RuntimeException("Not implemented");
+			return ctx.performVarying().accept(new PerformVaryingVisitor(perform));
 		}
 	}
 }

@@ -14,10 +14,10 @@ import de.cobolj.nodes.ExpressionNode;
 @NodeInfo(shortName="PerformTimes")
 public class PerformUntilNode extends PerformTypeNode {
 	/** Kennzeichen, ob die Schleifenbedingung vor dem Schleifen-Body geprüft werden soll */
-	private final boolean testBefore;
+	protected final boolean testBefore;
 	/** Schleifenzähler */
 	@Child
-	private ExpressionNode until;
+	protected ExpressionNode until;
 	
 	public PerformUntilNode(boolean testBefore, ExpressionNode until, PerformStatementNode perform) {
 		super(perform);
