@@ -1,6 +1,8 @@
-package de.cobolj.parser;
+package de.cobolj.parser.condition;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.ConditionContext;
 
 /**
