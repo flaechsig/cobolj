@@ -91,7 +91,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 		StringNode name = null;
 		PictureNode picture = null;
 		List<LiteralNode> values = new ArrayList<>();
-		// FIXME
+		// FIXME: Vervollständigen
 		
 		checkLevel(ctx);
 		

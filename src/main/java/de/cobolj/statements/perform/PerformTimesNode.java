@@ -45,14 +45,10 @@ public class PerformTimesNode extends PerformTypeNode {
 		Object value = node.executeGeneric(frame);
 		if (value instanceof Long) {
 			result = (long) value;
-		} else if (value instanceof BigDecimal) {
-			result = ((BigDecimal) value).longValue();
-		} else if (value instanceof NumericPicture) {
+		} else /* NumericPicture */ {
 			NumericPicture pic = (NumericPicture) value;
 			result = ((BigDecimal) pic.getValue()).longValue();
-		} else {
-			throw new RuntimeException("Unerwarteter Datentyp " + value.getClass().getSimpleName());
-		}
+		} 
 		return result;
 	}
 
