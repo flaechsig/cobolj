@@ -2,10 +2,10 @@ package de.cobolj.nodes;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-public class LongNode extends NumberNode {
-	long value;
+public class BooleanNode extends NumberNode {
+	boolean value;
 
-	public LongNode(long value) {
+	public BooleanNode(boolean value) {
 		this.value = value;
 	}
 
@@ -16,6 +16,6 @@ public class LongNode extends NumberNode {
 
 	@Override
 	public String toString() {
-		return Long.toString(value);
+		return Boolean.toString(value);
 	}
 }
