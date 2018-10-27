@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.move;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +7,10 @@ import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.MoveToStatementNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.IdentifierVisitor;
+import de.cobolj.parser.Cobol85Parser.MoveToStatementContext;
 
 /**
  * 

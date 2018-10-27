@@ -1,6 +1,9 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.perform;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.ConditionVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
 import de.cobolj.statements.perform.PerformStatementNode;
 import de.cobolj.statements.perform.PerformTypeNode;

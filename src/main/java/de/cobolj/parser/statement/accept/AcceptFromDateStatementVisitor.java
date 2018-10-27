@@ -1,7 +1,11 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.accept;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Lexer;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.Cobol85Parser.AcceptFromDateStatementContext;
 import de.cobolj.statements.accept.DateTimeInputNode;
 import de.cobolj.statements.accept.DateTimeInputNode.DateTimePattern;
 import de.cobolj.statements.accept.InputNode;

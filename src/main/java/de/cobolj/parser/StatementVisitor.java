@@ -2,6 +2,10 @@ package de.cobolj.parser;
 
 import org.antlr.v4.runtime.RuleContext;
 
+import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
+import de.cobolj.parser.statement.add.AddStatementVisitor;
+import de.cobolj.parser.statement.move.MoveStatementVisitor;
+import de.cobolj.parser.statement.perform.PerformStatementVisitor;
 import de.cobolj.statements.StatementNode;
 
 public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {

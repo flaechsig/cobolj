@@ -2,7 +2,7 @@ package de.cobolj.statements.add;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-import de.cobolj.parser.AddImplNode;
+import de.cobolj.parser.statement.add.AddImplNode;
 import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.phrase.SizePhraseNode;
 import de.cobolj.statements.StatementNode;

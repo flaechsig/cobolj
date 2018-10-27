@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.add;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

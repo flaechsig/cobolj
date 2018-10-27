@@ -6,7 +6,7 @@ import java.util.List;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.parser.AddToStatementNode;
+import de.cobolj.parser.statement.add.AddToStatementNode;
 
 public class AddToGivingNode extends AddToStatementNode {
 

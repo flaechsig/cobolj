@@ -1,8 +1,11 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.perform;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.StatementVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformInlineStatementContext;
 import de.cobolj.statements.StatementNode;
 import de.cobolj.statements.perform.PerformInlineStatementNode;

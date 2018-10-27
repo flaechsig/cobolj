@@ -1,5 +1,7 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.perform;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.PerformTestClauseContext;
 
 /**

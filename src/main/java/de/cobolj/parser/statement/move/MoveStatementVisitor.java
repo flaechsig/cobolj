@@ -1,4 +1,7 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.move;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.Cobol85Parser.MoveStatementContext;
 import de.cobolj.statements.StatementNode;
 import de.cobolj.statements.move.MoveStatementNode;
 
