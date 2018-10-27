@@ -1,7 +1,7 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.PerformTypeNode;
 import de.cobolj.parser.Cobol85Parser.PerformStatementContext;
+import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * performStatement: PERFORM  (performInlineStatement  | performProcedureStatement  )

@@ -1,10 +1,10 @@
 package de.cobolj.parser;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.nodes.PerformStatementNode;
-import de.cobolj.nodes.PerformTypeNode;
-import de.cobolj.nodes.PerformUntilNode;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
+import de.cobolj.statements.perform.PerformStatementNode;
+import de.cobolj.statements.perform.PerformTypeNode;
+import de.cobolj.statements.perform.PerformUntilNode;
 
 /**
  * 

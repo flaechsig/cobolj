@@ -1,10 +1,10 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.PerformOneTimeNode;
-import de.cobolj.nodes.PerformProcedureStatementNode;
-import de.cobolj.nodes.PerformStatementNode;
-import de.cobolj.nodes.PerformTypeNode;
 import de.cobolj.parser.Cobol85Parser.PerformProcedureStatementContext;
+import de.cobolj.statements.perform.PerformOneTimeNode;
+import de.cobolj.statements.perform.PerformProcedureStatementNode;
+import de.cobolj.statements.perform.PerformStatementNode;
+import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * 

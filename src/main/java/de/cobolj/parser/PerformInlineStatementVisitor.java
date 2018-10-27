@@ -3,12 +3,12 @@ package de.cobolj.parser;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.cobolj.nodes.PerformInlineStatementNode;
-import de.cobolj.nodes.PerformOneTimeNode;
-import de.cobolj.nodes.PerformStatementNode;
-import de.cobolj.nodes.PerformTypeNode;
 import de.cobolj.parser.Cobol85Parser.PerformInlineStatementContext;
 import de.cobolj.statements.StatementNode;
+import de.cobolj.statements.perform.PerformInlineStatementNode;
+import de.cobolj.statements.perform.PerformOneTimeNode;
+import de.cobolj.statements.perform.PerformStatementNode;
+import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * 

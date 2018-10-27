@@ -1,10 +1,10 @@
 package de.cobolj.parser;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.nodes.PerformStatementNode;
-import de.cobolj.nodes.PerformTimesNode;
-import de.cobolj.nodes.PerformTypeNode;
 import de.cobolj.parser.Cobol85Parser.PerformTimesContext;
+import de.cobolj.statements.perform.PerformStatementNode;
+import de.cobolj.statements.perform.PerformTimesNode;
+import de.cobolj.statements.perform.PerformTypeNode;
 import de.cobolj.util.ExpressionNodeFactory;
 
 /**

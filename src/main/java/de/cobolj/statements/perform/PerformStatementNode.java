@@ -1,4 +1,4 @@
-package de.cobolj.nodes;
+package de.cobolj.statements.perform;
 
 import de.cobolj.statements.StatementNode;
 
