@@ -12,5 +12,5 @@ PROCEDURE DIVISION.
         add 1 to ws-counter
         display "Hello " ws-counter
     end-perform.
-
+    display ws-counter
 STOP RUN.

@@ -11,14 +11,17 @@ import de.cobolj.nodes.ExpressionNode;
  * @author flaechsig
  *
  */
-@NodeInfo(shortName="PerformTimes")
+@NodeInfo(shortName = "PerformTimes")
 public class PerformUntilNode extends PerformTypeNode {
-	/** Kennzeichen, ob die Schleifenbedingung vor dem Schleifen-Body geprüft werden soll */
+	/**
+	 * Kennzeichen, ob die Schleifenbedingung vor dem Schleifen-Body geprüft werden
+	 * soll
+	 */
 	protected final boolean testBefore;
 	/** Schleifenzähler */
 	@Child
 	protected ExpressionNode until;
-	
+
 	public PerformUntilNode(boolean testBefore, ExpressionNode until, PerformStatementNode perform) {
 		super(perform);
 		this.until = until;
@@ -28,14 +31,16 @@ public class PerformUntilNode extends PerformTypeNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 
-		if(!testBefore) {
-			// Ersten durchgang immer ausführen
+		while (true) {
+			boolean conditionResult = (boolean) until.executeGeneric(frame);
+			if (testBefore && conditionResult) {
+				break;
+			}
 			perform.executeGeneric(frame);
+			if (!testBefore && conditionResult) {
+				break;
+			}
 		}
-		while(!(boolean) until.executeGeneric(frame))  {
-			perform.executeGeneric(frame);
-		}
-		
 		return null;
 	}
 
