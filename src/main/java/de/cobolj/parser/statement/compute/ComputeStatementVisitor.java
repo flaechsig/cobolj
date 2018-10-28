@@ -10,8 +10,8 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.ArithmeticExpressionVisitor;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ComputeStatementContext;
+import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.SizePhraseVisitor;
-import de.cobolj.parser.statement.add.AddToResult;
 import de.cobolj.phrase.SizePhraseNode;
 import de.cobolj.statement.compute.ComputeStatementNode;
 
@@ -26,7 +26,7 @@ import de.cobolj.statement.compute.ComputeStatementNode;
 public class ComputeStatementVisitor extends Cobol85BaseVisitor<ComputeStatementNode> {
 	@Override
 	public ComputeStatementNode visitComputeStatement(ComputeStatementContext ctx) {
-		List<AddToResult> store = ctx.computeStore()
+		List<CalculationResult> store = ctx.computeStore()
 				.stream()
 				.map(item -> item.accept(new ComputeStoreVisitor()))
 				.collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class ComputeStatementVisitor extends Cobol85BaseVisitor<ComputeStatement
 			successPhrase = ctx.notOnSizeErrorPhrase().accept(new SizePhraseVisitor());
 		}
 
-		for(AddToResult singleResult : store) {
+		for(CalculationResult singleResult : store) {
 			slots.add(singleResult.slot);
 			roundeds.add(singleResult.rounded);
 		}

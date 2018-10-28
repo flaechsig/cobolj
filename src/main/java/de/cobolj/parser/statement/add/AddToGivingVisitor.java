@@ -9,6 +9,7 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.statements.add.AddFromVisitor;
 import de.cobolj.statemtent.add.AddToGivingNode;
 
@@ -23,7 +24,7 @@ public class AddToGivingVisitor extends Cobol85BaseVisitor<AddImplNode> {
 	@Override
 	public AddImplNode visitAddToGivingStatement(Cobol85Parser.AddToGivingStatementContext ctx) {
 		List<ExpressionNode> summands;
-		List<AddToResult> results;
+		List<CalculationResult> results;
 		List<FrameSlot> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
@@ -43,7 +44,7 @@ public class AddToGivingVisitor extends Cobol85BaseVisitor<AddImplNode> {
 				.map(result -> result.accept(toVisitor))
 				.collect(Collectors.toList());
 		
-		for(AddToResult singleResult : results) {
+		for(CalculationResult singleResult : results) {
 			slots.add(singleResult.slot);
 			roundeds.add(singleResult.rounded);
 		}

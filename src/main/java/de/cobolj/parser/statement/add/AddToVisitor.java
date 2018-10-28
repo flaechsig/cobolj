@@ -5,6 +5,7 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.AddGivingContext;
+import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.IdentifierVisitor;
 
 /**
@@ -14,21 +15,21 @@ import de.cobolj.parser.IdentifierVisitor;
  * @author flaechsig
  *
  */
-public class AddToVisitor extends Cobol85BaseVisitor<AddToResult> {
+public class AddToVisitor extends Cobol85BaseVisitor<CalculationResult> {
 
 
-	@Override public AddToResult visitAddTo(Cobol85Parser.AddToContext ctx) {
+	@Override public CalculationResult visitAddTo(Cobol85Parser.AddToContext ctx) {
 		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
-		return new AddToResult(slot,  rounded);
+		return new CalculationResult(slot,  rounded);
 	}
 	
 	@Override
-	public AddToResult visitAddGiving(AddGivingContext ctx) {
+	public CalculationResult visitAddGiving(AddGivingContext ctx) {
 		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
-		return new AddToResult(slot,  rounded);
+		return new CalculationResult(slot,  rounded);
 	}
 }

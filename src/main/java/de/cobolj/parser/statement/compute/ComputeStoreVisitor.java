@@ -4,8 +4,8 @@ import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ComputeStoreContext;
+import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.statement.add.AddToResult;
 
 /**
  * 
@@ -14,12 +14,12 @@ import de.cobolj.parser.statement.add.AddToResult;
  * @author flaechsig
  *
  */
-public class ComputeStoreVisitor extends Cobol85BaseVisitor<AddToResult> {
+public class ComputeStoreVisitor extends Cobol85BaseVisitor<CalculationResult> {
 	@Override
-	public AddToResult visitComputeStore(ComputeStoreContext ctx) {
+	public CalculationResult visitComputeStore(ComputeStoreContext ctx) {
 		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
-		return new AddToResult(slot,  rounded);
+		return new CalculationResult(slot,  rounded);
 	}
 }
