@@ -19,6 +19,7 @@ import de.cobolj.CobolLanguage;
 public class ParagraphNode extends StructureNode {
 	private final RootCallTarget callTarget;
 	public ParagraphNode(CobolLanguage language, String name, List<SentenceNode> sentences) {
+		new CobolCallableNode(language, name, sentences); // Trägt sich selbst in den Cache ein
 		this.callTarget = CobolCallableNode.findByName(name);
 	}
 	
