@@ -25,10 +25,9 @@ public class NumericalLiteralVisitor extends Cobol85BaseVisitor<NumberNode> {
 			return new LongNode(0);
 		} else if(ctx.integerLiteral() != null) {
 			return new LongNode(Long.valueOf(ctx.integerLiteral().getText()));
-		} else if(ctx.NUMERICLITERAL() != null) {
+		} else /* ctx.NUMERICLITERAL() */ {
 			return new BigDecimalNode(new BigDecimal(ctx.NUMERICLITERAL().getText()));
 		}
-		throw new RuntimeException("Unerwarteter Typ");
 	}
 	
 	@Override

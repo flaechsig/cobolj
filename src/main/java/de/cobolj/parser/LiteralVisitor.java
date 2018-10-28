@@ -32,6 +32,8 @@ public class LiteralVisitor extends Cobol85BaseVisitor<LiteralNode> {
 			return ctx2.accept(new NonNumericalLiteralVisitor());
 		case Cobol85Parser.RULE_numericLiteral:
 			return ctx2.accept(new NumericalLiteralVisitor());
+		case Cobol85Parser.RULE_figurativeConstant:
+			return ctx2.accept(new FigurativeConstantVisitor());
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
 		}
