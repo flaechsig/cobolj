@@ -1,6 +1,8 @@
-package de.cobolj.parser;
+package de.cobolj.parser.arithmetic;
 
 import de.cobolj.nodes.ArithmeticNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.ArithmeticExpressionContext;
 import de.cobolj.parser.Cobol85Parser.PlusMinusContext;
 

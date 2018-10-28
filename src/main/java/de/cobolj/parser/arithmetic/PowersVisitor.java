@@ -1,9 +1,12 @@
-package de.cobolj.parser;
+package de.cobolj.parser.arithmetic;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.nodes.ArithmeticNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.PowersNode;
 import de.cobolj.parser.Cobol85Parser.PowersContext;
 
 /**

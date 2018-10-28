@@ -1,7 +1,9 @@
-package de.cobolj.parser;
+package de.cobolj.parser.arithmetic;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.RelationSignConditionNode;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.RelationSignConditionContext;
 
 /**

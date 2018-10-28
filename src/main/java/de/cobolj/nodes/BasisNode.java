@@ -1,10 +1,7 @@
-package de.cobolj.parser;
+package de.cobolj.nodes;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-
-import de.cobolj.nodes.ArithmeticNode;
-import de.cobolj.nodes.NumberNode;
 
 @NodeInfo(shortName="Basis")
 public class BasisNode extends ArithmeticNode {
