@@ -19,7 +19,6 @@ import de.cobolj.CobolLanguage;
 public class ParagraphNode extends StructureNode {
 	private final RootCallTarget callTarget;
 	public ParagraphNode(CobolLanguage language, String name, List<SentenceNode> sentences) {
-		CobolCallableNode callNode = new CobolCallableNode(language, name, sentences);
 		this.callTarget = CobolCallableNode.findByName(name);
 	}
 	

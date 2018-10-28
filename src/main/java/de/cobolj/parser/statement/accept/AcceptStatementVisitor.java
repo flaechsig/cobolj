@@ -5,7 +5,6 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.Cobol85Parser.AcceptStatementContext;
 import de.cobolj.statements.ChangeElementaryItemNodeGen;
 import de.cobolj.statements.accept.AcceptStatementNode;
 import de.cobolj.statements.accept.InputNode;

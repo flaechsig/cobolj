@@ -3,7 +3,6 @@ package de.cobolj.statements.add;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.AddFromContext;
 import de.cobolj.util.ExpressionNodeFactory;
 
 /**

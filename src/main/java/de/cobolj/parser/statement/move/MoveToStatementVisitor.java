@@ -10,7 +10,6 @@ import de.cobolj.nodes.MoveToStatementNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.Cobol85Parser.MoveToStatementContext;
 
 /**
  * 

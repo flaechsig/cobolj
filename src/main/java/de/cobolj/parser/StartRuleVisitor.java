@@ -42,7 +42,7 @@ public class StartRuleVisitor extends Cobol85BaseVisitor<StartRuleNode>{
 	public static LinkedList<Integer> PICTURE_GROUP_LEVEL = new LinkedList<>();
 	
 	public StartRuleVisitor(CobolLanguage language) {
-		this.language = language;
+		StartRuleVisitor.language = language;
 	}
 	
 	/** 
@@ -52,7 +52,7 @@ public class StartRuleVisitor extends Cobol85BaseVisitor<StartRuleNode>{
 	public StartRuleNode visitStartRule(Cobol85Parser.StartRuleContext ctx) { 
 		CompilationUnitVisitor unitVisitor = new CompilationUnitVisitor();
 		CompilationUnitNode compilationUnit = unitVisitor.visit(ctx.compilationUnit());
-		StartRuleNode root = new StartRuleNode(this.language, descriptor, compilationUnit);
+		StartRuleNode root = new StartRuleNode(StartRuleVisitor.language, descriptor, compilationUnit);
 		return root;
 	}
 

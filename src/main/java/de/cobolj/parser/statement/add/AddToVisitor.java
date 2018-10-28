@@ -4,9 +4,8 @@ import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.Cobol85Parser.AddGivingContext;
-import de.cobolj.parser.Cobol85Parser.AddToContext;
+import de.cobolj.parser.IdentifierVisitor;
 
 /**
  * 

@@ -8,7 +8,6 @@ import de.cobolj.nodes.ProgramUnitNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.ProgramUnitVisitor;
-import de.cobolj.parser.Cobol85Parser.CompilationUnitContext;
 
 /** 
  * Zweite Ebene des Parsers. 

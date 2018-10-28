@@ -23,9 +23,9 @@ import de.cobolj.statement.compute.ComputeStatementNode;
  * @author flaechsig
  *
  */
-public class ComputeStatementVisitor extends Cobol85BaseVisitor {
+public class ComputeStatementVisitor extends Cobol85BaseVisitor<ComputeStatementNode> {
 	@Override
-	public Object visitComputeStatement(ComputeStatementContext ctx) {
+	public ComputeStatementNode visitComputeStatement(ComputeStatementContext ctx) {
 		List<AddToResult> store = ctx.computeStore()
 				.stream()
 				.map(item -> item.accept(new ComputeStoreVisitor()))

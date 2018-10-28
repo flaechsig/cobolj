@@ -2,7 +2,6 @@ package de.cobolj.parser.statement.display;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.DisplayOperandContext;
 import de.cobolj.statements.display.DisplayOperandNode;
 import de.cobolj.util.ExpressionNodeFactory;
 
