@@ -13,6 +13,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.RootNode;
 
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.SentenceNode;
 import de.cobolj.parser.statement.nextsentence.NextSentenceExcetion;
 
 public class CobolCallableNode extends RootNode {
@@ -37,7 +38,11 @@ public class CobolCallableNode extends RootNode {
 			try {
 				last = node.executeGeneric(frame);
 			} catch (NextSentenceExcetion e) {
-				continue;
+				if (node instanceof SentenceNode) {
+					continue;
+				} else {
+					throw e;
+				}
 			}
 		}
 		return last;
