@@ -7,7 +7,7 @@ public class AddToResult {
 	public FrameSlot slot;
 	public boolean rounded;
 
-	AddToResult(FrameSlot slot, boolean rounded) {
+	public AddToResult(FrameSlot slot, boolean rounded) {
 		this.slot = slot;
 		this.rounded = rounded;
 	}

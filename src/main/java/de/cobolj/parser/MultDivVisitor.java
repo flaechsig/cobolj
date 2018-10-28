@@ -1,8 +1,7 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.BigDecimalNode;
+import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.nodes.DivNode;
-import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.MultNode;
 import de.cobolj.parser.Cobol85Parser.MultDivContext;
 
@@ -13,17 +12,17 @@ import de.cobolj.parser.Cobol85Parser.MultDivContext;
  * @author flaechsig
  *
  */
-public class MultDivVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class MultDivVisitor extends Cobol85BaseVisitor<ArithmeticNode> {
 	/** Argument, auf das diese Node angewendet wird */
-	private ExpressionNode leftPowers;
+	private ArithmeticNode leftPowers;
 
-	public MultDivVisitor(ExpressionNode powers) {
+	public MultDivVisitor(ArithmeticNode powers) {
 		this.leftPowers = powers;
 	}
 
 	@Override
-	public ExpressionNode visitMultDiv(MultDivContext ctx) {
-		BigDecimalNode rightPowers = (BigDecimalNode) ctx.powers().accept(new PowersVisitor());
+	public ArithmeticNode visitMultDiv(MultDivContext ctx) {
+		ArithmeticNode rightPowers = ctx.powers().accept(new PowersVisitor());
 		if(ctx.ASTERISKCHAR() != null) {
 			return new MultNode(leftPowers, rightPowers);
 		} else {

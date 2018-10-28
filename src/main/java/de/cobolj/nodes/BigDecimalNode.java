@@ -12,7 +12,7 @@ public class BigDecimalNode extends NumberNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Number executeGeneric(VirtualFrame frame) {
 		return value;
 	}
 	

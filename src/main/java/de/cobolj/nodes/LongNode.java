@@ -10,7 +10,7 @@ public class LongNode extends NumberNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Number executeGeneric(VirtualFrame frame) {
 		return value;
 	}
 
@@ -18,4 +18,5 @@ public class LongNode extends NumberNode {
 	public String toString() {
 		return Long.toString(value);
 	}
+
 }

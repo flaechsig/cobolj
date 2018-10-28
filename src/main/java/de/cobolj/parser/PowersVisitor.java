@@ -3,7 +3,7 @@ package de.cobolj.parser;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.parser.Cobol85Parser.PowersContext;
 
 /**
@@ -13,11 +13,11 @@ import de.cobolj.parser.Cobol85Parser.PowersContext;
  * @author flaechsig
  *
  */
-public class PowersVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class PowersVisitor extends Cobol85BaseVisitor<ArithmeticNode> {
 	@Override
-	public ExpressionNode visitPowers(PowersContext ctx) {
-		ExpressionNode basis = ctx.basis().accept(new BasisVisitor());
-		List<ExpressionNode> powers;
+	public ArithmeticNode visitPowers(PowersContext ctx) {
+		ArithmeticNode basis = ctx.basis().accept(new BasisVisitor());
+		List<ArithmeticNode> powers;
 		PowerVisitor visitor = new PowerVisitor();
 		powers = ctx.power()
 				.stream()

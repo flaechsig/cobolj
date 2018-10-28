@@ -1,6 +1,6 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.parser.Cobol85Parser.PowerContext;
 
 /**
@@ -10,9 +10,9 @@ import de.cobolj.parser.Cobol85Parser.PowerContext;
  * @author flaechsig
  *
  */
-public class PowerVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class PowerVisitor extends Cobol85BaseVisitor<ArithmeticNode> {
 	@Override
-	public ExpressionNode visitPower(PowerContext ctx) {
+	public ArithmeticNode visitPower(PowerContext ctx) {
 		return ctx.basis().accept(new BasisVisitor());
 	}
 }

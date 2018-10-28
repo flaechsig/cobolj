@@ -1,7 +1,7 @@
 package de.cobolj.parser;
 
 import de.cobolj.nodes.AddNode;
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.nodes.SubstractNode;
 import de.cobolj.parser.Cobol85Parser.PlusMinusContext;
 
@@ -12,16 +12,16 @@ import de.cobolj.parser.Cobol85Parser.PlusMinusContext;
  * @author flaechsig
  *
  */
-public class PlusMinusVisitor extends Cobol85BaseVisitor<ExpressionNode> {
-	private ExpressionNode left;
+public class PlusMinusVisitor extends Cobol85BaseVisitor<ArithmeticNode> {
+	private ArithmeticNode left;
 	
-	public PlusMinusVisitor(ExpressionNode left) {
+	public PlusMinusVisitor(ArithmeticNode left) {
 		this.left = left;
 	}
 
 	@Override
-	public ExpressionNode visitPlusMinus(PlusMinusContext ctx) {
-		ExpressionNode right = ctx.multDivs().accept(new PowersVisitor());
+	public ArithmeticNode visitPlusMinus(PlusMinusContext ctx) {
+		ArithmeticNode right = ctx.multDivs().accept(new MultDivsVisitor());
 		if(ctx.PLUSCHAR() != null) {
 			return new AddNode(left, right);
 		} else {

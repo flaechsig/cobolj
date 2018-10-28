@@ -9,10 +9,12 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.AddToStatementContext;
 import de.cobolj.statements.add.AddFromVisitor;
 
 /**
+ * 
+ * addToStatement: addFrom+ TO addTo+
+ * 
  * Mit diesem Statement können mehrere Summanden auf mehrere andere Summanden
  * gleichzeitig wirken. Die Form ADD sum1 sum2 TO sum3 sum4. führt dazu, dass 
  * Summe von sum1 und sum2 (sum1+sum2) auf sum3 und sum4 hinzugerechnet wird. 

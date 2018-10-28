@@ -1,26 +1,23 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.parser.Cobol85Parser.BasisContext;
-import de.cobolj.util.ExpressionNodeFactory;
+import de.cobolj.util.ArithmeticNodeFactory;
 
 /**
  * 
- * basis: 
- *   LPARENCHAR arithmeticExpression RPARENCHAR
- *   | identifier
- *   | literal
+ * basis: LPARENCHAR arithmeticExpression RPARENCHAR | identifier | literal
  * 
  * @author flaechsig
  *
  */
-public class BasisVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class BasisVisitor extends Cobol85BaseVisitor<ArithmeticNode> {
 	@Override
-	public ExpressionNode visitBasis(BasisContext ctx) {
-		if(ctx.arithmeticExpression() != null) {
+	public ArithmeticNode visitBasis(BasisContext ctx) {
+		if (ctx.arithmeticExpression() != null) {
 			return ctx.arithmeticExpression().accept(new ArithmeticExpressionVisitor());
 		} else {
-			return ExpressionNodeFactory.create(ctx.literal(), ctx.identifier());
+			return new BasisNode(ArithmeticNodeFactory.create(ctx.literal(), ctx.identifier()));
 		}
 	}
 }

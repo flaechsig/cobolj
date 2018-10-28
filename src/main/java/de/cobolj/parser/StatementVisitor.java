@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.RuleContext;
 
 import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
 import de.cobolj.parser.statement.add.AddStatementVisitor;
+import de.cobolj.parser.statement.compute.ComputeStatementVisitor;
 import de.cobolj.parser.statement.display.DisplayStatementVisitor;
 import de.cobolj.parser.statement.move.MoveStatementVisitor;
 import de.cobolj.parser.statement.perform.PerformStatementVisitor;
@@ -35,6 +36,9 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 			break;
 		case Cobol85Parser.RULE_performStatement:
 			visitor = new PerformStatementVisitor();
+			break;
+		case Cobol85Parser.RULE_computeStatement:
+			visitor = new ComputeStatementVisitor();
 			break;
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);

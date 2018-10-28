@@ -2,7 +2,7 @@ package de.cobolj.nodes;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-public class BooleanNode extends NumberNode {
+public class BooleanNode extends LiteralNode {
 	boolean value;
 
 	public BooleanNode(boolean value) {

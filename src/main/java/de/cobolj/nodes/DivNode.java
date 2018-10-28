@@ -12,22 +12,22 @@ import com.oracle.truffle.api.nodes.NodeInfo;
  *
  */
 @NodeInfo(shortName="MultNode")
-public class DivNode extends ExpressionNode {
+public class DivNode extends ArithmeticNode {
 	@Child
 	private ExpressionNode left;
 	@Child
 	private ExpressionNode right;
 
-	public DivNode(ExpressionNode leftPowers, ExpressionNode rightPowers) {
+	public DivNode(ArithmeticNode leftPowers, ArithmeticNode rightPowers) {
 		this.left = leftPowers;
 		this.right = rightPowers;
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Number executeGeneric(VirtualFrame frame) {
 		BigDecimal left = (BigDecimal) this.left.executeGeneric(frame);
 		BigDecimal right = (BigDecimal) this.right.executeGeneric(frame);
-		return new BigDecimalNode(left.divide(right));
+		return left.divide(right);
 	}
 
 }
