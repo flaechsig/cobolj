@@ -10,20 +10,21 @@ import de.cobolj.parser.LiteralVisitor;
 import de.cobolj.parser.NumericalLiteralVisitor;
 
 public class ExpressionNodeFactory {
-	private ExpressionNodeFactory() {}
-	
+	private ExpressionNodeFactory() {
+	}
+
 	/**
 	 * Erstellt eine ExpressionNode.
 	 * 
-	 * @param literal Ein LiteralContext oder null
+	 * @param literal    Ein LiteralContext oder null
 	 * @param identifier Ein IdentifierContext oder null
 	 * @return ExpressionNode oder null
 	 */
 	public static ExpressionNode create(LiteralContext literal, IdentifierContext identifier) {
-		if(literal != null) {
+		if (literal != null) {
 			return literal.accept(LiteralVisitor.INSTANCE);
-		} else if(identifier !=null) {
-			return ReadElementaryItemNodeGen.create(identifier.accept(IdentifierVisitor.INSTANCE));
+		} else if (identifier != null) {
+			return create(identifier);
 		} else {
 			return null;
 		}
@@ -33,9 +34,22 @@ public class ExpressionNodeFactory {
 	 * @see ExpressionNodeFactory#create(LiteralContext, IdentifierContext)
 	 */
 	public static ExpressionNode create(IntegerLiteralContext literal, IdentifierContext identifier) {
-		if(literal != null) {
+		if (literal != null) {
 			return literal.accept(new NumericalLiteralVisitor());
-		} else if(identifier !=null) {
+		} else if (identifier != null) {
+			return create(identifier);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @see ExpressionNodeFactory#create(LiteralContext, IdentifierContext)
+	 * 
+	 */
+	public static ExpressionNode create(IdentifierContext identifier) {
+		if (identifier != null) {
 			return ReadElementaryItemNodeGen.create(identifier.accept(IdentifierVisitor.INSTANCE));
 		} else {
 			return null;

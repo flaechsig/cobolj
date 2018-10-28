@@ -1,12 +1,11 @@
 package de.cobolj.parser.statement.perform;
 
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ProcedureNameVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformProcedureStatementContext;
+import de.cobolj.parser.ProcedureNameVisitor;
 import de.cobolj.statements.perform.PerformOneTimeNode;
 import de.cobolj.statements.perform.PerformProcedureStatementNode;
-import de.cobolj.statements.perform.PerformStatementNode;
 import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
@@ -28,7 +27,7 @@ public class PerformProcedureStatementVisitor extends Cobol85BaseVisitor<Perform
 			endFunction = ctx.procedureName(1).accept(visitor);
 		}
 		
-		PerformStatementNode perform = new PerformProcedureStatementNode(startFunction, endFunction);
+		ExpressionNode perform = new PerformProcedureStatementNode(startFunction, endFunction);
 		PerformTypeNode node;
 		if(ctx.performType() != null) {
 			node = ctx.performType().accept(new PerformTypeVisitor(perform));

@@ -6,10 +6,9 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
 import de.cobolj.parser.condition.ConditionVisitor;
-import de.cobolj.statements.perform.PerformVaryingExpressionNode;
 
 /**
- * @see PerformUntilVisitor
+ * @see PerformUntilAfterVisitor
  * 
  *      Diese Klasse ist sehr ähnlich zu der PerformUntilVisitor und
  *      interpretiert auch dieselbe Grammatik-Regel. Allerdings werden hier
@@ -21,7 +20,7 @@ import de.cobolj.statements.perform.PerformVaryingExpressionNode;
  * @author flaechsig
  *
  */
-public class PerformVaryingUntilVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class PerformVaryingUntilAfterVisitor extends Cobol85BaseVisitor<ExpressionNode> {
 	/** Auszuführender Perform-Block */
 	private ExpressionNode perform;
 	/** Speicher für den Schleifenzähler */
@@ -33,8 +32,8 @@ public class PerformVaryingUntilVisitor extends Cobol85BaseVisitor<ExpressionNod
 	/** Kennzeichen, ob der Test vor oder nach dem Schleifenrumpf stattfindet */
 	private boolean testBefore;
 
-	public PerformVaryingUntilVisitor(ExpressionNode perform, boolean testBefore, FrameSlot var, ExpressionNode start,
-			ExpressionNode step) {
+	public PerformVaryingUntilAfterVisitor(ExpressionNode perform, boolean testBefore, FrameSlot var,
+			ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;
 		this.var = var;
@@ -45,6 +44,6 @@ public class PerformVaryingUntilVisitor extends Cobol85BaseVisitor<ExpressionNod
 	@Override
 	public ExpressionNode visitPerformUntil(PerformUntilContext ctx) {
 		ExpressionNode condition = ctx.condition().accept(new ConditionVisitor());
-		return new PerformVaryingExpressionNode(testBefore, condition, perform, var, start, step);
+		return new PerformAfterNode(testBefore, condition, perform, var, start, step);
 	}
 }

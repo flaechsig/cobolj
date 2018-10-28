@@ -2,9 +2,7 @@ package de.cobolj.parser.statement.perform;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.PerformTimesContext;
-import de.cobolj.statements.perform.PerformStatementNode;
 import de.cobolj.statements.perform.PerformTimesNode;
 import de.cobolj.statements.perform.PerformTypeNode;
 import de.cobolj.util.ExpressionNodeFactory;
@@ -18,9 +16,9 @@ import de.cobolj.util.ExpressionNodeFactory;
  */
 public class PerfomTimesVistor extends Cobol85BaseVisitor<PerformTypeNode> {
 	
-	private PerformStatementNode perform;
+	private ExpressionNode perform;
 
-	public PerfomTimesVistor(PerformStatementNode perform) {
+	public PerfomTimesVistor(ExpressionNode perform) {
 		this.perform = perform;
 	}
 

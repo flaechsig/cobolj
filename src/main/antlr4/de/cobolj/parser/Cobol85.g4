@@ -3371,7 +3371,7 @@ performVaryingPhrase
 :
     (
         identifier
-        | literal
+        | indexName
     ) performFrom performBy performUntil
 ;
 
@@ -3386,7 +3386,7 @@ performFrom
     (
         identifier
         | literal
-        | arithmeticExpression
+        | indexName
     )
 ;
 
@@ -3396,7 +3396,6 @@ performBy
     (
         identifier
         | literal
-        | arithmeticExpression
     )
 ;
 

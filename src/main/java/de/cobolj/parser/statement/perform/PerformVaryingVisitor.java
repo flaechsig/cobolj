@@ -1,8 +1,8 @@
 package de.cobolj.parser.statement.perform;
 
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformVaryingContext;
-import de.cobolj.statements.perform.PerformStatementNode;
 import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
@@ -14,9 +14,9 @@ import de.cobolj.statements.perform.PerformTypeNode;
  *
  */
 public class PerformVaryingVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
-	private PerformStatementNode perform;
+	private ExpressionNode perform;
 
-	public PerformVaryingVisitor(PerformStatementNode perform) {
+	public PerformVaryingVisitor(ExpressionNode perform) {
 		this.perform = perform;
 	}
 
@@ -26,6 +26,7 @@ public class PerformVaryingVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
 		if (ctx.performTestClause() != null) {
 			testBefore = ctx.performTestClause().accept(new PerformTestClauseVisitor());
 		}
-		return ctx.performVaryingClause().accept(new PerformVaringClauseVisitor(testBefore, perform));
+		ExpressionNode childExpression = ctx.performVaryingClause().accept(new PerformVaringClauseVisitor(testBefore, perform));
+		return new PerformVaryingNode(childExpression);
 	}
 }

@@ -20,7 +20,7 @@ public class PerformTimesNode extends PerformTypeNode {
 	/** Schleifenzähler */
 	@Child
 	private ExpressionNode times;
-	public PerformTimesNode(ExpressionNode times, PerformStatementNode perform) {
+	public PerformTimesNode(ExpressionNode times, ExpressionNode perform) {
 		super(perform);
 		this.times = times;
 	}

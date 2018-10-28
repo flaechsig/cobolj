@@ -9,31 +9,31 @@ import de.cobolj.parser.IdentifierVisitor;
 
 /**
  * 
- * performVaryingPhrase: (identifier | literal) performFrom performBy performUntil
+ * performVaryingPhrase: (identifier | indexName) performFrom performBy performUntil
  * 
  * @author flaechsig
  *
  */
-public class PerformVaryingPhraseVisitor extends Cobol85BaseVisitor<ExpressionNode> {
-	
+public class PerformAfterVaryingVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+
 	private final ExpressionNode perform;
 	private final boolean testBefore;
 
-	public PerformVaryingPhraseVisitor(boolean testBefore, ExpressionNode perform) {
-		this.perform = perform; 
+	public PerformAfterVaryingVisitor(boolean testBefore, ExpressionNode perform) {
+		this.perform = perform;
 		this.testBefore = testBefore;
 	}
 
 	@Override
 	public ExpressionNode visitPerformVaryingPhrase(PerformVaryingPhraseContext ctx) {
 		FrameSlot var;
-		if(ctx.identifier()!=null) {
+		if (ctx.identifier() != null) {
 			var = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
-		} else  /* index */ {
+		} else {
 			throw new RuntimeException("Not Implemented");
-		} 
+		}
 		ExpressionNode start = ctx.performFrom().accept(new PerformFromVisitor());
 		ExpressionNode step = ctx.performBy().accept(new PerformByVisitor());
-		return ctx.performUntil().accept(new PerformVaryingUntilVisitor(perform, testBefore, var, start, step));
+		return ctx.performUntil().accept(new PerformVaryingUntilAfterVisitor(perform, testBefore, var, start, step));
 	}
 }

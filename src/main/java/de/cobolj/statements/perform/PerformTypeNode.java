@@ -1,5 +1,6 @@
 package de.cobolj.statements.perform;
 
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.statements.StatementNode;
 
 /**
@@ -11,9 +12,9 @@ import de.cobolj.statements.StatementNode;
 public abstract class PerformTypeNode extends StatementNode {
 
 	@Child
-	protected PerformStatementNode perform;
+	protected ExpressionNode perform;
 	
-	public PerformTypeNode(PerformStatementNode perform) {
+	public PerformTypeNode(ExpressionNode perform) {
 		this.perform = perform;
 	}
 }

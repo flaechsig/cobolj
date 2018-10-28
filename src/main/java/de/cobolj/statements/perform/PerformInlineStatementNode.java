@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.statements.StatementNode;
 
 /**
@@ -15,7 +16,7 @@ import de.cobolj.statements.StatementNode;
  * @author flaechsig
  *
  */
-public class PerformInlineStatementNode extends PerformStatementNode {
+public class PerformInlineStatementNode extends ExpressionNode {
 
 	/** Auszuführende Perform-Variante */
 	@Children

@@ -22,7 +22,7 @@ public class PerformUntilNode extends PerformTypeNode {
 	@Child
 	protected ExpressionNode until;
 
-	public PerformUntilNode(boolean testBefore, ExpressionNode until, PerformStatementNode perform) {
+	public PerformUntilNode(boolean testBefore, ExpressionNode until, ExpressionNode perform) {
 		super(perform);
 		this.until = until;
 		this.testBefore = testBefore;

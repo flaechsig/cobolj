@@ -7,6 +7,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.CobolCallableNode;
+import de.cobolj.nodes.ExpressionNode;
 
 /**
  * Führt eine Liste von Paragraphen oder Sections aus, die im Rahmen einer
@@ -16,7 +17,7 @@ import de.cobolj.CobolCallableNode;
  *
  */
 @NodeInfo(shortName = "PerformProcedure")
-public class PerformProcedureStatementNode extends PerformStatementNode {
+public class PerformProcedureStatementNode extends ExpressionNode {
 
 	/** Erster Paragraph/Section die ausgeführt werden */
 	private final String startFunction;

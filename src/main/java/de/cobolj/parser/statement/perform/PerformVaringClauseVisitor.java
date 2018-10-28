@@ -1,9 +1,13 @@
 package de.cobolj.parser.statement.perform;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser.PerformAfterContext;
 import de.cobolj.parser.Cobol85Parser.PerformVaryingClauseContext;
-import de.cobolj.statements.perform.PerformStatementNode;
-import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * 
@@ -12,23 +16,27 @@ import de.cobolj.statements.perform.PerformTypeNode;
  * @author flaechsig
  *
  */
-public class PerformVaringClauseVisitor extends Cobol85BaseVisitor<PerformTypeNode> {
-	
-	private final PerformStatementNode perform;
+public class PerformVaringClauseVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+
+	private final ExpressionNode perform;
 	private final boolean testBefore;
 
-	public PerformVaringClauseVisitor(boolean testBefore, PerformStatementNode perform) {
+	public PerformVaringClauseVisitor(boolean testBefore, ExpressionNode perform) {
 		this.perform = perform;
 		this.testBefore = testBefore;
 	}
 
 	@Override
-	public PerformTypeNode visitPerformVaryingClause(PerformVaryingClauseContext ctx) {
-		PerformTypeNode node = ctx.performVaryingPhrase().accept(new PerformVaryingPhraseVisitor(testBefore, perform));
-		if(ctx.performAfter().size()>0) {
-			throw new RuntimeException("Not implemented");
-//			ctx.performAfter().add(new PerformAfterVisitor());
+	public ExpressionNode visitPerformVaryingClause(PerformVaryingClauseContext ctx) {
+		ExpressionNode performVarying = perform;
+
+		List<PerformAfterContext> performAfter = new ArrayList<>(ctx.performAfter());
+		Collections.reverse(performAfter); 
+		for(PerformAfterContext childCtx : performAfter) {
+			performVarying = childCtx.accept(new PerformAfterVisitor(testBefore, performVarying));
 		}
-		return node;
+
+		return ctx.performVaryingPhrase().accept(new PerformVaryingPhraseVisitor(testBefore, performVarying));
 	}
+
 }
