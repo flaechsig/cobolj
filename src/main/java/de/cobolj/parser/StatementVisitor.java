@@ -6,6 +6,7 @@ import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
 import de.cobolj.parser.statement.add.AddStatementVisitor;
 import de.cobolj.parser.statement.compute.ComputeStatementVisitor;
 import de.cobolj.parser.statement.display.DisplayStatementVisitor;
+import de.cobolj.parser.statement.ifstmt.IfStatementVisitor;
 import de.cobolj.parser.statement.move.MoveStatementVisitor;
 import de.cobolj.parser.statement.perform.PerformStatementVisitor;
 import de.cobolj.parser.statement.stop.StopStatementVisitor;
@@ -39,6 +40,9 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 			break;
 		case Cobol85Parser.RULE_computeStatement:
 			visitor = new ComputeStatementVisitor();
+			break;
+		case Cobol85Parser.RULE_ifStatement:
+			visitor = new IfStatementVisitor();
 			break;
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);

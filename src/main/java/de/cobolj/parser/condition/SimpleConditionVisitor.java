@@ -1,6 +1,6 @@
 package de.cobolj.parser.condition;
 
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ConditionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.SimpleConditionContext;
 
@@ -12,10 +12,10 @@ import de.cobolj.parser.Cobol85Parser.SimpleConditionContext;
  * @author flaechsig
  *
  */
-public class SimpleConditionVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class SimpleConditionVisitor extends Cobol85BaseVisitor<ConditionNode> {
 
 	@Override
-	public ExpressionNode visitSimpleCondition(SimpleConditionContext ctx) {
+	public ConditionNode visitSimpleCondition(SimpleConditionContext ctx) {
 		if (ctx.condition() != null) {
 			throw new RuntimeException("Not implemented");
 		} else if (ctx.relationCondition() != null) {

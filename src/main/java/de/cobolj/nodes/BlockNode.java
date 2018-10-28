@@ -8,27 +8,27 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import de.cobolj.statements.StatementNode;
 
 /**
- * Ein Sentence (Satz) definiert einen zusammengehörigen Block von 0 - n
- * Statements.
+ * Ansammlung von Statements, die ausgeführt werden. Diese Klasse ist damit sehr ähnlich zu SentenceNode.
  * 
  * @author flaechsig
  *
  */
-@NodeInfo(shortName = "Sentence")
-public class SentenceNode extends StructureNode {
+@NodeInfo(shortName="Block")
+public class BlockNode extends StructureNode {
+	
 	@Children
 	protected final StatementNode statements[];
-
-	public SentenceNode(List<StatementNode> statements) {
+	
+	public BlockNode(List<StatementNode> statements) {
 		this.statements = statements.toArray(new StatementNode[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Object last = null;
-		for (StatementNode node : statements) {
-			last = node.executeGeneric(frame);
+		for(StatementNode stmt : statements) {
+			stmt.executeGeneric(frame);
 		}
-		return last;
+		return null;
 	}
+
 }

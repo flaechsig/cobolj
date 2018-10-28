@@ -7,7 +7,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
  * @author flaechsig
  *
  */
-public class CombinableCondition extends ExpressionNode {
+public class CombinableCondition extends ConditionNode {
 	/** kennzeichen, ob auf NOT geprüft werden soll. Dann ist dieses Kennzeichen false */
 	private final boolean checkPositive;
 	/** Untergeordnete Condition */
@@ -20,7 +20,7 @@ public class CombinableCondition extends ExpressionNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Boolean executeGeneric(VirtualFrame frame) {
 		Boolean childResult = (Boolean) conditionChild.executeGeneric(frame);
 		return checkPositive == childResult;
 	}

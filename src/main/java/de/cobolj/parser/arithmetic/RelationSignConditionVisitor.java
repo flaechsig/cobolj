@@ -1,9 +1,9 @@
 package de.cobolj.parser.arithmetic;
 
+import de.cobolj.nodes.ConditionNode;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.RelationSignConditionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.RelationSignConditionContext;
 
 /**
@@ -14,9 +14,9 @@ import de.cobolj.parser.Cobol85Parser.RelationSignConditionContext;
  * @author flaechsig
  *
  */
-public class RelationSignConditionVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class RelationSignConditionVisitor extends Cobol85BaseVisitor<ConditionNode> {
 	@Override
-	public ExpressionNode visitRelationSignCondition(RelationSignConditionContext ctx) {
+	public ConditionNode visitRelationSignCondition(RelationSignConditionContext ctx) {
 		boolean checkPositive = true;
 		int checkCompare = 0;
 		ExpressionNode arithmetic;

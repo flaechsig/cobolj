@@ -1,7 +1,7 @@
 package de.cobolj.parser.condition;
 
 import de.cobolj.nodes.CombinableCondition;
-import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.ConditionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.CombinableConditionContext;
 
@@ -12,10 +12,10 @@ import de.cobolj.parser.Cobol85Parser.CombinableConditionContext;
  * @author flaechsig
  *
  */
-public class CombinableConditionVisitor extends Cobol85BaseVisitor<ExpressionNode> {
+public class CombinableConditionVisitor extends Cobol85BaseVisitor<ConditionNode> {
 	@Override
-	public ExpressionNode visitCombinableCondition(CombinableConditionContext ctx) {
-		ExpressionNode child = ctx.simpleCondition().accept(new SimpleConditionVisitor());
+	public ConditionNode visitCombinableCondition(CombinableConditionContext ctx) {
+		ConditionNode child = ctx.simpleCondition().accept(new SimpleConditionVisitor());
 		return new CombinableCondition(ctx.NOT()==null, child);
 	}
 }
