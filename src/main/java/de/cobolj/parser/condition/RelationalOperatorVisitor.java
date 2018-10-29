@@ -4,9 +4,10 @@ import static de.cobolj.parser.ParserUtil.check;
 
 import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.nodes.ConditionNode;
+import de.cobolj.nodes.RelationalOperatorNode;
+import de.cobolj.nodes.RelationalOperatorNode.Operator;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.RelationalOperatorContext;
-import de.cobolj.parser.condition.RelationalOperatorNode.Operator;
 
 /**
  * relationalOperator : ( IS | ARE )? ( NOT? ( GREATER THAN? | MORETHANCHAR |
