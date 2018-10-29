@@ -47,6 +47,7 @@ public class RelationalOperatorNode extends ConditionNode {
 			break;
 		case GREATEREQUAL:
 			result = compare>=0;
+			break;
 		case LESS:
 			result = compare<0;
 			break;
@@ -56,5 +57,4 @@ public class RelationalOperatorNode extends ConditionNode {
 		}
 		return negate!=result;
 	}
-
 }
