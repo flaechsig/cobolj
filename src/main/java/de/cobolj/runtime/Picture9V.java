@@ -105,4 +105,9 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 		return this.precession;
 	}
 
+	@Override
+	public void clear() {
+		this.value = BigDecimal.ZERO;
+	}
+
 }

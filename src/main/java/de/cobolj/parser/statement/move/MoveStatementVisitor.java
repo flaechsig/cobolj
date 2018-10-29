@@ -18,8 +18,8 @@ public class MoveStatementVisitor extends Cobol85BaseVisitor<MoveStatementNode> 
 		StatementNode stmt = null;
 		if(ctx.moveToStatement() != null) {
 			stmt = ctx.moveToStatement().accept(new MoveToStatementVisitor());
-			// TODO
 		} else  {
+//			stmt = ctx.moveCorrespondingToStatement().accept(new MoveCorrespondingToStatement());
 			throw new RuntimeException("Not implemented");
 		}
 		return new MoveStatementNode(stmt);

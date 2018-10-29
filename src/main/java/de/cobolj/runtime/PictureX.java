@@ -12,7 +12,7 @@ import de.cobolj.phrase.SizeOverflowException;
 @MessageResolution(receiverType = PictureX.class)
 public class PictureX extends Picture implements Comparable<PictureX> {
 	
-	private String value;
+	private String value = "";
 	
 	public PictureX(int size) {
 		super(size);
@@ -60,6 +60,11 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 	@Override
 	public String toString() {
 		return StringUtils.rightPad(value, size, ' ');
+	}
+
+	@Override
+	public void clear() {
+		this.value = ""; 
 	}
 
 }

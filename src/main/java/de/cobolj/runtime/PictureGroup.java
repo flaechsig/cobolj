@@ -4,36 +4,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
+import com.oracle.truffle.api.interop.MessageResolution;
 
 import de.cobolj.phrase.SizeOverflowException;
 
+@MessageResolution(receiverType = PictureX.class)
 public class PictureGroup extends Picture {
 
-	private List<Picture> children = new ArrayList<>();
+	private ArrayList<Picture> children = new ArrayList<>();
 
 	public PictureGroup() {
 		super(0);
 	}
-	
+
 	@Override
 	public ForeignAccess getForeignAccess() {
-		throw new RuntimeException("Not Implemented");
+		return PictureGroupForeign.ACCESS;
 	}
 
 	@Override
 	public void setValue(Object object) {
-		throw new RuntimeException("Not Implemented");
-
+		setValue(object, false);
 	}
 
 	@Override
 	public void setValue(Object object, boolean sizeCheck) throws SizeOverflowException {
-		throw new RuntimeException("Not Implemented");
+		PictureGroup other = (PictureGroup) object;
+		
+		clear();
+		for(int i=0; i<children.size(); i++) {
+			Picture self = children.get(i);
+			Picture othter = other.children.get(i);
+			self.setValue(othter);
+		}
 	}
 
 	@Override
-	public Object getValue() {
-		throw new RuntimeException("Not Implemented");
+	public List<Picture> getValue() {
+		return children;
 	}
 
 	/**
@@ -42,16 +50,22 @@ public class PictureGroup extends Picture {
 	 * @param picture Picture-Eintrag, der der Gruppe hinzugefügt wird.
 	 */
 	public void add(Picture picture) {
-		this.children .add(picture);
-		
+		this.children.add(picture);
 	}
 
 	@Override
 	public String toString() {
 		StringBuffer buf = new StringBuffer();
-		for(Picture pic : children) {
+		for (Picture pic : children) {
 			buf.append(pic.toString());
 		}
 		return buf.toString();
+	}
+
+	@Override
+	public void clear() {
+		for(Picture pic : children) {
+			pic.clear();
+		}
 	}
 }

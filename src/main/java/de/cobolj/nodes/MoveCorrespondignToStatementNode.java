@@ -11,13 +11,17 @@ import de.cobolj.statements.StatementNode;
 import de.cobolj.util.FrameUtil;
 
 /**
- * Implementierung des "einfachen" MOVE ... TO ...
+ * Implementierung des "einfachen" MOVE CORR ... TO ...
+ * 
+ * Das ist eine Gruppen-Kopierfunktion, die auf Namensgleichheit abzielt. Bei
+ * gleichen Namen werden die Daten von der Quelle ins Ziel kopiert. Die Typen
+ * müssen dabei hinhaltlich übertragbar sein.
  * 
  * @author flaechsig
  *
  */
-@NodeInfo(shortName = "MoveTo")
-public class MoveToStatementNode extends StatementNode {
+@NodeInfo(shortName = "MoveCorrTo")
+public class MoveCorrespondignToStatementNode extends StatementNode {
 
 	/** Quellfeld für den Move-Befehl */
 	@Child
@@ -25,7 +29,7 @@ public class MoveToStatementNode extends StatementNode {
 	/** Liste der Slots, in die das Quellfeld übertragen wird. */
 	private final FrameSlot[] receiving;
 
-	public MoveToStatementNode(ExpressionNode sending, List<FrameSlot> receiving) {
+	public MoveCorrespondignToStatementNode(ExpressionNode sending, List<FrameSlot> receiving) {
 		this.sending = sending;
 		this.receiving = receiving.toArray(new FrameSlot[] {});
 	}

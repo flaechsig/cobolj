@@ -157,4 +157,9 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 		return size;
 	}
 
+	@Override
+	public void clear() {
+		this.value = 0;
+	}
+
 }

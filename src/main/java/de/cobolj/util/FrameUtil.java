@@ -4,6 +4,7 @@ import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.runtime.NumericPicture;
+import de.cobolj.runtime.Picture;
 
 /**
  * Hilfsklasse für den Umgang mit häufigen Funktionen.
@@ -21,6 +22,13 @@ public class FrameUtil {
 	 * @param slot Slot mit dem Storage.
 	 */
 	public static NumericPicture getNumericPicture(Frame frame, FrameSlot slot) {
-			return (NumericPicture) com.oracle.truffle.api.frame.FrameUtil.getObjectSafe(frame, slot);
+			return (NumericPicture) getPicture(frame, slot);
+	}
+
+	/**
+	 * @see FrameUtil#getNumericPicture(Frame, FrameSlot)
+	 */
+	public static Picture getPicture(Frame frame, FrameSlot slot) {
+		return (Picture)com.oracle.truffle.api.frame.FrameUtil.getObjectSafe(frame, slot);
 	}
 }

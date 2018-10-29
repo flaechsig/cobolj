@@ -45,4 +45,9 @@ public abstract class Picture implements TruffleObject {
 	public abstract void setValue(Object object, boolean sizeCheck) throws SizeOverflowException;
 
 	public abstract Object getValue();
+	
+	/**
+	 * löscht den Inhalt eines Pictures. 
+	 */
+	public abstract void clear();
 }

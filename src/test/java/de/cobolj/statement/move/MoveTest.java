@@ -13,7 +13,7 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class MoveTest extends CobolBaseTest {
-	private static int ANZAHL_TESTFAELLE = 3;
+	private static int ANZAHL_TESTFAELLE = 4;
 
 	 /** 
 	 *@return Liste aller Test-Objekte
