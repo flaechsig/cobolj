@@ -35,7 +35,12 @@ public class PictureGroup extends Picture {
 		for(int i=0; i<children.size(); i++) {
 			Picture self = children.get(i);
 			Picture othter = other.children.get(i);
-			self.setValue(othter);
+			try {
+				self.setValue(othter);
+			} catch(NumberFormatException e) {
+				// FIXME: Verhalten in dies Fall ist nicht sauber definiert. Verschiede Compiler verhalten sich unterschiedlich
+				self.clear();
+			}
 		}
 	}
 
