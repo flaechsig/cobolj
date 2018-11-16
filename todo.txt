@@ -1,3 +1,6 @@
 Picture:
   Bisher nur S, 9, A, V umgesetzt
   99, PPP999, ... werden noch nicht beherrscht
+  
+MOVE
+  Krankes Verhalten der MOVE Group wird noch nicht beherrscht (Move von X auf 9)

@@ -27,4 +27,5 @@ public class WorkingStorageTest extends CobolBaseTest {
 		}
 		return testObjekte.toArray();
 	}
+	
 }

@@ -26,5 +26,4 @@ public class AddTest extends CobolBaseTest {
 		}
 		return result.toArray();
 	}
-
 }

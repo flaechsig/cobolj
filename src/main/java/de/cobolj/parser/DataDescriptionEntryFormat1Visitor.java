@@ -117,10 +117,12 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 			values = ctx.dataValueClause().stream().map(node -> node.accept(DataValueClauseVisitor.INSTANCE))
 					.collect(Collectors.toList());
 			if (values.size() > 1) {
+
 				throw new RuntimeException("Akuell kann exakt nur ein Value-Wert verarbeitet werden. " + ctx.getText());
 			}
 		}
 		if (!values.isEmpty()) {
+			// FIXME: Hier wird nur das erste Element verarbeitet. War
 			picture.getPicture().setValue(values.get(0));
 		}
 		FrameSlot slot = StartRuleVisitor.descriptor.findOrAddFrameSlot(name.toString(), FrameSlotKind.Object);

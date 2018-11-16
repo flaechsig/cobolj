@@ -1279,7 +1279,7 @@ screenDescriptionPictureClause
     (
         PICTURE
         | PIC
-    ) IS? pictureString
+    ) IS? pictureString+
 ;
 
 screenDescriptionFromClause
@@ -1554,7 +1554,7 @@ reportGroupPictureClause
     (
         PICTURE
         | PIC
-    ) IS? pictureString
+    ) IS? pictureString+
 ;
 
 reportGroupResetClause
@@ -1936,40 +1936,20 @@ dataOccursSort
 
 dataPictureClause
 :
-    (
-        PICTURE
-        | PIC
-    ) IS? pictureString
+    ( PICTURE | PIC) IS?  pictureString
 ;
 
 pictureString
-:
-    (
-        pictureChars+ pictureCardinality?
-    )+
-;
+   : (pictureChars pictureCardinality?)+
+   ;
 
 pictureChars
-:
-    DOLLARCHAR
-    | IDENTIFIER
-    | NUMERICLITERAL
-    | SLASHCHAR
-    | COMMACHAR
-    | DOT
-    | COLONCHAR
-    | ASTERISKCHAR
-    | DOUBLEASTERISKCHAR
-    | PLUSCHAR
-    | MINUSCHAR
-    | LESSTHANCHAR
-    | MORETHANCHAR
-    | integerLiteral
+   : DOLLARCHAR | IDENTIFIER | NUMERICLITERAL | SLASHCHAR | COMMACHAR | DOT | COLONCHAR | ASTERISKCHAR | DOUBLEASTERISKCHAR | PLUSCHAR | MINUSCHAR | LESSTHANCHAR | MORETHANCHAR | integerLiteral
 ;
 
 pictureCardinality
 :
-    LPARENCHAR integerLiteral RPARENCHAR
+    '(' INTEGERLITERAL ')'
 ;
 
 dataReceivedByClause
@@ -2112,7 +2092,7 @@ dataValueClause
     (
         VALUE IS?
         | VALUES ARE?
-    )? dataValueInterval
+    ) dataValueInterval
     (
         COMMACHAR? dataValueInterval
     )*
@@ -4921,6 +4901,14 @@ commentEntry
     COMMENTENTRYLINE+
 ;
 
+nonNumericLiteral
+    : STRINGLITERAL
+    | DBCSLITERAL
+    | HEXNUMBER
+    | NULLTERMINATED
+;
+
+
 // lexer rules --------------------------------------------------------------------------------
 
 // keywords
@@ -5450,6 +5438,10 @@ COUNT
     C O U N T
 ;
 
+CR:
+    C R
+;
+
 CRUNCH
 :
     C R U N C H
@@ -5498,6 +5490,11 @@ DAY
 DAY_OF_WEEK
 :
     D A Y MINUSCHAR O F MINUSCHAR W E E K
+;
+
+DB
+:
+    D B
 ;
 
 DBCS
@@ -7588,28 +7585,17 @@ DOLLARCHAR
 ;
 
 DOUBLEQUOTE
-:
-    '"'
+:    '"'
 ;
 // period full stop
 
 DOT_FS
-:
-    '.'
-    (
-        '\r'
-        | '\n'
-        | '\f'
-        | '\t'
-        | ' '
-    )+
-    | '.' EOF
+: ('.' ('\r' | '\n' | '\f' | '\t' | ' ')+ | '.' EOF)
 ;
 
 DOT
-:
-    '.'
-;
+: '.'
+; 
 
 EQUALCHAR
 :
@@ -7687,13 +7673,6 @@ SLASHCHAR
 ;
 
 // literals
-
-nonNumericLiteral
-    : STRINGLITERAL
-    | DBCSLITERAL
-    | HEXNUMBER
-    | NULLTERMINATED
-;
 
 HEXNUMBER
 :

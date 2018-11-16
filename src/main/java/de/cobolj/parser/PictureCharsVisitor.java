@@ -1,9 +1,19 @@
 package de.cobolj.parser;
 
-public class PictureCharsVisitor extends Cobol85BaseVisitor<String> {
+import de.cobolj.parser.Cobol85Parser.PictureCharsContext;
 
+/**
+ * pictureChars : 'A' | 'B' | 'P' | 'X' | 'Z' | '9' | '0' | SLASHCHAR |
+ * COMMACHAR | PLUSCHAR | MINUSCHAR | ASTERISKCHAR | DOLLARCHAR | 'S' | V | DOT
+ * | 'CR' | 'DB' ;
+ * 
+ * 
+ * @author flaechsig
+ *
+ */
+public class PictureCharsVisitor extends Cobol85BaseVisitor<String> {
 	@Override
-	public String visitPictureChars(Cobol85Parser.PictureCharsContext ctx) {
-		return ctx.getChild(0).getText();
+	public String visitPictureChars(PictureCharsContext ctx) {
+		return ctx.getText();
 	}
 }

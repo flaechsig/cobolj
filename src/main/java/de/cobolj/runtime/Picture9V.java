@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.DecimalFormatSymbols;
 import com.oracle.truffle.api.interop.ForeignAccess;
@@ -39,7 +41,21 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public void setValue(Object object) {
-		setValue(new BigDecimal(object.toString()));
+		String obj = object.toString();
+		String ganzzahl = obj;
+		String nachkomma = "";
+		boolean sign = false;
+		if ("-".equals(obj.substring(0, 1))) {
+			sign = true;
+			ganzzahl = ganzzahl.substring(1);
+		}
+		int idxDecimalPoint = obj.indexOf('.');
+		if (idxDecimalPoint > -1) {
+			ganzzahl = obj.substring(0, idxDecimalPoint);
+			nachkomma = obj.substring(idxDecimalPoint + 1);
+		}
+		ganzzahl = StringUtils.right(ganzzahl, precession);
+		setValue(new BigDecimal((sign==false?"":"-")+ganzzahl + "." + nachkomma));
 	}
 
 	public void setValue(BigDecimal object) {
@@ -52,7 +68,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 		if (sizeCheck && decimal.precision() > size) {
 			throw new SizeOverflowException();
 		}
-		setValue(decimal);
+		setValue(object);
 	}
 
 	@Override
@@ -78,9 +94,10 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 		}
 		DecimalFormat df = new DecimalFormat();
 		df.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.US));
+		df.setGroupingUsed(false);
 		df.setMinimumFractionDigits(scale);
 		df.setMaximumFractionDigits(scale);
-		df.setFormatWidth(precession + scale + 1);
+		df.setFormatWidth(precession + scale + (scale > 0 ? 1 : 0)); // Komma berücksichtigen
 		df.setPadCharacter('0');
 		return sign + df.format(value.abs());
 	}

@@ -1,54 +1,38 @@
 package de.cobolj.nodes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.PictureCarinalityVisitor;
 import de.cobolj.parser.PictureCharsVisitor;
-import de.cobolj.runtime.Picture;
-import de.cobolj.runtime.Picture9;
-import de.cobolj.runtime.Picture9V;
-import de.cobolj.runtime.PictureX;
 
 /**
  * 
- * pictureString: (pictureChars+ pictureCardinality?)+
+ * pictureString: (pictureChars pictureCardinality?)
+ * 
+ * Als Ergebnis normiert dieser Visitor die Darstellung des Picture-Strings. So
+ * wird beispielsweise aus 9(2)V9(2) zu 99.99
  * 
  * @author flaechsig
  *
  */
-public class PictureStringVisitor extends Cobol85BaseVisitor<PictureNode> {
+public class PictureStringVisitor extends Cobol85BaseVisitor<String> {
 
 	@Override
-	public PictureNode visitPictureString(Cobol85Parser.PictureStringContext ctx) {
-		// Fixme: Vervollständigen
-		// Typ ermitteln
-		String pictureTyp = null;
-		Picture picture = null;
-		List<Integer> cardinality = null;
-		PictureCharsVisitor visitor = new PictureCharsVisitor();
-		pictureTyp = ctx.pictureChars().stream().map(chars -> chars.accept(visitor)).collect(Collectors.joining());
-
-		if (ctx.pictureCardinality() != null) {
-			PictureCarinalityVisitor cardinalityVisitor = new PictureCarinalityVisitor();
-			cardinality = ctx.pictureCardinality().stream()
-					.map(card -> card.accept(cardinalityVisitor)).collect(Collectors.toList());
+	public String visitPictureString(Cobol85Parser.PictureStringContext ctx) {
+//		String pictureChar = ctx.pictureChars()
+//				.stream()
+//				.map(chars -> chars.accept(new PictureCharsVisitor()))
+//				.collect(Collectors.joining());
+//		
+//		String fullString = ctx.pictureCardinality()
+//					.stream()
+//					.map(card -> card.accept(new PictureCarinalityVisitor(pictureChar)))
+//					.collect(Collectors.joining());
+		String fullString = "";
+		for(int i=0; i<ctx.pictureChars().size();i++) {
+			String pictureChar = ctx.pictureChars(i).accept(new PictureCharsVisitor());
+			fullString += ctx.pictureCardinality(i).accept(new PictureCarinalityVisitor(pictureChar));
 		}
-		if ("9".equals(pictureTyp)) {
-			picture = new Picture9(cardinality.get(0));
-		} else if ("S9".equals(pictureTyp)) {
-			picture = new Picture9(cardinality.get(0), true);
-		} else if ("9V9".equals(pictureTyp)) {
-			picture = new Picture9V(cardinality.get(0), cardinality.get(1), false);
-		} else if ("S9V9".equals(pictureTyp)) {
-			picture = new Picture9V(cardinality.get(0), cardinality.get(1), true);
-		} else if ("A".equals(pictureTyp)) {
-			picture = new PictureX(cardinality.get(0));
-		} else if ("X".equals(pictureTyp)) {
-			picture = new PictureX(cardinality.get(0)); // TODO: Vielleicht A schärfer formulieren und PictureX einführen.
-		}
-		return new PictureNode(picture);
+		return fullString;
 	}
 }
