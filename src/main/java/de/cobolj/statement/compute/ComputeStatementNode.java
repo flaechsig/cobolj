@@ -51,6 +51,7 @@ public class ComputeStatementNode extends StatementNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
+		Object lastCall = null;
 		BigDecimal arithmeticResult = (BigDecimal) arithmetic.executeGeneric(frame);
 
 		boolean hasSizeError = false;
@@ -67,13 +68,15 @@ public class ComputeStatementNode extends StatementNode {
 			} catch (SizeOverflowException e) {
 				hasSizeError = true;
 			}
+			lastCall = picture;
 		}
 		if (hasSizeError && error != null) {
-			error.executeGeneric(frame);
-		} else if(!hasSizeError && success!= null) {
-			success.executeGeneric(frame);
+			 lastCall = error.executeGeneric(frame);
+		} 
+		if(!hasSizeError && success!= null) {
+			 lastCall = success.executeGeneric(frame);
 		}
-		return null;
+		return lastCall;
 	}
 
 	private boolean checkSizeError() {

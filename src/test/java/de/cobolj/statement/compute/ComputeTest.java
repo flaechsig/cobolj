@@ -3,6 +3,7 @@ package de.cobolj.statement.compute;
 import java.util.ArrayList;
 
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import de.cobolj.CobolBaseTest;
 
@@ -13,7 +14,7 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class ComputeTest extends CobolBaseTest {
-	private static int ANZAHL_TESTFAELLE = 18;
+	private static int ANZAHL_TESTFAELLE = 22;
 
 	 /** 
 	 *@return Liste aller Test-Objekte
@@ -27,4 +28,8 @@ public class ComputeTest extends CobolBaseTest {
 		return result.toArray();
 	}
 
+	@Test
+	public void test1() {
+		super.cobolTest("compute-21");
+	}
 }
