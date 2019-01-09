@@ -2342,15 +2342,15 @@ addStatement
 
 addToStatement
 :
-    addFrom+ TO addTo+
+    literalOrIdentifier+ TO resultIdentifier+
 ;
 
 addToGivingStatement
 :
-    addFrom+
+    addSummand+=literalOrIdentifier+
     (
-        TO addToGiving+
-    )? GIVING addGiving+
+        TO toSummand=literalOrIdentifier
+    )? GIVING resultIdentifier+
 ;
 
 addCorrespondingStatement
@@ -2358,27 +2358,16 @@ addCorrespondingStatement
     (
         CORRESPONDING
         | CORR
-    ) identifier TO addTo
+    ) identifier TO resultIdentifier
 ;
 
-addFrom
+literalOrIdentifier
 :
     identifier
     | literal
 ;
 
-addTo
-:
-    identifier ROUNDED?
-;
-
-addToGiving
-:
-    identifier
-    | literal
-;
-
-addGiving
+resultIdentifier
 :
     identifier ROUNDED?
 ;
@@ -3889,12 +3878,12 @@ subtractStatement
 
 subtractFromStatement
 :
-    subtractSubtrahend+ FROM subtractMinuend+
+    literalOrIdentifier+ FROM resultIdentifier+
 ;
 
 subtractFromGivingStatement
 :
-    subtractSubtrahend+ FROM subtractMinuendGiving GIVING subtractGiving+
+    subtrahend+=literalOrIdentifier+ FROM minuend=literalOrIdentifier GIVING resultIdentifier+
 ;
 
 subtractCorrespondingStatement
@@ -3905,26 +3894,10 @@ subtractCorrespondingStatement
     ) qualifiedDataName FROM subtractMinuendCorresponding
 ;
 
-subtractSubtrahend
-:
-    identifier
-    | literal
-;
-
-subtractMinuend
-:
-    identifier ROUNDED?
-;
-
 subtractMinuendGiving
 :
     identifier
     | literal
-;
-
-subtractGiving
-:
-    identifier ROUNDED?
 ;
 
 subtractMinuendCorresponding

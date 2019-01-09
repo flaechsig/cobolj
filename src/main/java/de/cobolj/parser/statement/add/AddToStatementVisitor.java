@@ -10,7 +10,8 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.statement.CalculationResult;
-import de.cobolj.statements.add.AddFromVisitor;
+import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
+import de.cobolj.statements.add.AddToStatementNode;
 
 /**
  * 
@@ -26,23 +27,23 @@ import de.cobolj.statements.add.AddFromVisitor;
  * @author flaechsig
  *
  */
-public class AddToStatementVisitor extends Cobol85BaseVisitor<AddImplNode> {
+public class AddToStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
 
 	@Override
-	public AddImplNode visitAddToStatement(Cobol85Parser.AddToStatementContext ctx) {
+	public MathImplNode visitAddToStatement(Cobol85Parser.AddToStatementContext ctx) {
 		List<ExpressionNode> summands;
 		List<CalculationResult> results;
 		List<FrameSlot> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
-		AddFromVisitor fromVisitor = new AddFromVisitor();
-		summands = ctx.addFrom()
+		LiteralOrIdentifierVisitor fromVisitor = new LiteralOrIdentifierVisitor();
+		summands = ctx.literalOrIdentifier()
 				.stream()
 				.map(operand -> operand.accept(fromVisitor))
 				.collect(Collectors.toList());
 		
-		AddToVisitor toVisitor = new AddToVisitor();
-		results = ctx.addTo()
+		ResultIdentifierVisitor toVisitor = new ResultIdentifierVisitor();
+		results = ctx.resultIdentifier()
 				.stream()
 				.map(result -> result.accept(toVisitor))
 				.collect(Collectors.toList());

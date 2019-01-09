@@ -19,15 +19,6 @@ public class PictureStringVisitor extends Cobol85BaseVisitor<String> {
 
 	@Override
 	public String visitPictureString(Cobol85Parser.PictureStringContext ctx) {
-//		String pictureChar = ctx.pictureChars()
-//				.stream()
-//				.map(chars -> chars.accept(new PictureCharsVisitor()))
-//				.collect(Collectors.joining());
-//		
-//		String fullString = ctx.pictureCardinality()
-//					.stream()
-//					.map(card -> card.accept(new PictureCarinalityVisitor(pictureChar)))
-//					.collect(Collectors.joining());
 		String fullString = "";
 		for(int i=0; i<ctx.pictureChars().size();i++) {
 			String pictureChar = ctx.pictureChars(i).accept(new PictureCharsVisitor());

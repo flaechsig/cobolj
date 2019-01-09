@@ -1,11 +1,10 @@
-package de.cobolj.statements.add;
+package de.cobolj.statements;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-import de.cobolj.parser.statement.add.AddImplNode;
+import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.phrase.SizePhraseNode;
-import de.cobolj.statements.StatementNode;
 
 /**
  * Ausführung des Add-Statements. Die Addtion wird simuliert und im Anschluss
@@ -19,11 +18,11 @@ import de.cobolj.statements.StatementNode;
  * @author flaechsig
  *
  */
-public class AddStatementNode extends StatementNode {
+public class MathStatementNode extends StatementNode {
 
 	/** Eine Add-Implementierung der drei unterschiedlichen Möglichkeiten */
 	@Child
-	private AddImplNode add;
+	private MathImplNode math;
 	/** Optionaler Error-Block */
 	@Child
 	private SizePhraseNode errorPhrase;
@@ -31,14 +30,14 @@ public class AddStatementNode extends StatementNode {
 	@Child
 	private SizePhraseNode successPhrase;
 
-	public AddStatementNode(AddImplNode add, SizePhraseNode errorPhrase, SizePhraseNode successPhrase) {
-		this.add = add;
+	public MathStatementNode(MathImplNode math, SizePhraseNode errorPhrase, SizePhraseNode successPhrase) {
+		this.math = math;
 		this.errorPhrase = errorPhrase;
 		this.successPhrase = successPhrase;
 	}
 
 	/**
-	 * @see AddStatementNode
+	 * @see MathStatementNode
 	 * 
 	 * @param frame Standard-Frame zur Ausführung.
 	 * @return Liefert null, da es kein Ergeniswert hat.
@@ -46,7 +45,7 @@ public class AddStatementNode extends StatementNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		try {
-			this.add.executeGeneric(frame);
+			this.math.executeGeneric(frame);
 			if (successPhrase != null) {
 				successPhrase.executeGeneric(frame);
 			}
@@ -55,7 +54,7 @@ public class AddStatementNode extends StatementNode {
 				this.errorPhrase.executeGeneric(frame);
 			}
 		}
-		return null;
+		return this;
 	}
 
 }

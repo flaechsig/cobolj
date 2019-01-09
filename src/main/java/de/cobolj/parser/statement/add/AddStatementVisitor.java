@@ -4,7 +4,7 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.SizePhraseVisitor;
 import de.cobolj.phrase.SizePhraseNode;
-import de.cobolj.statements.add.AddStatementNode;
+import de.cobolj.statements.MathStatementNode;
 
 /**
  * 
@@ -14,18 +14,18 @@ import de.cobolj.statements.add.AddStatementNode;
  * @author flaechsig
  *
  */
-public class AddStatementVisitor extends Cobol85BaseVisitor<AddStatementNode> {
+public class AddStatementVisitor extends Cobol85BaseVisitor<MathStatementNode> {
 
 	@Override
-	public AddStatementNode visitAddStatement(Cobol85Parser.AddStatementContext ctx) {
-		AddImplNode add = null; // mandatory
+	public MathStatementNode visitAddStatement(Cobol85Parser.AddStatementContext ctx) {
+		MathImplNode add = null; // mandatory
 		SizePhraseNode errorPhrase = null; // optional
 		SizePhraseNode successPhrase = null; // optional
 
 		if (ctx.addToStatement() != null) {
 			add = ctx.addToStatement().accept(new AddToStatementVisitor());
 		} else if (ctx.addToGivingStatement() != null) {
-			add = ctx.addToGivingStatement().accept(new AddToGivingVisitor());
+			add = ctx.addToGivingStatement().accept(new AddToGivingStatementVisitor());
 		} else if (ctx.addCorrespondingStatement() != null) {
 			throw new RuntimeException("Nicht implementiert");
 		}
@@ -39,6 +39,6 @@ public class AddStatementVisitor extends Cobol85BaseVisitor<AddStatementNode> {
 		}
 		add.setSizeErrorCheck(errorPhrase != null || successPhrase != null);
 
-		return new AddStatementNode(add, errorPhrase, successPhrase);
+		return new MathStatementNode(add, errorPhrase, successPhrase);
 	}
 }

@@ -1,0 +1,54 @@
+package de.cobolj.statements.subtract;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.parser.statement.add.MathImplNode;
+
+/**
+ * Führt das SUBTRACT ... FROM - Statement aus. Wesentlicher Teil der Implementierung ist für 
+ * die Grundrechenarten identisch und ausgelagert.
+ * 
+ * @author flaechsig
+ *
+ */
+@NodeInfo(shortName = "SubtractFromStatement")
+public class SubtractFromGivingStatementNode extends MathImplNode {
+	/**
+	 * @see MathImplNode
+	 */
+	public SubtractFromGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<FrameSlot> results, List<Boolean> rounded) {
+		super(summands, mid, results, rounded);
+	}
+
+	/**
+	 * Drei Parameter-Variante des SUBTRACT-Befehls. Für jede Variable in rightResults gilt rightResult = right-sum(left).
+	 * In Cobol SUBTRACT literalOrIdentifier+ FROM literalOrIdentifier GIVING identifier+
+	 * 
+	 * @param left Liste mit Werten, die in das Ergebnis (durch Addition) einfließen
+	 * @param right rechter Operand, der in das Ergebnis Einfließt
+	 * @param rightResult unbenutzt bzw. nur für die Anzahl der zu erzeugenden Ergebnis-Elemente
+	 * @result Ergebnis-Array der Länge length(rightResult) mit sum(left) + right.
+	 * 
+	 */
+	@Override
+	protected List<BigDecimal> calculateNewValue(List<BigDecimal> left, BigDecimal right,
+			List<BigDecimal> rightResult) {
+		List<BigDecimal> resultList = new ArrayList<>();
+		BigDecimal leftOperand = BigDecimal.ZERO;
+		for(BigDecimal leftNode : left) {
+			leftOperand = leftOperand.add(leftNode);
+		}
+
+		for(int i=0; i<rightResult.size(); i++) {
+			resultList.add(right.subtract(leftOperand));
+		}
+		return resultList;
+	}
+
+}

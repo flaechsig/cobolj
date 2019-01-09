@@ -10,44 +10,40 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.statement.CalculationResult;
-import de.cobolj.statements.add.AddFromVisitor;
-import de.cobolj.statemtent.add.AddToGivingNode;
+import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
+import de.cobolj.statements.add.AddToGivingStatementNode;
 
 /**
- * addToGivingStatement: addFrom+ ( TO addToGiving+ )? GIVING addGiving+
+ * addToGivingStatement: literalOrIdentifier+ ( TO literalOrIdentifier )? GIVING resultIdentifier+
  * 
  * @author flaechsig
  *
  */
-public class AddToGivingVisitor extends Cobol85BaseVisitor<AddImplNode> {
+public class AddToGivingStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
 
 	@Override
-	public AddImplNode visitAddToGivingStatement(Cobol85Parser.AddToGivingStatementContext ctx) {
-		List<ExpressionNode> summands;
+	public MathImplNode visitAddToGivingStatement(Cobol85Parser.AddToGivingStatementContext ctx) {
+		List<ExpressionNode> left;
+		ExpressionNode right;
 		List<CalculationResult> results;
 		List<FrameSlot> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
-		AddFromVisitor fromVisitor = new AddFromVisitor();
-		summands = ctx.addFrom()
+		LiteralOrIdentifierVisitor fromVisitor = new LiteralOrIdentifierVisitor();
+		left = ctx.addSummand
 				.stream()
 				.map(operand -> operand.accept(fromVisitor))
 				.collect(Collectors.toList());
-		summands.addAll(ctx.addToGiving()
+		right = ctx.toSummand.accept(fromVisitor);
+		results = ctx.resultIdentifier()
 				.stream()
-				.map(operand -> operand.accept(new AddToGivenVisitor()))
-				.collect(Collectors.toList()));
-		
-		AddToVisitor toVisitor = new AddToVisitor();
-		results = ctx.addGiving()
-				.stream()
-				.map(result -> result.accept(toVisitor))
+				.map(result -> result.accept(new ResultIdentifierVisitor()))
 				.collect(Collectors.toList());
 		
 		for(CalculationResult singleResult : results) {
 			slots.add(singleResult.slot);
 			roundeds.add(singleResult.rounded);
 		}
-		return new AddToGivingNode(summands, slots, roundeds);
+		return new AddToGivingStatementNode(left, right, slots, roundeds);
 	}
 }
