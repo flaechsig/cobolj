@@ -11,8 +11,7 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.statement.add.MathImplNode;
 
 /**
- * Führt das SUBTRACT ... FROM - Statement aus. Wesentlicher Teil der Implementierung ist für 
- * die Grundrechenarten identisch und ausgelagert.
+ * Führt MULTIPLY multiplicant BY multiplicator GIVING result
  * 
  * @author flaechsig
  *
@@ -27,10 +26,10 @@ public class SubtractFromGivingStatementNode extends MathImplNode {
 	}
 
 	/**
-	 * Drei Parameter-Variante des SUBTRACT-Befehls. Für jede Variable in rightResults gilt rightResult = right-sum(left).
-	 * In Cobol SUBTRACT literalOrIdentifier+ FROM literalOrIdentifier GIVING identifier+
+	 * Drei Parameter-Variante des Multiply-Befehls. Für jede Variable in rightResults gilt rightResult = multiplikant*multiplikator
+	 * In Cobol MULTIPLY literalOrIdentifier BY literalOrIdentifier GIVING identifier+
 	 * 
-	 * @param left Liste mit Werten, die in das Ergebnis (durch Addition) einfließen
+	 * @param left Liste mit nur einem Wert - dem Multiplikant
 	 * @param right rechter Operand, der in das Ergebnis Einfließt
 	 * @param rightResult unbenutzt bzw. nur für die Anzahl der zu erzeugenden Ergebnis-Elemente
 	 * @result Ergebnis-Array der Länge length(rightResult) mit sum(left) + right.
@@ -42,7 +41,7 @@ public class SubtractFromGivingStatementNode extends MathImplNode {
 		List<BigDecimal> resultList = new ArrayList<>();
 		BigDecimal leftOperand = BigDecimal.ZERO;
 		for(BigDecimal leftNode : left) {
-			leftOperand = leftOperand.add(leftNode);
+			leftOperand = leftOperand.add(leftNode); // Bei der Muliplikation hat die Liste nur einen Wert...
 		}
 
 		for(int i=0; i<rightResult.size(); i++) {

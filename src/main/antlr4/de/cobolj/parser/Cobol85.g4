@@ -3191,42 +3191,20 @@ moveCorrespondingToSendingArea
 
 multiplyStatement
 :
-    MULTIPLY
-    (
-        identifier
-        | literal
-    ) BY
-    (
-        multiplyRegular
-        | multiplyGiving
-    ) onSizeErrorPhrase? notOnSizeErrorPhrase? END_MULTIPLY?
+    (multiplyByStatement | multiplyGivingStatement)
+    onSizeErrorPhrase? notOnSizeErrorPhrase? END_MULTIPLY?
 ;
 
-multiplyRegular
+multiplyByStatement
 :
-    multiplyRegularOperand+
+    MULTIPLY literalOrIdentifier BY resultIdentifier+
 ;
 
-multiplyRegularOperand
+multiplyGivingStatement
 :
-    identifier ROUNDED?
+    MULTIPLY multiplicant=literalOrIdentifier BY multiplicator=literalOrIdentifier GIVING resultIdentifier+
 ;
 
-multiplyGiving
-:
-    multiplyGivingOperand GIVING multiplyGivingResult+
-;
-
-multiplyGivingOperand
-:
-    identifier
-    | literal
-;
-
-multiplyGivingResult
-:
-    identifier ROUNDED?
-;
 
 // open statement
 

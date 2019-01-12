@@ -47,6 +47,9 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 		case Cobol85Parser.RULE_subtractStatement:
 			visitor = new SubtractStatementVisitor();
 			break;
+		case Cobol85Parser.RULE_multiplyStatement:
+			visitor = new MultiplyStatementVisitor();
+			break;
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
 		}
