@@ -3,7 +3,7 @@ package de.cobolj.parser;
 import de.cobolj.parser.Cobol85Parser.SubtractStatementContext;
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.phrase.SizePhraseNode;
-import de.cobolj.statements.MathStatementNode;
+import de.cobolj.statement.MathStatementNode;
 
 /**
  * subtractStatement: SUBTRACT ( subtractFromStatement |

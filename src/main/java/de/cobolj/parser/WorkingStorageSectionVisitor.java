@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.nodes.WorkingStorageSectionNode;
-import de.cobolj.statements.WriteElementaryItemNode;
+import de.cobolj.statement.WriteElementaryItemNode;
 
 /**
  * 

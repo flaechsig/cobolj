@@ -5,7 +5,7 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statements.WriteElementaryItemNode;
+import de.cobolj.statement.WriteElementaryItemNode;
 
 @NodeInfo(shortName="Working Storage Section")
 public class WorkingStorageSectionNode extends DataDivisionSectionNode {
