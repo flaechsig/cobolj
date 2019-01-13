@@ -2672,59 +2672,38 @@ displayWith
 
 divideStatement
 :
-    DIVIDE
-    (
-        identifier
-        | literal
-    )
     (
         divideIntoStatement
         | divideIntoGivingStatement
         | divideByGivingStatement
-    ) divideRemainder? onSizeErrorPhrase? notOnSizeErrorPhrase? END_DIVIDE?
+        | divideIntoGivingStatementRemainder
+        | divideByGivingStatementRemainder
+    ) onSizeErrorPhrase? notOnSizeErrorPhrase? END_DIVIDE?
 ;
 
 divideIntoStatement
 :
-    INTO divideInto+
+   DIVIDE literalOrIdentifier INTO resultIdentifier+
 ;
 
 divideIntoGivingStatement
 :
-    INTO
-    (
-        identifier
-        | literal
-    ) divideGivingPhrase?
+    DIVIDE divisor=literalOrIdentifier INTO dividend=literalOrIdentifier GIVING resultIdentifier+
 ;
 
 divideByGivingStatement
 :
-    BY
-    (
-        identifier
-        | literal
-    ) divideGivingPhrase?
+    DIVIDE dividend=literalOrIdentifier BY divisor=literalOrIdentifier GIVING resultIdentifier+
 ;
 
-divideGivingPhrase
+divideIntoGivingStatementRemainder
 :
-    GIVING divideGiving+
+    DIVIDE divisor=literalOrIdentifier INTO dividend=literalOrIdentifier GIVING resultIdentifier REMAINDER resultIdentifier
 ;
 
-divideInto
+divideByGivingStatementRemainder
 :
-    identifier ROUNDED?
-;
-
-divideGiving
-:
-    identifier ROUNDED?
-;
-
-divideRemainder
-:
-    REMAINDER identifier
+    DIVIDE  dividend=literalOrIdentifier BY divisor=literalOrIdentifier GIVING resultIdentifier REMAINDER resultIdentifier
 ;
 
 // enable statement
