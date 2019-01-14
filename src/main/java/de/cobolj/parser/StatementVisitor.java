@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.RuleContext;
 import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
 import de.cobolj.parser.statement.add.AddStatementVisitor;
 import de.cobolj.parser.statement.compute.ComputeStatementVisitor;
+import de.cobolj.parser.statement.continuestmt.ContinueStatementVisitor;
 import de.cobolj.parser.statement.display.DisplayStatementVisitor;
 import de.cobolj.parser.statement.divide.DivideStatementVisitor;
 import de.cobolj.parser.statement.ifstmt.IfStatementVisitor;
@@ -55,6 +56,9 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 			break;
 		case Cobol85Parser.RULE_divideStatement:
 			visitor = new DivideStatementVisitor();
+			break;
+		case Cobol85Parser.RULE_continueStatement:
+			visitor = new ContinueStatementVisitor();
 			break;
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
