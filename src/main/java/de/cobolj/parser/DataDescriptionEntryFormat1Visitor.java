@@ -13,8 +13,8 @@ import de.cobolj.nodes.PictureNode;
 import de.cobolj.nodes.StringNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;
-import de.cobolj.statements.WriteElementaryItemNode;
-import de.cobolj.statements.WriteElementaryItemNodeGen;
+import de.cobolj.statement.WriteElementaryItemNode;
+import de.cobolj.statement.WriteElementaryItemNodeGen;
 
 /**
  * 

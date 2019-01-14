@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.statements.display.DisplayOperandNode;
-import de.cobolj.statements.display.DisplayStatementNode;
+import de.cobolj.statement.display.DisplayOperandNode;
+import de.cobolj.statement.display.DisplayStatementNode;
 
 /**
  * displayStatement:    DISPLAY displayOperand+ displayAt? displayUpon? displayWith?

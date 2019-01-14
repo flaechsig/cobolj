@@ -3,10 +3,10 @@ package de.cobolj.parser.statement.perform;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformProcedureStatementContext;
+import de.cobolj.statement.perform.PerformOneTimeNode;
+import de.cobolj.statement.perform.PerformProcedureStatementNode;
+import de.cobolj.statement.perform.PerformTypeNode;
 import de.cobolj.parser.ProcedureNameVisitor;
-import de.cobolj.statements.perform.PerformOneTimeNode;
-import de.cobolj.statements.perform.PerformProcedureStatementNode;
-import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * 

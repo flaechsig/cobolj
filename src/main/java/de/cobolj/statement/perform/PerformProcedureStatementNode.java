@@ -1,4 +1,4 @@
-package de.cobolj.statements.perform;
+package de.cobolj.statement.perform;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package de.cobolj.statements.accept;
+package de.cobolj.statement.accept;
 
 import de.cobolj.nodes.ExpressionNode;
 

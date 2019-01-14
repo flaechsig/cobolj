@@ -4,7 +4,7 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.SizePhraseVisitor;
 import de.cobolj.phrase.SizePhraseNode;
-import de.cobolj.statements.MathStatementNode;
+import de.cobolj.statement.MathStatementNode;
 
 /**
  * 

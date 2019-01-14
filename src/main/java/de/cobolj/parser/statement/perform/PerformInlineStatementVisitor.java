@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformInlineStatementContext;
+import de.cobolj.statement.StatementNode;
+import de.cobolj.statement.perform.PerformInlineStatementNode;
+import de.cobolj.statement.perform.PerformOneTimeNode;
+import de.cobolj.statement.perform.PerformTypeNode;
 import de.cobolj.parser.StatementVisitor;
-import de.cobolj.statements.StatementNode;
-import de.cobolj.statements.perform.PerformInlineStatementNode;
-import de.cobolj.statements.perform.PerformOneTimeNode;
-import de.cobolj.statements.perform.PerformTypeNode;
 
 /**
  * 

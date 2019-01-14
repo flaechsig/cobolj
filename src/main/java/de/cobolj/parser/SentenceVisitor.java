@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.nodes.SentenceNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * 

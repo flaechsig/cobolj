@@ -1,7 +1,7 @@
-package de.cobolj.statements.perform;
+package de.cobolj.statement.perform;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Abstrakte Oberklasse für die verschiedenen Perform-Typen.

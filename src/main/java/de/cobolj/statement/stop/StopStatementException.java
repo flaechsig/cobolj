@@ -1,4 +1,4 @@
-package de.cobolj.statements.stop;
+package de.cobolj.statement.stop;
 
 import com.oracle.truffle.api.nodes.ControlFlowException;
 

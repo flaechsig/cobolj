@@ -2,7 +2,7 @@ package de.cobolj.parser;
 
 import org.antlr.v4.runtime.RuleContext;
 
-import de.cobolj.statements.WriteElementaryItemNode;
+import de.cobolj.statement.WriteElementaryItemNode;
 
 /**
  * 

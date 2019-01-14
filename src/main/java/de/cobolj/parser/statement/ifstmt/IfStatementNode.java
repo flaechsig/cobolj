@@ -5,7 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.BlockNode;
 import de.cobolj.nodes.ConditionNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Implementierung des IF Statements.

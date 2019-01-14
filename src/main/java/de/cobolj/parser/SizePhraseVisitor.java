@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85Parser.OnSizeErrorPhraseContext;
 import de.cobolj.phrase.SizePhraseNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Erzeugt die Node für ON SIZE ERROR und NOT ON SIZE ERROR

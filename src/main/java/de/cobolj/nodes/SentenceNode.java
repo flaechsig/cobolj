@@ -5,7 +5,7 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Ein Sentence (Satz) definiert einen zusammengehörigen Block von 0 - n

@@ -2,7 +2,7 @@ package de.cobolj.parser.statement.perform;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformStatementContext;
-import de.cobolj.statements.perform.PerformTypeNode;
+import de.cobolj.statement.perform.PerformTypeNode;
 
 /**
  * performStatement: PERFORM  (performInlineStatement  | performProcedureStatement  )

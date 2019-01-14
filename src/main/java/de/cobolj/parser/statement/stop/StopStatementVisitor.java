@@ -2,7 +2,7 @@ package de.cobolj.parser.statement.stop;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.statements.stop.StopStatementNode;
+import de.cobolj.statement.stop.StopStatementNode;
 
 public class StopStatementVisitor extends Cobol85BaseVisitor<StopStatementNode> {
 

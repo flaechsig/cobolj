@@ -6,7 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
 
-import de.cobolj.statements.stop.StopStatementException;
+import de.cobolj.statement.stop.StopStatementException;
 
 @NodeInfo(shortName = "Start")
 public class StartRuleNode extends RootNode {

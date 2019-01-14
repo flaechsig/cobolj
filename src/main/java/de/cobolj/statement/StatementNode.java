@@ -1,4 +1,4 @@
-package de.cobolj.statements;
+package de.cobolj.statement;
 
 import com.oracle.truffle.api.nodes.NodeInfo;
 

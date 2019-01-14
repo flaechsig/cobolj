@@ -1,4 +1,4 @@
-package de.cobolj.statements.display;
+package de.cobolj.statement.display;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;

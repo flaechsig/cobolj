@@ -10,7 +10,7 @@ import de.cobolj.parser.statement.ifstmt.IfStatementVisitor;
 import de.cobolj.parser.statement.move.MoveStatementVisitor;
 import de.cobolj.parser.statement.perform.PerformStatementVisitor;
 import de.cobolj.parser.statement.stop.StopStatementVisitor;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 

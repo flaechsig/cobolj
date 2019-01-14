@@ -5,7 +5,7 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Ansammlung von Statements, die ausgeführt werden. Diese Klasse ist damit sehr ähnlich zu SentenceNode.

@@ -3,7 +3,7 @@ package de.cobolj.parser.statement.perform;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformTypeContext;
-import de.cobolj.statements.perform.PerformTypeNode;
+import de.cobolj.statement.perform.PerformTypeNode;
 
 /**
  * performType: performTimes | performUntil | performVarying

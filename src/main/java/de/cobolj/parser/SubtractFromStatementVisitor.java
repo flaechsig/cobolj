@@ -11,7 +11,7 @@ import de.cobolj.parser.Cobol85Parser.SubtractFromStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
 import de.cobolj.parser.statement.add.ResultIdentifierVisitor;
-import de.cobolj.statements.subtract.SubtractFromStatementNode;
+import de.cobolj.statement.subtract.SubtractFromStatementNode;
 
 /**
  * subtractFromStatement:

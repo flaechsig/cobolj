@@ -1,4 +1,4 @@
-package de.cobolj.statements.accept;
+package de.cobolj.statement.accept;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

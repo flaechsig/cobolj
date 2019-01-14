@@ -6,7 +6,7 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
 import de.cobolj.parser.condition.ConditionVisitor;
-import de.cobolj.statements.perform.PerformVaryingExpressionNode;
+import de.cobolj.statement.perform.PerformVaryingExpressionNode;
 
 /**
  * @see PerformUntilVisitor

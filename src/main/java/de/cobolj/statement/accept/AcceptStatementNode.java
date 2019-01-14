@@ -1,10 +1,10 @@
-package de.cobolj.statements.accept;
+package de.cobolj.statement.accept;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statements.ChangeElementaryItemNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.ChangeElementaryItemNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Implementierung des Accept-Statements.

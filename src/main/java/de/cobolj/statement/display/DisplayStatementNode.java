@@ -1,4 +1,4 @@
-package de.cobolj.statements.display;
+package de.cobolj.statement.display;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /** Node-Repräsentation für ein Display-Statement.
  * 

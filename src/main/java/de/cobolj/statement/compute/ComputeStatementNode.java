@@ -12,7 +12,7 @@ import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.phrase.SizePhraseNode;
 import de.cobolj.runtime.NumericPicture;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 import de.cobolj.util.FrameUtil;
 
 /**

@@ -8,7 +8,7 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.IfElseContext;
 import de.cobolj.parser.StatementVisitor;
 import de.cobolj.parser.statement.nextsentence.NextSentenceNode;
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * 

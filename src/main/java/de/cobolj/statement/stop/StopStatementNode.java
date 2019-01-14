@@ -1,8 +1,8 @@
-package de.cobolj.statements.stop;
+package de.cobolj.statement.stop;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 /**
  * Implementiert das Statement STOP RUN.

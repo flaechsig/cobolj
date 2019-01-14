@@ -1,4 +1,4 @@
-package de.cobolj.statements.divide;
+package de.cobolj.statement.divide;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

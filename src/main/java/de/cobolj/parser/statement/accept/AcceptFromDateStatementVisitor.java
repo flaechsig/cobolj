@@ -5,9 +5,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Lexer;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.statements.accept.DateTimeInputNode;
-import de.cobolj.statements.accept.DateTimeInputNode.DateTimePattern;
-import de.cobolj.statements.accept.InputNode;
+import de.cobolj.statement.accept.DateTimeInputNode;
+import de.cobolj.statement.accept.InputNode;
+import de.cobolj.statement.accept.DateTimeInputNode.DateTimePattern;
 
 /**
  * acceptFromDateStatement: FROM ( DATE YYYYMMDD? | DAY YYYYDDD? | DAY_OF_WEEK |

@@ -1,6 +1,6 @@
 package de.cobolj.parser;
 
-import de.cobolj.statements.StatementNode;
+import de.cobolj.statement.StatementNode;
 
 public abstract class SubtractStatementNode extends StatementNode {
 

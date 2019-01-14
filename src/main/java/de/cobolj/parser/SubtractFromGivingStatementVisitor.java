@@ -12,7 +12,7 @@ import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.parser.statement.add.ResultIdentifierVisitor;
-import de.cobolj.statements.subtract.SubtractFromGivingStatementNode;
+import de.cobolj.statement.subtract.SubtractFromGivingStatementNode;
 
 /**
  * subtractFromGivingStatement:

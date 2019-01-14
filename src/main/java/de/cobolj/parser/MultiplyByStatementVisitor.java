@@ -11,7 +11,7 @@ import de.cobolj.parser.Cobol85Parser.MultiplyByStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
 import de.cobolj.parser.statement.add.ResultIdentifierVisitor;
-import de.cobolj.statements.multiply.MultiplyByStatementNode;
+import de.cobolj.statement.multiply.MultiplyByStatementNode;
 
 /**
  * multiplyByStatement: MULTIPLY literalOrIdentifier BY resultIdentifier+

@@ -11,7 +11,7 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
-import de.cobolj.statements.add.AddToGivingStatementNode;
+import de.cobolj.statement.add.AddToGivingStatementNode;
 
 /**
  * addToGivingStatement: literalOrIdentifier+ ( TO literalOrIdentifier )? GIVING resultIdentifier+

@@ -1,4 +1,4 @@
-package de.cobolj.statements.multiply;
+package de.cobolj.statement.multiply;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

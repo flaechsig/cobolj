@@ -1,4 +1,4 @@
-package de.cobolj.statements.add;
+package de.cobolj.statement.add;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

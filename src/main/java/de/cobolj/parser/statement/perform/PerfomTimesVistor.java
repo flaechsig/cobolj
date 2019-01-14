@@ -3,8 +3,8 @@ package de.cobolj.parser.statement.perform;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformTimesContext;
-import de.cobolj.statements.perform.PerformTimesNode;
-import de.cobolj.statements.perform.PerformTypeNode;
+import de.cobolj.statement.perform.PerformTimesNode;
+import de.cobolj.statement.perform.PerformTypeNode;
 import de.cobolj.util.ExpressionNodeFactory;
 
 /**
