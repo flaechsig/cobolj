@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.divide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.parser.Cobol85Parser.DivideIntoGivingStatementContext;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.Cobol85Parser.DivideByGivingStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
 import de.cobolj.parser.statement.add.MathImplNode;
@@ -15,16 +17,17 @@ import de.cobolj.parser.statement.add.ResultIdentifierVisitor;
 import de.cobolj.statement.divide.DivideIntoGivingStatementNode;
 
 /**
- * divideIntoGivingStatement:
- *     DIVIDE divisor=literalOrIdentifier INTO dividend=literalOrIdentifier GIVING resultIdentifier+
+ * divideByGivingStatement:
+ *      DIVIDE dividend=literalOrIdentifier BY divisor=literalOrIdentifier GIVING resultIdentifier+
+ *    
+ * In der Variante "BY" sind Dividend und Divisor vertauscht.
  *    
  * @author flaechsig
  *
  */
-public class DivideIntoGivingStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
-	
+public class DivideByGivingStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
 	@Override
-	public MathImplNode visitDivideIntoGivingStatement(DivideIntoGivingStatementContext ctx) {
+	public MathImplNode visitDivideByGivingStatement(DivideByGivingStatementContext ctx) {
 		List<ExpressionNode> left = new ArrayList<>();
 		ExpressionNode right;
 		List<CalculationResult> results;

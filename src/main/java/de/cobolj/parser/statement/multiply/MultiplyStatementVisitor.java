@@ -1,5 +1,8 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.multiply;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.SizePhraseVisitor;
 import de.cobolj.parser.Cobol85Parser.MultiplyStatementContext;
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.phrase.SizePhraseNode;

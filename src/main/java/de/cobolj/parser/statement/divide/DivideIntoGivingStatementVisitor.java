@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.divide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,23 +7,26 @@ import java.util.stream.Collectors;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.parser.Cobol85Parser.DivideIntoGivingStatementRemainderContext;
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.Cobol85Parser.DivideIntoGivingStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.parser.statement.add.ResultIdentifierVisitor;
-import de.cobolj.statement.divide.DivideIntoGivingRemainderStatementNode;
+import de.cobolj.statement.divide.DivideIntoGivingStatementNode;
 
 /**
- * divideIntoGivingStatementRemainder:
- *     DIVIDE divisor=literalOrIdentifier INTO dividend=literalOrIdentifier GIVING resultIdentifier REMAINDER resultIdentifier
+ * divideIntoGivingStatement:
+ *     DIVIDE divisor=literalOrIdentifier INTO dividend=literalOrIdentifier GIVING resultIdentifier+
  *    
  * @author flaechsig
  *
  */
-public class DivideIntoGivingRemainderStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
+public class DivideIntoGivingStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
+	
 	@Override
-	public MathImplNode visitDivideIntoGivingStatementRemainder(DivideIntoGivingStatementRemainderContext ctx) {
+	public MathImplNode visitDivideIntoGivingStatement(DivideIntoGivingStatementContext ctx) {
 		List<ExpressionNode> left = new ArrayList<>();
 		ExpressionNode right;
 		List<CalculationResult> results;
@@ -41,6 +44,6 @@ public class DivideIntoGivingRemainderStatementVisitor extends Cobol85BaseVisito
 			roundeds.add(singleResult.rounded);
 		}
 		
-		return new DivideIntoGivingRemainderStatementNode(left, right, slots, roundeds);
+		return new DivideIntoGivingStatementNode(left, right, slots, roundeds);
 	}
 }
