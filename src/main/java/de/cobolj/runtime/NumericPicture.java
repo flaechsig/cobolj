@@ -13,5 +13,5 @@ public abstract class NumericPicture extends Picture {
 	public abstract int getScale();
 	
 	public abstract int getPrrecession();
-
+	
 }

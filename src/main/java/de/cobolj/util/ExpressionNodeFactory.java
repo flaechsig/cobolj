@@ -8,6 +8,7 @@ import de.cobolj.parser.Cobol85Parser.LiteralContext;
 import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.LiteralVisitor;
 import de.cobolj.parser.NumericalLiteralVisitor;
+import de.cobolj.parser.StartRuleVisitor;
 
 public class ExpressionNodeFactory {
 	private ExpressionNodeFactory() {
@@ -51,6 +52,19 @@ public class ExpressionNodeFactory {
 	public static ExpressionNode create(IdentifierContext identifier) {
 		if (identifier != null) {
 			return ReadElementaryItemNodeGen.create(identifier.accept(IdentifierVisitor.INSTANCE));
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @see ExpressionNodeFactory#create(LiteralContext, IdentifierContext)
+	 * 
+	 */
+	public static ExpressionNode create(String identifier) {
+		if (identifier != null) {
+			return ReadElementaryItemNodeGen.create(StartRuleVisitor.descriptor.findFrameSlot(identifier));
 		} else {
 			return null;
 		}

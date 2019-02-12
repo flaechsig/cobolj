@@ -1,7 +1,5 @@
 package de.cobolj.parser;
 
-import org.antlr.v4.runtime.RuleContext;
-
 import de.cobolj.nodes.DataDivisionSectionNode;
 
 /**
@@ -19,17 +17,14 @@ public class DataDivisionSectionVisitor extends Cobol85BaseVisitor<DataDivisionS
 
 	@Override
 	public DataDivisionSectionNode visitDataDivisionSection(Cobol85Parser.DataDivisionSectionContext ctx) {
-		// FIXME: Vervollständigen
-		Cobol85BaseVisitor<?> visitor;
-		RuleContext ctx2 = (RuleContext) ctx.getChild(0);
-		int rule = ctx2.getRuleIndex();
-		switch (rule) {
-		case Cobol85Parser.RULE_workingStorageSection:
-			visitor = WorkingStorageSectionVisitor.INSTANCE;
-			break;
-		default:
-			throw new RuntimeException("Unbekannte Data Division Section:" + Cobol85Parser.ruleNames[rule]);
+		DataDivisionSectionNode result = null;
+		if(ctx.workingStorageSection() != null) {
+			result = ctx.workingStorageSection().accept(new WorkingStorageSectionVisitor());
+		} else if (ctx.fileSection() != null){
+			result = ctx.fileSection().accept(new FileSectionVisitor());
+		} else {
+			ParserHelper.notImplemented();
 		}
-		return (DataDivisionSectionNode)ctx2.accept(visitor);
+		return result;
 	}
 }

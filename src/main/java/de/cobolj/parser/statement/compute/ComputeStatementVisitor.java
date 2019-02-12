@@ -11,8 +11,8 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ComputeStatementContext;
 import de.cobolj.parser.arithmetic.ArithmeticExpressionVisitor;
 import de.cobolj.parser.statement.CalculationResult;
-import de.cobolj.parser.SizePhraseVisitor;
-import de.cobolj.phrase.SizePhraseNode;
+import de.cobolj.parser.PhraseVisitor;
+import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.compute.ComputeStatementNode;
 
 /**
@@ -33,13 +33,13 @@ public class ComputeStatementVisitor extends Cobol85BaseVisitor<ComputeStatement
 		ExpressionNode arithmeticEx = ctx.arithmeticExpression().accept(new ArithmeticExpressionVisitor());
 		List<FrameSlot> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
-		SizePhraseNode successPhrase = null;
-		SizePhraseNode errorPhrase = null;
+		PhraseNode successPhrase = null;
+		PhraseNode errorPhrase = null;
 		if(ctx.onSizeErrorPhrase()!=null) {
-			errorPhrase = ctx.onSizeErrorPhrase().accept(new SizePhraseVisitor());
+			errorPhrase = ctx.onSizeErrorPhrase().accept(new PhraseVisitor());
 		}
 		if(ctx.notOnSizeErrorPhrase()!=null) {
-			successPhrase = ctx.notOnSizeErrorPhrase().accept(new SizePhraseVisitor());
+			successPhrase = ctx.notOnSizeErrorPhrase().accept(new PhraseVisitor());
 		}
 
 		for(CalculationResult singleResult : store) {

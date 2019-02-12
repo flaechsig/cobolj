@@ -20,12 +20,12 @@ import de.cobolj.statement.StatementNode;
  *
  */
 @NodeInfo(shortName = "NotOnSizeError")
-public class SizePhraseNode extends CobolNode {
+public class PhraseNode extends CobolNode {
 
 	@Children
 	private final StatementNode[] statements;
 
-	public SizePhraseNode(List<StatementNode> statements) {
+	public PhraseNode(List<StatementNode> statements) {
 		this.statements = statements.toArray(new StatementNode[] {});
 	}
 

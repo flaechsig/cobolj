@@ -60,6 +60,15 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 		case Cobol85Parser.RULE_continueStatement:
 			visitor = new ContinueStatementVisitor();
 			break;
+		case Cobol85Parser.RULE_openStatement:
+			visitor = new OpenStatementVisitor();
+			break;
+		case Cobol85Parser.RULE_readStatement:
+			visitor = new ReadStatementVisitor();
+			break;
+		case Cobol85Parser.RULE_closeStatement:
+			visitor = new CloseStatementVisitor();
+			break;
 		default:
 			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
 		}

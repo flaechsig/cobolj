@@ -4,7 +4,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.phrase.SizeOverflowException;
-import de.cobolj.phrase.SizePhraseNode;
+import de.cobolj.phrase.PhraseNode;
 
 /**
  * Ausführung des Add-Statements. Die Addtion wird simuliert und im Anschluss
@@ -25,12 +25,12 @@ public class MathStatementNode extends StatementNode {
 	private MathImplNode math;
 	/** Optionaler Error-Block */
 	@Child
-	private SizePhraseNode errorPhrase;
+	private PhraseNode errorPhrase;
 	/** Optionaler Success-Block */
 	@Child
-	private SizePhraseNode successPhrase;
+	private PhraseNode successPhrase;
 
-	public MathStatementNode(MathImplNode math, SizePhraseNode errorPhrase, SizePhraseNode successPhrase) {
+	public MathStatementNode(MathImplNode math, PhraseNode errorPhrase, PhraseNode successPhrase) {
 		this.math = math;
 		this.errorPhrase = errorPhrase;
 		this.successPhrase = successPhrase;

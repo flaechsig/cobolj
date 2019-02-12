@@ -10,7 +10,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.phrase.SizeOverflowException;
-import de.cobolj.phrase.SizePhraseNode;
+import de.cobolj.phrase.PhraseNode;
 import de.cobolj.runtime.NumericPicture;
 import de.cobolj.statement.StatementNode;
 import de.cobolj.util.FrameUtil;
@@ -35,13 +35,13 @@ public class ComputeStatementNode extends StatementNode {
 	private Boolean[] rounded;
 	/** Wird ausgeführt, wenn es keine Größenverletzungen gab */
 	@Child
-	private SizePhraseNode success;
+	private PhraseNode success;
 	/** Wird ausgeführt, wenn es eine Größenverletzung gab. */
 	@Child
-	private SizePhraseNode error;
+	private PhraseNode error;
 
 	public ComputeStatementNode(ExpressionNode arithmeticEx, List<FrameSlot> slots, List<Boolean> rounded,
-			SizePhraseNode successPhrase, SizePhraseNode errorPhrase) {
+			PhraseNode successPhrase, PhraseNode errorPhrase) {
 		this.arithmetic = arithmeticEx;
 		this.slots = slots.toArray(new FrameSlot[] {});
 		this.rounded = rounded.toArray(new Boolean[] {});

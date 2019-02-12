@@ -471,18 +471,28 @@ fileControlParagraph
 :
     FILE_CONTROL
     (
-        DOT_FS? fileControlEntry
+        DOT_FS?  (fileControlEntryFormat1 | fileControlEntryFormat2 | fileControlEntryFormat3 | fileControlEntryFormat4)
     )* DOT_FS
 ;
 
-fileControlEntry
-:
-    selectClause fileControlClause*
+fileControlEntryFormat1
+: 
+    SELECT OPTIONAL? fileName=identifier assignClause reserveClause? organizationClause? paddingCharacterClause? recordDelimiterClause? accessModeClause? fileStatusClause?
 ;
 
-selectClause
-:
-    SELECT OPTIONAL? fileName
+fileControlEntryFormat2
+: 
+    SELECT OPTIONAL? fileName=identifier assignClause reserveClause? organizationClause? relativeKeyClause accessModeClause? fileStatusClause?
+;
+
+fileControlEntryFormat3
+: 
+    SELECT fileName=identifier assignClause reserveClause? organizationClause? INDEXED accessModeClause? recordKeyClause alternateRecordKeyClause? fileStatusClause?
+;
+
+fileControlEntryFormat4
+: 
+    SELECT fileName=identifier assignClause
 ;
 
 fileControlClause
@@ -513,7 +523,7 @@ assignClause
         | REMOTE
         | TAPE
         | VIRTUAL
-        | assignmentName
+        | assignmentName=IDENTIFIER
         | literal
     )
 ;
@@ -564,7 +574,7 @@ recordDelimiterClause
     (
         STANDARD_1
         | IMPLICIT
-        | assignmentName
+        | assignmentName=IDENTIFIER
     )
 ;
 
@@ -616,7 +626,7 @@ ioControlParagraph
 :
     I_O_CONTROL DOT_FS
     (
-        fileName DOT_FS
+        fileName=IDENTIFIER DOT_FS
     )?
     (
         ioControlClause* DOT_FS
@@ -637,8 +647,8 @@ rerunClause
     (
         ON
         (
-            assignmentName
-            | fileName
+            assignmentName=IDENTIFIER
+            | cobolWord
         )
     )? EVERY
     (
@@ -659,7 +669,7 @@ rerunEveryOf
     (
         REEL
         | UNIT
-    ) OF fileName
+    ) OF fileName=IDENTIFIER
 ;
 
 rerunEveryClock
@@ -674,7 +684,7 @@ sameClause
         RECORD
         | SORT
         | SORT_MERGE
-    )? AREA? FOR? fileName+
+    )? AREA? FOR? fileName+=IDENTIFIER+
 ;
 
 multipleFileClause
@@ -684,7 +694,7 @@ multipleFileClause
 
 multipleFilePosition
 :
-    fileName
+    fileName=IDENTIFIER
     (
         POSITION integerLiteral
     )?
@@ -692,7 +702,7 @@ multipleFilePosition
 
 commitmentControlClause
 :
-    COMMITMENT CONTROL FOR? fileName
+    COMMITMENT CONTROL FOR? fileName=IDENTIFIER
 ;
 
 // --- data division --------------------------------------------------------------------
@@ -727,7 +737,7 @@ fileDescriptionEntry
     (
         FD
         | SD
-    ) fileName
+    ) fileName=identifier
     (
         DOT_FS? fileDescriptionEntryClause
     )* DOT_FS dataDescriptionEntry*
@@ -1777,7 +1787,7 @@ libraryEntryProcedureUsingClause
 libraryEntryProcedureUsingName
 :
     dataName
-    | fileName
+    | fileName=IDENTIFIER
 ;
 
 libraryEntryProcedureWithClause
@@ -1788,7 +1798,7 @@ libraryEntryProcedureWithClause
 libraryEntryProcedureWithName
 :
     localName
-    | fileName
+    | fileName=IDENTIFIER
 ;
 
 libraryIsCommonClause
@@ -2166,7 +2176,7 @@ procedureDivisionByReference
         OPTIONAL?
         (
             identifier
-            | fileName
+            | fileName=IDENTIFIER
         )
     )
     | ANY
@@ -2434,7 +2444,7 @@ callByReference
             | STRING
         )? identifier
         | literal
-        | fileName
+        | fileName=IDENTIFIER
     )
     | OMITTED
 ;
@@ -2506,7 +2516,7 @@ closeStatement
 
 closeFile
 :
-    fileName
+    fileName=identifier
     (
         closeReelUnitStatement
         | closeRelativeStatement
@@ -2614,7 +2624,7 @@ continueStatement
 
 deleteStatement
 :
-    DELETE fileName RECORD? invalidKeyPhrase? notInvalidKeyPhrase? END_DELETE?
+    DELETE fileName=IDENTIFIER RECORD? invalidKeyPhrase? notInvalidKeyPhrase? END_DELETE?
 ;
 
 // disable statement
@@ -3066,7 +3076,7 @@ inspectBeforeAfter
 
 mergeStatement
 :
-    MERGE fileName mergeOnKeyClause+ mergeCollatingSequencePhrase? mergeUsing*
+    MERGE fileName=IDENTIFIER mergeOnKeyClause+ mergeCollatingSequencePhrase? mergeUsing*
     mergeOutputProcedurePhrase? mergeGivingPhrase*
 ;
 
@@ -3097,7 +3107,7 @@ mergeCollatingNational
 
 mergeUsing
 :
-    USING fileName+
+    USING fileName+=IDENTIFIER+
 ;
 
 mergeOutputProcedurePhrase
@@ -3120,7 +3130,7 @@ mergeGivingPhrase
 
 mergeGiving
 :
-    fileName
+    fileName=IDENTIFIER
     (
         LOCK
         | SAVE
@@ -3205,7 +3215,7 @@ openInputStatement
 
 openInput
 :
-    fileName
+    fileName=identifier
     (
         REVERSED
         | WITH? NO REWIND
@@ -3219,7 +3229,7 @@ openOutputStatement
 
 openOutput
 :
-    fileName
+    fileName=identifier
     (
         WITH? NO REWIND
     )?
@@ -3227,12 +3237,12 @@ openOutput
 
 openIOStatement
 :
-    I_O fileName+
+    I_O fileName+=identifier+
 ;
 
 openExtendStatement
 :
-    EXTEND fileName+
+    EXTEND fileName+=identifier+
 ;
 
 // perform statement
@@ -3345,7 +3355,7 @@ purgeStatement
 
 readStatement
 :
-    READ fileName NEXT? RECORD? readInto? readWith? readKey? invalidKeyPhrase?
+    READ fileName=identifier NEXT? RECORD? readInto? readWith? readKey? invalidKeyPhrase?
     notInvalidKeyPhrase? atEndPhrase? notAtEndPhrase? END_READ?
 ;
 
@@ -3470,7 +3480,7 @@ releaseStatement
 
 returnStatement
 :
-    RETURN fileName RECORD? returnInto? atEndPhrase notAtEndPhrase?
+    RETURN fileName=IDENTIFIER RECORD? returnInto? atEndPhrase notAtEndPhrase?
     END_RETURN?
 ;
 
@@ -3652,7 +3662,7 @@ setByValue
 
 sortStatement
 :
-    SORT fileName sortOnKeyClause+ sortDuplicatesPhrase?
+    SORT fileName=IDENTIFIER sortOnKeyClause+ sortDuplicatesPhrase?
     sortCollatingSequencePhrase? sortInputProcedurePhrase? sortUsing*
     sortOutputProcedurePhrase? sortGivingPhrase*
 ;
@@ -3702,7 +3712,7 @@ sortInputThrough
 
 sortUsing
 :
-    USING fileName+
+    USING fileName+=IDENTIFIER+
 ;
 
 sortOutputProcedurePhrase
@@ -3725,7 +3735,7 @@ sortGivingPhrase
 
 sortGiving
 :
-    fileName
+    fileName=IDENTIFIER
     (
         LOCK
         | SAVE
@@ -3740,7 +3750,7 @@ sortGiving
 
 startStatement
 :
-    START fileName startKey? invalidKeyPhrase? notInvalidKeyPhrase? END_START?
+    START fileName=IDENTIFIER startKey? invalidKeyPhrase? notInvalidKeyPhrase? END_START?
 ;
 
 startKey
@@ -3960,7 +3970,7 @@ useAfterOn
     | OUTPUT
     | I_O
     | EXTEND
-    | fileName+
+    | fileName+=IDENTIFIER+
 ;
 
 useDebugClause
@@ -3973,7 +3983,7 @@ useDebugOn
     ALL PROCEDURES
     | ALL REFERENCES? OF? identifier
     | procedureName
-    | fileName
+    | fileName=IDENTIFIER
 ;
 
 // write statement
@@ -4409,7 +4419,7 @@ inFile
     (
         IN
         | OF
-    ) fileName
+    ) fileName=IDENTIFIER
 ;
 
 inMnemonic
@@ -4449,12 +4459,7 @@ inTable
 alphabetName
 :
     cobolWord
-;
-
-assignmentName
-:
-    systemName
-;
+;   
 
 basisName
 :
@@ -4496,11 +4501,6 @@ dataDescName
 environmentName
 :
     systemName
-;
-
-fileName
-:
-    cobolWord
 ;
 
 functionName

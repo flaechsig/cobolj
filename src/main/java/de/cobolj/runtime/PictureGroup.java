@@ -1,5 +1,6 @@
 package de.cobolj.runtime;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,5 +73,23 @@ public class PictureGroup extends Picture {
 		for(Picture pic : children) {
 			pic.clear();
 		}
+	}
+
+	/** 
+	 * Allgemeine Implementierung des Parsens muss für die Gruppe angepasst werden.
+	 */
+	@Override
+	public int parse(InputStream is) {
+		int result = 0;
+		for(Picture pic : this.children) {
+			int readSize = pic.parse(is);
+			if(readSize == -1) {
+				result = -1;
+				break;
+			} else {
+				result += readSize;
+			}
+		}
+		return result;
 	}
 }

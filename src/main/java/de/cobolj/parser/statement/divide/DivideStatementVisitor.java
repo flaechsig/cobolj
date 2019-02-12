@@ -2,10 +2,10 @@ package de.cobolj.parser.statement.divide;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.SizePhraseVisitor;
+import de.cobolj.parser.PhraseVisitor;
 import de.cobolj.parser.Cobol85Parser.DivideStatementContext;
 import de.cobolj.parser.statement.add.MathImplNode;
-import de.cobolj.phrase.SizePhraseNode;
+import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.MathStatementNode;
 
 /**
@@ -18,13 +18,13 @@ public class DivideStatementVisitor extends Cobol85BaseVisitor<MathStatementNode
 	@Override
 	public MathStatementNode visitDivideStatement(DivideStatementContext ctx) {
 		MathImplNode math = null; 
-		SizePhraseNode errorPhrase = null;
-		SizePhraseNode successPhrase = null;
+		PhraseNode errorPhrase = null;
+		PhraseNode successPhrase = null;
 		if(ctx.onSizeErrorPhrase() != null) {
-			errorPhrase = ctx.onSizeErrorPhrase().accept(new SizePhraseVisitor());
+			errorPhrase = ctx.onSizeErrorPhrase().accept(new PhraseVisitor());
 		}
 		if(ctx.notOnSizeErrorPhrase() != null ) {
-			successPhrase = ctx.notOnSizeErrorPhrase().accept(new SizePhraseVisitor());
+			successPhrase = ctx.notOnSizeErrorPhrase().accept(new PhraseVisitor());
 		}
 		
 		if(ctx.divideIntoStatement() != null) {

@@ -7,7 +7,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.statement.WriteElementaryItemNode;
 
-@NodeInfo(shortName="Working Storage Section")
+@NodeInfo(shortName="WorkingStorageSection")
 public class WorkingStorageSectionNode extends DataDivisionSectionNode {
 	@Children
 	private final WriteElementaryItemNode[] dataDescriptionEntries;

@@ -14,11 +14,6 @@ import de.cobolj.statement.WriteElementaryItemNode;
  *
  */
 public class WorkingStorageSectionVisitor extends Cobol85BaseVisitor<WorkingStorageSectionNode> {
-	
-	public static WorkingStorageSectionVisitor INSTANCE = new WorkingStorageSectionVisitor();
-	
-	private WorkingStorageSectionVisitor() {}
-
 	@Override
 	public WorkingStorageSectionNode visitWorkingStorageSection(Cobol85Parser.WorkingStorageSectionContext ctx) {
 		List<WriteElementaryItemNode> dataDescriptionEntryNodes = ctx.dataDescriptionEntry()

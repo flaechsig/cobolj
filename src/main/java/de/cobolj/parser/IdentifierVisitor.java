@@ -21,9 +21,10 @@ public class IdentifierVisitor extends Cobol85BaseVisitor<FrameSlot> {
 		// FIXME: Vervollständigen
 		if(ctx.qualifiedDataName()!=null) {
 			StringNode literal =  ctx.qualifiedDataName().accept(QualifiedDataNameVisitor.INSTANCE);
-			return StartRuleVisitor.descriptor.findFrameSlot(literal.toString().toUpperCase());
+			return StartRuleVisitor.descriptor.findOrAddFrameSlot(literal.toString().toUpperCase());
 		} else {
-			throw new RuntimeException("Else-Fall nicht implementiert");
+			ParserHelper.notImplemented();
+			return null;
 		}
 	}
 }

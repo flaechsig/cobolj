@@ -18,9 +18,16 @@ public class ProgramUnitVisitor extends Cobol85BaseVisitor<ProgramUnitNode> {
 
 	@Override
 	public ProgramUnitNode visitProgramUnit(Cobol85Parser.ProgramUnitContext ctx) {
+		EnvironmentDivisionNode environmentDivisionNode = null;
 		ProcedureDivisionNode procedureDivisionNode = null;
 		DataDivisionNode dataDivisionNode = null;
 
+		if(ctx.identificationDivision()!=null)  {
+			// FIXME
+		}
+		if(ctx.environmentDivision()!=null) {
+			environmentDivisionNode = ctx.environmentDivision().accept(new EnvironmentDivisionVisitor());
+		}
 		if(ctx.dataDivision() != null) {
 			DataDivisionVisitor visitor = new DataDivisionVisitor();
 			dataDivisionNode = ctx.dataDivision().accept(visitor);
@@ -29,10 +36,11 @@ public class ProgramUnitVisitor extends Cobol85BaseVisitor<ProgramUnitNode> {
 			ProcedureDivisionVisitor visitor = new ProcedureDivisionVisitor();
 			procedureDivisionNode = ctx.procedureDivision().accept(visitor);
 		}
-
+		
 		// FIXME: Vervollständigen
 
 		ProgramUnitNode programUnit = new ProgramUnitNode();
+		programUnit.setEnvironmentDivision(environmentDivisionNode);
 		programUnit.setDataDivision(dataDivisionNode);
 		programUnit.setProcedureDivision(procedureDivisionNode);
 
