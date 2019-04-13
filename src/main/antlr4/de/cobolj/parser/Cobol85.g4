@@ -3168,13 +3168,9 @@ moveCorrespondingToStatement
     (
         CORRESPONDING
         | CORR
-    ) moveCorrespondingToSendingArea TO identifier+
+    ) moveCorrespondingToSendingArea=identifier TO moveCorrespondingToReceivingArea+=identifier+
 ;
 
-moveCorrespondingToSendingArea
-:
-    identifier
-;
 
 // multiply statement
 
