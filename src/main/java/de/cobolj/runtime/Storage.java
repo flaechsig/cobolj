@@ -4,7 +4,7 @@ package de.cobolj.runtime;
  * Verwaltung eines einzelnen Speicherbereichs (z.B. Working-Storage). Über den
  * Storage kann auf unterschiedliche Zugriffswege auf einzelne Datenbereiche
  * zugegriffen werden. Hierbei werden verschiedene Möglichkeiten des Zugriffs
- * geboten, um den unterschiedlichen Anfroderungen Rechnung zu tragen.
+ * geboten, um den unterschiedlichen Anforderungen Rechnung zu tragen.
  * 
  * @author flaechsig
  *

@@ -50,7 +50,7 @@ public abstract class CobolBaseTest {
 			}
 
 			CobolExec.execute(fileReader, inputStream, out);
-			Assert.assertEquals(out.toString(), expected, error);
+			Assert.assertEquals(out.toString(), expected, input+ ": "+error);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());

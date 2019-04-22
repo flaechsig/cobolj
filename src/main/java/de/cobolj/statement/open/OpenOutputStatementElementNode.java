@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.statement.open;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 /**
- * Dieses Komando für das Open-Statement öffnet eine Reihe von Input-Elementen.
+ * Dieses Komando für das Open-Statement öffnet eine Reihe von Output-Elementen.
  * Aufgrund der aktuellen Technologie wird es sich dabei wohl nur um Dateien handeln ;-)
  * Dazu wird für jeden Input ein FileDescriptor angelegt, über den auf den zugrundeliegenden
  * Datenstrom zugegriffen werden kann.
@@ -14,20 +14,20 @@ import com.oracle.truffle.api.nodes.NodeInfo;
  * @author flaechsig
  *
  */
-@NodeInfo(shortName="OpentInputStatementElement")
-public class OpentInputStatementElementNode extends OpenStatementElementNode {
+@NodeInfo(shortName="OpenOutputStatementElement")
+public class OpenOutputStatementElementNode extends OpenStatementElementNode {
 
 	@Children
-	private final OpenInputNode[] inputs;
+	private final OpenOutputNode[] outputs;
 
-	public OpentInputStatementElementNode(List<OpenInputNode> inputs) {
-		this.inputs = inputs.toArray(new OpenInputNode[] {});
+	public OpenOutputStatementElementNode(List<OpenOutputNode> outputs) {
+		this.outputs = outputs.toArray(new OpenOutputNode[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		Object last = null;
-		for( OpenInputNode node : inputs) {
+		for( OpenOutputNode node : outputs) {
 			last = node.executeGeneric(frame);
 		}
 		return last;

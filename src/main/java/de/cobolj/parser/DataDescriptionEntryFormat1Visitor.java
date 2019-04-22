@@ -54,11 +54,11 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 	 * 
 	 * @param pic Das Element, das dieser Gruppe untergeordnet ist.
 	 */
-	private void addToGroup(Picture pic) {
+	private void addToGroup(String name, Picture pic) {
 		if (groupStack.isEmpty()) {
 			return;
 		}
-		groupStack.peek().add(pic);
+		groupStack.peek().add(name, pic);
 	}
 
 	/**
@@ -103,13 +103,13 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 			DataPictureClauseVisitor visitor = new DataPictureClauseVisitor();
 			picture = ctx.dataPictureClause().get(0).accept(visitor); // TODO: Bin irritiert, das hier eine List sein
 																		// soll
-			addToGroup(picture.getPicture());
+			addToGroup(name.toString(), picture.getPicture());
 		} else {
 			// Es muss sich um eine PictureGroup handeln, da kein Picture angegeben ist
 			PictureGroup group = new PictureGroup();
 			picture = new PictureNode(group);
 			levelStack.push(getLevelNumber(ctx));
-			addToGroup(group);
+			addToGroup(name.toString(), group);
 			groupStack.push(group);
 		}
 

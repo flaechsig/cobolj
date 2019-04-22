@@ -15,7 +15,7 @@ import de.cobolj.util.FrameUtil;
  * 
  * Das ist eine Gruppen-Kopierfunktion, die auf Namensgleichheit abzielt. Bei
  * gleichen Namen werden die Daten von der Quelle ins Ziel kopiert. Die Typen
- * müssen dabei hinhaltlich übertragbar sein.
+ * müssen dabei inhaltlich übertragbar sein.
  * 
  * @author flaechsig
  *
