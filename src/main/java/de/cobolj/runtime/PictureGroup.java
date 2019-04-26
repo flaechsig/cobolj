@@ -15,8 +15,8 @@ public class PictureGroup extends Picture {
 
 	private List<Picture> children = new ArrayList<>();
 
-	public PictureGroup(String name) {
-		super(name, 0);
+	public PictureGroup(String name, PictureGroup parent) {
+		super(name, 0, parent);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class PictureGroup extends Picture {
 		clear();
 		for(Picture otherPicture : other.children) {
 			for(Picture childPicture : children) {
-				if(otherPicture.name.equals(childPicture.name))  {
+				if(otherPicture.name.equals(childPicture.getName()))  {
 					childPicture.setValue(otherPicture.getValue());
 					break;
 				}

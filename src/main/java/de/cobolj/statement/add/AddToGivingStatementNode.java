@@ -20,7 +20,7 @@ public class AddToGivingStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public AddToGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<FrameSlot> slots, List<Boolean> roundeds) {
+	public AddToGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<String> slots, List<Boolean> roundeds) {
 		super(summands, mid, slots, roundeds);
 	}
 

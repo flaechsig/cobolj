@@ -22,7 +22,7 @@ public class AddToStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public AddToStatementNode(List<ExpressionNode> summands, List<FrameSlot> results, List<Boolean> rounded) {
+	public AddToStatementNode(List<ExpressionNode> summands, List<String> results, List<Boolean> rounded) {
 		super(summands, results, rounded);
 	}
 	

@@ -23,7 +23,7 @@ public class MoveToStatementVisitor extends Cobol85BaseVisitor<MoveToStatementNo
 	@Override
 	public MoveToStatementNode visitMoveToStatement(Cobol85Parser.MoveToStatementContext ctx) {
 		ExpressionNode sending;
-		List<FrameSlot> receiving;
+		List<String> receiving;
 
 		sending = ctx.moveToSendingArea().accept(new MoveToSendingAreaVisitor());
 

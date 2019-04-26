@@ -11,11 +11,11 @@ import de.cobolj.nodes.CobolNode;
 @NodeInfo(shortName="FileControlEntry")
 public class FileControlEntryNode extends CobolNode {
 
-	private FrameSlot fileName;
+	private String fileName;
 	@Child
 	private AssignClauseNode assign;
 
-	public FileControlEntryNode(FrameSlot fileName, AssignClauseNode assign) {
+	public FileControlEntryNode(String fileName, AssignClauseNode assign) {
 		this.fileName = fileName;
 		this.assign = assign;
 	}
@@ -23,7 +23,7 @@ public class FileControlEntryNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		File file = assign.executeGeneric(frame);
-		getContext().getFileDescriptorByName(fileName.getIdentifier().toString()).setFile(file);
+		getContext().getFileDescriptorByName(fileName).setFile(file);
 		return this;
 	}
 

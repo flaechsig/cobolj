@@ -5,23 +5,23 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.statement.WriteElementaryItemNode;
+import de.cobolj.runtime.Picture;
 
 @NodeInfo(shortName="WorkingStorageSection")
 public class WorkingStorageSectionNode extends DataDivisionSectionNode {
-	@Children
-	private final WriteElementaryItemNode[] dataDescriptionEntries;
+	private final Picture[] dataDescriptionEntries;
 	
 
-	public WorkingStorageSectionNode(List<WriteElementaryItemNode> dataDescEntry) {
-		this.dataDescriptionEntries = dataDescEntry.toArray(new WriteElementaryItemNode[] {});
+	public WorkingStorageSectionNode(List<Picture> dataDescEntry) {
+		this.dataDescriptionEntries = dataDescEntry.toArray(new Picture[] {});
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
-		Object last = null;
-		for(WriteElementaryItemNode entry : this.dataDescriptionEntries) {
-			last = entry.executeGeneric(frame);
+	public Picture executeGeneric(VirtualFrame frame) {
+		Picture last = null;
+		for(Picture entry : this.dataDescriptionEntries) {
+			getContext().putPicture(frame, entry);
+			last = entry;
 		}
 		return last;
 	}

@@ -31,7 +31,7 @@ public class ComputeStatementVisitor extends Cobol85BaseVisitor<ComputeStatement
 				.map(item -> item.accept(new ComputeStoreVisitor()))
 				.collect(Collectors.toList());
 		ExpressionNode arithmeticEx = ctx.arithmeticExpression().accept(new ArithmeticExpressionVisitor());
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		PhraseNode successPhrase = null;
 		PhraseNode errorPhrase = null;

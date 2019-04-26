@@ -22,7 +22,7 @@ public class MultiplyByStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public MultiplyByStatementNode(List<ExpressionNode> summands, List<FrameSlot> results, List<Boolean> rounded) {
+	public MultiplyByStatementNode(List<ExpressionNode> summands, List<String> results, List<Boolean> rounded) {
 		super(summands, results, rounded);
 	}
 	

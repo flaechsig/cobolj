@@ -17,7 +17,7 @@ import de.cobolj.parser.IdentifierVisitor;
 public class ComputeStoreVisitor extends Cobol85BaseVisitor<CalculationResult> {
 	@Override
 	public CalculationResult visitComputeStore(ComputeStoreContext ctx) {
-		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
+		String slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
 		return new CalculationResult(slot,  rounded);

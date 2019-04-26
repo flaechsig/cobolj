@@ -11,17 +11,17 @@ import de.cobolj.nodes.StringNode;
  * @author flaechsig
  *
  */
-public class IdentifierVisitor extends Cobol85BaseVisitor<FrameSlot> {
+public class IdentifierVisitor extends Cobol85BaseVisitor<String> {
 	public static IdentifierVisitor INSTANCE = new IdentifierVisitor();
 	
 	private IdentifierVisitor() {}
 
 	@Override
-	public FrameSlot visitIdentifier(Cobol85Parser.IdentifierContext ctx) {
+	public String visitIdentifier(Cobol85Parser.IdentifierContext ctx) {
 		// FIXME: Vervollständigen
 		if(ctx.qualifiedDataName()!=null) {
-			StringNode literal =  ctx.qualifiedDataName().accept(QualifiedDataNameVisitor.INSTANCE);
-			return StartRuleVisitor.descriptor.findOrAddFrameSlot(literal.toString().toUpperCase());
+			String literal =  ctx.qualifiedDataName().accept(QualifiedDataNameVisitor.INSTANCE);
+			return literal.toUpperCase();
 		} else {
 			ParserHelper.notImplemented();
 			return null;

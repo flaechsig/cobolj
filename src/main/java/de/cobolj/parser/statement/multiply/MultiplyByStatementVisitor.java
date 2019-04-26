@@ -27,7 +27,7 @@ public class MultiplyByStatementVisitor extends Cobol85BaseVisitor<MultiplyBySta
 		List<ExpressionNode> left = new ArrayList<>();
 		ExpressionNode right;
 		List<CalculationResult> results;
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 
 		left.add(ctx.literalOrIdentifier().accept(new LiteralOrIdentifierVisitor()));

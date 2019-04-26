@@ -40,7 +40,7 @@ public class DateTimeInputNode extends InputNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public String executeGeneric(VirtualFrame frame) {
 		String result = DateTimeFormatter.ofPattern(pattern.pattern, Locale.UK).format(LocalDateTime.now());
 	
 		if(pattern == DateTimePattern.TODAYS_NAME) {

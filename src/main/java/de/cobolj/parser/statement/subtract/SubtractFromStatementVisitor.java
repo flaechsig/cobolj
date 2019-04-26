@@ -26,7 +26,7 @@ public class SubtractFromStatementVisitor extends Cobol85BaseVisitor<SubtractFro
 public SubtractFromStatementNode visitSubtractFromStatement(SubtractFromStatementContext ctx) {
 		List<ExpressionNode> left;
 		List<CalculationResult> results;
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
 		LiteralOrIdentifierVisitor literalOrIdentifierVisitor = new LiteralOrIdentifierVisitor();

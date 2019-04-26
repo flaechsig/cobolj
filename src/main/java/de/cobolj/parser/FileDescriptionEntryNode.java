@@ -7,7 +7,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.DataDivisionSectionNode;
-import de.cobolj.statement.WriteElementaryItemNode;
+import de.cobolj.runtime.Picture;
 
 /**
  * Beschreibung eines Dateiformats.
@@ -22,24 +22,23 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 	/** Symbolischer File-Name */
 	private String name;
 	/** Strukturelle Beschreibung der Datei */
-	@Children
-	private final WriteElementaryItemNode[] dataDescEntry;
+	private final Picture[] pictures;
 	/** Assoziierte Datei */
 	private File file = null;
 	/** Assoziierter Stream. Kann sowohl für Input und Output dienen */
 	private Object stream = null;
 
-	public FileDescriptionEntryNode(String desc, String fileName, List<WriteElementaryItemNode> dataDescriptionEntries) {
+	public FileDescriptionEntryNode(String desc, String fileName, List<Picture> pictures) {
 		this.desc = desc;
 		this.name = fileName;
-		this.dataDescEntry = dataDescriptionEntries.toArray(new WriteElementaryItemNode[0]);
+		this.pictures = pictures.toArray(new Picture[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		getContext().addFileDescriptor(this);
-		for(WriteElementaryItemNode entry : dataDescEntry) {
-			getContext().putPicture(entry.getValueNode().getPicture());
+		for(Picture entry : pictures) {
+			getContext().putPicture(frame, entry);
 		}
 		return this;
 	}
@@ -48,8 +47,8 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 		return name;
 	}
 
-	public WriteElementaryItemNode[] getDataDescriptionEntries() {
-		return dataDescEntry;
+	public Picture[] getPictures() {
+		return pictures;
 	}
 
 	public void setFile(File file) {

@@ -18,7 +18,7 @@ public class CloseFileVisitor extends Cobol85BaseVisitor<CloseFileNode> {
 		ParserHelper.notImplemented(ctx.closeRelativeStatement());
 		ParserHelper.notImplemented(ctx.closePortFileIOStatement());
 
-		FrameSlot fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
+		String fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
 		
 		return new CloseFileNode(fileName);
 	}

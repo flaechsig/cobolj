@@ -24,7 +24,7 @@ public class PerformVaryingUntilAfterVisitor extends Cobol85BaseVisitor<Expressi
 	/** Auszuführender Perform-Block */
 	private ExpressionNode perform;
 	/** Speicher für den Schleifenzähler */
-	private FrameSlot var;
+	private String var;
 	/** Startwert des Schleifenzählers */
 	private ExpressionNode start;
 	/** Schrittweite des Schleifenzählers */
@@ -32,7 +32,7 @@ public class PerformVaryingUntilAfterVisitor extends Cobol85BaseVisitor<Expressi
 	/** Kennzeichen, ob der Test vor oder nach dem Schleifenrumpf stattfindet */
 	private boolean testBefore;
 
-	public PerformVaryingUntilAfterVisitor(ExpressionNode perform, boolean testBefore, FrameSlot var,
+	public PerformVaryingUntilAfterVisitor(ExpressionNode perform, boolean testBefore, String var,
 			ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;

@@ -18,9 +18,9 @@ import de.cobolj.parser.FileDescriptionEntryNode;
  */
 public abstract class OpenInputOutputNode extends CobolNode {
 
-	private FrameSlot fileName;
+	private String fileName;
 
-	public OpenInputOutputNode(FrameSlot fileSlot) {
+	public OpenInputOutputNode(String fileSlot) {
 		this.fileName = fileSlot;
 	}
 	
@@ -34,7 +34,7 @@ public abstract class OpenInputOutputNode extends CobolNode {
 	/** Legt einen weiteren FrameSlot für den Input-Stream an */
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		FileDescriptionEntryNode fd = getContext().getFileDescriptor(fileName);
+		FileDescriptionEntryNode fd = getContext().getFileDescriptorByName(fileName);
 		if(fd.getStream() != null) {
 			throw new RuntimeException("File-Descriptor ist bereits geöffnet");
 		}

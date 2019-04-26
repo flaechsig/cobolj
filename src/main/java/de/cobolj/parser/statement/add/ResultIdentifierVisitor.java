@@ -18,7 +18,7 @@ public class ResultIdentifierVisitor extends Cobol85BaseVisitor<CalculationResul
 
 	@Override
 	public CalculationResult visitResultIdentifier(ResultIdentifierContext ctx) {
-		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
+		String slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
 		return new CalculationResult(slot,  rounded);

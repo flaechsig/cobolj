@@ -11,7 +11,6 @@ import de.cobolj.phrase.PhraseNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;
 import de.cobolj.statement.StatementNode;
-import de.cobolj.statement.WriteElementaryItemNode;
 
 @NodeInfo(shortName = "ReadStatement")
 public class ReadStatementNode extends StatementNode {
@@ -47,8 +46,7 @@ public class ReadStatementNode extends StatementNode {
 
 		int read = 0;
 		do {
-			for (WriteElementaryItemNode node : fd.getDataDescriptionEntries()) {
-				Picture pic = getContext().getPicture(node.getSlot());
+			for (Picture pic : fd.getPictures()) {
 				if (pic instanceof PictureGroup) {
 					read = pic.parse(is);
 					if (readInto != null && read > -1) {

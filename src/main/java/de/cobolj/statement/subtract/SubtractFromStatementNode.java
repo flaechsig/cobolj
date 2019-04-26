@@ -22,7 +22,7 @@ public class SubtractFromStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public SubtractFromStatementNode(List<ExpressionNode> summands, List<FrameSlot> results, List<Boolean> rounded) {
+	public SubtractFromStatementNode(List<ExpressionNode> summands, List<String> results, List<Boolean> rounded) {
 		super(summands, results, rounded);
 	}
 

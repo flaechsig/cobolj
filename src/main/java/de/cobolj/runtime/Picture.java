@@ -16,18 +16,20 @@ import de.cobolj.phrase.SizeOverflowException;
  *
  */
 public abstract class Picture implements TruffleObject {
+	/** Übergeodnete PictureGroup */
+	protected final PictureGroup parent;
 	/** Name des Pictures */
 	protected final String name;
-
 	/** Maximale Anzahl von Stellen, die die Instanz der Klasse abbilden kann */
 	protected final int size;
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
-	public Picture(String name, int size) {
+	public Picture(String name, int size, PictureGroup parent) {
 		this.name = name;
 		this.size = size;
+		this.parent = parent;
 	}
 
 	/**
@@ -77,5 +79,9 @@ public abstract class Picture implements TruffleObject {
 	/** Liefert den symbolischen Namen des Pictures */
 	public String getName() {
 		return name;
+	}
+
+	public PictureGroup getParent() {
+		return parent;
 	}
 }

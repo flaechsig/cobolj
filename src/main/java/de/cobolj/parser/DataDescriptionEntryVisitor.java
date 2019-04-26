@@ -2,7 +2,7 @@ package de.cobolj.parser;
 
 import org.antlr.v4.runtime.RuleContext;
 
-import de.cobolj.statement.WriteElementaryItemNode;
+import de.cobolj.runtime.Picture;
 
 /**
  * 
@@ -13,14 +13,14 @@ import de.cobolj.statement.WriteElementaryItemNode;
  * @author flaechsig
  *
  */
-public class DataDescriptionEntryVisitor extends Cobol85BaseVisitor<WriteElementaryItemNode> {
+public class DataDescriptionEntryVisitor extends Cobol85BaseVisitor<Picture> {
 	
 	public static DataDescriptionEntryVisitor INSTANCE = new DataDescriptionEntryVisitor();
 	
 	private DataDescriptionEntryVisitor() {	}
 
 	@Override
-	public WriteElementaryItemNode visitDataDescriptionEntry(Cobol85Parser.DataDescriptionEntryContext ctx) {
+	public Picture visitDataDescriptionEntry(Cobol85Parser.DataDescriptionEntryContext ctx) {
 		Cobol85BaseVisitor<?> visitor;
 		RuleContext ctx2 = (RuleContext)ctx.getChild(0);
 		int rule = ctx2.getRuleIndex();
@@ -33,6 +33,6 @@ public class DataDescriptionEntryVisitor extends Cobol85BaseVisitor<WriteElement
 		default:
 			throw new RuntimeException("Unbekannte Data Division Section:" + Cobol85Parser.ruleNames[rule]);
 		}
-		return (WriteElementaryItemNode)ctx2.accept(visitor);
+		return (Picture) ctx2.accept(visitor);
 	}
 }

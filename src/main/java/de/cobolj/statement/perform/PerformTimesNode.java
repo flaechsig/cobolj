@@ -46,8 +46,7 @@ public class PerformTimesNode extends PerformTypeNode {
 		if (value instanceof Long) {
 			result = (long) value;
 		} else /* NumericPicture */ {
-			NumericPicture pic = (NumericPicture) value;
-			result = ((BigDecimal) pic.getValue()).longValue();
+			result = ((NumericPicture)value).getBigDecimal().longValue();
 		} 
 		return result;
 	}

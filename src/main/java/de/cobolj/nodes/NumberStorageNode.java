@@ -7,16 +7,16 @@ import de.cobolj.runtime.NumericPicture;
 
 @NodeInfo(shortName="NumberStorage")
 public class NumberStorageNode extends NumberNode {
-	@Child
-	private ReadElementaryItemNode item;
+	
+	private final String item;
 
-	public NumberStorageNode(ReadElementaryItemNode item) {
+	public NumberStorageNode(String item) {
 		this.item = item;
 	}
 	
 	@Override
 	public Number executeGeneric(VirtualFrame frame) {
-		return ((NumericPicture) item.executeGeneric(frame)).getBigDecimal();
+		return ((NumericPicture)getContext().getPicture(frame, item)).getBigDecimal();
 	}
 
 }

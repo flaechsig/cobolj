@@ -23,5 +23,6 @@ public class CobolExec {
 		Context context = org.graalvm.polyglot.Context.newBuilder(CobolLanguage.ID).in(in).out(out).build();
 		Source source = Source.newBuilder(CobolLanguage.ID, file, "static-in").build();
 		context.eval(source);
+		context.close();
 	}
 }

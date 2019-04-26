@@ -13,7 +13,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 public class StandardInputNode extends InputNode {
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public String executeGeneric(VirtualFrame frame) {
 		Scanner sc = getContext().getIn(); 
 		return sc.nextLine();
 	}

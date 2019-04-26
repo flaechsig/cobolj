@@ -9,7 +9,6 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.statement.StatementNode;
-import de.cobolj.statement.WriteElementaryItemNode;
 
 @NodeInfo(shortName = "WriteStatement")
 public class WriteStatementNode extends StatementNode {
@@ -34,7 +33,7 @@ public class WriteStatementNode extends StatementNode {
 			throw new RuntimeException("File-Descriptor nicht zum Schreiben geöffnet", e);
 		}
 		try {
-			os.write(getContext().getPicture(recordName).toString().getBytes());
+			os.write(getContext().getPicture(frame, recordName).toString().getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

@@ -19,7 +19,7 @@ import de.cobolj.runtime.NumericPicture;
 @NodeInfo(shortName = "PerformAfter")
 public class PerformAfterNode extends ExpressionNode {
 	private final boolean testBefore;
-	private FrameSlot var;
+	private String var;
 	@Child
 	private ExpressionNode perform;
 	@Child
@@ -29,7 +29,7 @@ public class PerformAfterNode extends ExpressionNode {
 	@Child
 	private ExpressionNode step;
 
-	public PerformAfterNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform, FrameSlot var,
+	public PerformAfterNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform, String var,
 			ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;
@@ -41,8 +41,7 @@ public class PerformAfterNode extends ExpressionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-//		NumericPicture picture = FrameUtil.getNumericPicture(frame, var);
-		NumericPicture picture = (NumericPicture) getContext().getPicture(var);
+		NumericPicture picture = (NumericPicture) getContext().getPicture(frame, var);
 		picture.setValue(start.executeGeneric(frame));
 		BigDecimal stepWidht = BigDecimal.valueOf((long) step.executeGeneric(frame));
 

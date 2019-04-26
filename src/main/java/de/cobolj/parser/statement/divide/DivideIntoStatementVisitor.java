@@ -27,7 +27,7 @@ public class DivideIntoStatementVisitor extends Cobol85BaseVisitor<MathImplNode>
 	public MathImplNode visitDivideIntoStatement(DivideIntoStatementContext ctx) {
 		List<ExpressionNode> left = new ArrayList<>();
 		List<CalculationResult> results;
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
 		left.add(ctx.literalOrIdentifier().accept(new LiteralOrIdentifierVisitor()));

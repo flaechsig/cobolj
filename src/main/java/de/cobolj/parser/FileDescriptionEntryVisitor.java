@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.ObjectUtils;
 
 import de.cobolj.parser.Cobol85Parser.FileDescriptionEntryContext;
-import de.cobolj.statement.WriteElementaryItemNode;
+import de.cobolj.runtime.Picture;
 
 /**
  * fileDescriptionEntry: 
@@ -24,7 +24,7 @@ public class FileDescriptionEntryVisitor extends Cobol85BaseVisitor<FileDescript
 		
 		String desc = ((TerminalNode)ObjectUtils.firstNonNull(ctx.FD(), ctx.SD())).getText();
 		String fileName = ctx.fileName.getText();
-		List<WriteElementaryItemNode> dataDescriptionEntries = ctx.dataDescriptionEntry()
+		List<Picture> dataDescriptionEntries = ctx.dataDescriptionEntry()
 				.stream()
 				.map(result -> result.accept( DataDescriptionEntryVisitor.INSTANCE) )
 				.collect(Collectors.toList());

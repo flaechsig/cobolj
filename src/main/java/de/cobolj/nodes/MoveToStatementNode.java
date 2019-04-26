@@ -22,18 +22,17 @@ public class MoveToStatementNode extends StatementNode {
 	@Child
 	private ExpressionNode sending;
 	/** Liste der Slots, in die das Quellfeld übertragen wird. */
-	private final FrameSlot[] receiving;
+	private final String[] receiving;
 
-	public MoveToStatementNode(ExpressionNode sending, List<FrameSlot> receiving) {
+	public MoveToStatementNode(ExpressionNode sending, List<String> receiving) {
 		this.sending = sending;
-		this.receiving = receiving.toArray(new FrameSlot[] {});
+		this.receiving = receiving.toArray(new String[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		for (FrameSlot slot : receiving) {
-//			Picture pic = FrameUtil.getPicture(frame, slot);
-			Picture pic = getContext().getPicture(slot.getIdentifier().toString());
+		for (String slot : receiving) {
+			Picture pic = getContext().getPicture(frame, slot);
 			pic.setValue(sending.executeGeneric(frame));
 		}
 		return receiving;

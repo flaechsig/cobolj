@@ -27,7 +27,7 @@ public class ComputeStatementNode extends StatementNode {
 	@Child
 	private ExpressionNode arithmetic;
 	/** Storage, in den das Ergebnis geschrieben wird */
-	private final FrameSlot[] slots;
+	private final String[] slots;
 	/**
 	 * Kennzeichen, ob der Store (selber Index wie bei slots) gerundet werden soll
 	 */
@@ -39,10 +39,10 @@ public class ComputeStatementNode extends StatementNode {
 	@Child
 	private PhraseNode error;
 
-	public ComputeStatementNode(ExpressionNode arithmeticEx, List<FrameSlot> slots, List<Boolean> rounded,
+	public ComputeStatementNode(ExpressionNode arithmeticEx, List<String> slots, List<Boolean> rounded,
 			PhraseNode successPhrase, PhraseNode errorPhrase) {
 		this.arithmetic = arithmeticEx;
-		this.slots = slots.toArray(new FrameSlot[] {});
+		this.slots = slots.toArray(new String[] {});
 		this.rounded = rounded.toArray(new Boolean[] {});
 		this.success = successPhrase;
 		this.error = errorPhrase;
@@ -55,10 +55,9 @@ public class ComputeStatementNode extends StatementNode {
 
 		boolean hasSizeError = false;
 		for (int i = 0; i < slots.length; i++) {
-			FrameSlot slot = slots[i];
+			String slot = slots[i];
 			boolean toRound = this.rounded[i];
-//			NumericPicture picture = FrameUtil.getNumericPicture(frame, slot);
-			NumericPicture picture = (NumericPicture) getContext().getPicture(slot);
+			NumericPicture picture = (NumericPicture) getContext().getPicture(frame, slot);
 			BigDecimal value = arithmeticResult;
 			if (toRound) {
 				value = value.setScale(picture.getScale(), RoundingMode.HALF_UP);

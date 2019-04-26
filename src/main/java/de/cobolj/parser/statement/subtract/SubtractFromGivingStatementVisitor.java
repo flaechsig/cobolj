@@ -29,7 +29,7 @@ public MathImplNode visitSubtractFromGivingStatement(SubtractFromGivingStatement
 	List<ExpressionNode> left;
 	ExpressionNode right;
 	List<CalculationResult> results;
-	List<FrameSlot> slots = new ArrayList<>();
+	List<String> slots = new ArrayList<>();
 	List<Boolean> roundeds = new ArrayList<>();
 	
 	LiteralOrIdentifierVisitor literaltOrIdentifierVisitor = new LiteralOrIdentifierVisitor();

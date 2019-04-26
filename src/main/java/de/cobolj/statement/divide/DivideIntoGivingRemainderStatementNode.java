@@ -22,7 +22,7 @@ public class DivideIntoGivingRemainderStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public DivideIntoGivingRemainderStatementNode(List<ExpressionNode> summands, ExpressionNode right, List<FrameSlot> results, List<Boolean> rounded) {
+	public DivideIntoGivingRemainderStatementNode(List<ExpressionNode> summands, ExpressionNode right, List<String> results, List<Boolean> rounded) {
 		super(summands, right, results, rounded);
 	}
 	

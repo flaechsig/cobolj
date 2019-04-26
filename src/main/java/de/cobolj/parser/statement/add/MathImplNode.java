@@ -40,7 +40,7 @@ public abstract class MathImplNode extends CobolNode {
 	 * Rechter Teil des Ausdrucks. Auf diesen Teil wirkt der linke Ausdruck. Er wird
 	 * also um den linken Teil erweitert/reduziert/ersetzt
 	 */
-	protected final FrameSlot[] result;
+	protected final String[] result;
 
 	/**
 	 * Unterstütz Ausdrücke mit zweit Operanden und mehreren Ergebnisspeichern.
@@ -51,11 +51,11 @@ public abstract class MathImplNode extends CobolNode {
 	 * @param results Liste von Ergebnisspeichern
 	 * @param rounded Liste von Rundungsanweisungen für den Ergenisspeicher
 	 */
-	public MathImplNode(List<ExpressionNode> left, ExpressionNode right, List<FrameSlot> results,
+	public MathImplNode(List<ExpressionNode> left, ExpressionNode right, List<String> results,
 			List<Boolean> rounded) {
 		this.left = left.toArray(new ExpressionNode[] {});
 		this.right = right;
-		this.result = results.toArray(new FrameSlot[] {});
+		this.result = results.toArray(new String[] {});
 		this.rounded = rounded.toArray(new Boolean[] {});
 	}
 
@@ -67,10 +67,10 @@ public abstract class MathImplNode extends CobolNode {
 	 * @param rightResult Liste rechter Operand und Ergebnisspeicher
 	 * @param rounded     Liste von Rundungsanweisungen für den Ergenisspeicher
 	 */
-	public MathImplNode(List<ExpressionNode> left, List<FrameSlot> rightResult, List<Boolean> rounded) {
+	public MathImplNode(List<ExpressionNode> left, List<String> rightResult, List<Boolean> rounded) {
 		this.left = left.toArray(new ExpressionNode[] {});
 		this.right = null;
-		this.result = rightResult.toArray(new FrameSlot[] {});
+		this.result = rightResult.toArray(new String[] {});
 		this.rounded = rounded.toArray(new Boolean[] {});
 	}
 
@@ -124,9 +124,9 @@ public abstract class MathImplNode extends CobolNode {
 		// Ergebnisliste bzw "rightResult" ermitteln
 		List<BigDecimal> rightResult = new ArrayList<>();
 		for (int i = 0; i < result.length; i++) {
-			FrameSlot slot = result[i];
+			String slot = result[i];
 //			rightResult.add(FrameUtil.getBigDecimal(frame, slot));
-			rightResult.add(((NumericPicture)getContext().getPicture(slot)).getBigDecimal());
+			rightResult.add(((NumericPicture)getContext().getPicture(frame, slot)).getBigDecimal());
 		}
 
 		// Eigentliche Berechnung in Sub-Klassen ausgelagert
@@ -136,10 +136,10 @@ public abstract class MathImplNode extends CobolNode {
 		boolean hasSizeError = false;
 		int i=0;
 		for (BigDecimal value : results) {
-			FrameSlot slot = result[i];
+			String slot = result[i];
 			boolean toRound = this.rounded[i];
 //			NumericPicture picture  = FrameUtil.getNumericPicture(frame, slot);
-			NumericPicture picture = (NumericPicture) getContext().getPicture(slot);
+			NumericPicture picture = (NumericPicture) getContext().getPicture(frame, slot);
 			if (toRound) {
 				value = value.setScale(picture.getScale(), RoundingMode.HALF_UP);
 			}

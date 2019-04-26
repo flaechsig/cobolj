@@ -21,7 +21,7 @@ public class MultiplyGivingStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public MultiplyGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<FrameSlot> results, List<Boolean> rounded) {
+	public MultiplyGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<String> results, List<Boolean> rounded) {
 		super(summands, mid, results, rounded);
 	}
 

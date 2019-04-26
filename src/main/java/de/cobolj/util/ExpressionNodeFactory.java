@@ -1,14 +1,18 @@
 package de.cobolj.util;
 
+import java.math.BigDecimal;
+
+import de.cobolj.nodes.BigDecimalNode;
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.nodes.ReadElementaryItemNodeGen;
+import de.cobolj.nodes.NumberNode;
+import de.cobolj.nodes.NumberStorageNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85Parser.IdentifierContext;
 import de.cobolj.parser.Cobol85Parser.IntegerLiteralContext;
 import de.cobolj.parser.Cobol85Parser.LiteralContext;
 import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.LiteralVisitor;
 import de.cobolj.parser.NumericalLiteralVisitor;
-import de.cobolj.parser.StartRuleVisitor;
 
 public class ExpressionNodeFactory {
 	private ExpressionNodeFactory() {
@@ -51,7 +55,7 @@ public class ExpressionNodeFactory {
 	 */
 	public static ExpressionNode create(IdentifierContext identifier) {
 		if (identifier != null) {
-			return ReadElementaryItemNodeGen.create(identifier.accept(IdentifierVisitor.INSTANCE));
+			return new PictureNode(identifier.accept(IdentifierVisitor.INSTANCE));
 		} else {
 			return null;
 		}
@@ -64,7 +68,7 @@ public class ExpressionNodeFactory {
 	 */
 	public static ExpressionNode create(String identifier) {
 		if (identifier != null) {
-			return ReadElementaryItemNodeGen.create(StartRuleVisitor.descriptor.findFrameSlot(identifier));
+			return new NumberStorageNode(identifier);
 		} else {
 			return null;
 		}

@@ -16,7 +16,7 @@ import de.cobolj.statement.open.OpenInputNode;
 public class OpenInputVisitor extends Cobol85BaseVisitor<OpenInputNode> {
 	@Override
 	public OpenInputNode visitOpenInput(OpenInputContext ctx) {
-		FrameSlot fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
+		String fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
 		return new OpenInputNode(fileName);
 	}
 }

@@ -26,7 +26,7 @@ public class PerformAfterVaryingVisitor extends Cobol85BaseVisitor<ExpressionNod
 
 	@Override
 	public ExpressionNode visitPerformVaryingPhrase(PerformVaryingPhraseContext ctx) {
-		FrameSlot var;
+		String var;
 		if (ctx.identifier() != null) {
 			var = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		} else {

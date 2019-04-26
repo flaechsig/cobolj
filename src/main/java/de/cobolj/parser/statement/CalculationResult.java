@@ -4,10 +4,10 @@ import com.oracle.truffle.api.frame.FrameSlot;
 
 public class CalculationResult {
 
-	public FrameSlot slot;
+	public String slot;
 	public boolean rounded;
 
-	public CalculationResult(FrameSlot slot, boolean rounded) {
+	public CalculationResult(String slot, boolean rounded) {
 		this.slot = slot;
 		this.rounded = rounded;
 	}

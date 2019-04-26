@@ -28,7 +28,7 @@ public class FileControlEntryVisitor extends Cobol85BaseVisitor<FileControlEntry
 		ParserHelper.notImplemented(ctx.accessModeClause());
 		ParserHelper.notImplemented(ctx.fileStatusClause());
 
-		FrameSlot fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
+		String fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
 		AssignClauseNode assign = ctx.assignClause().accept(new AssignClauseVisitor());
 
 		return new FileControlEntryNode(fileName, assign);
@@ -40,7 +40,7 @@ public class FileControlEntryVisitor extends Cobol85BaseVisitor<FileControlEntry
 	 */
 	@Override
 	public FileControlEntryNode visitFileControlEntryFormat4(FileControlEntryFormat4Context ctx) {
-		FrameSlot fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
+		String fileName = ctx.fileName.accept(IdentifierVisitor.INSTANCE);
 		AssignClauseNode assign = ctx.assignClause().accept(new AssignClauseVisitor());
 
 		return new FileControlEntryNode(fileName, assign);

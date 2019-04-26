@@ -13,7 +13,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 @NodeInfo(shortName = "OpenOutput")
 public class OpenOutputNode extends OpenInputOutputNode {
 
-	public OpenOutputNode(FrameSlot fileSlot) {
+	public OpenOutputNode(String fileSlot) {
 		super(fileSlot);	}
 
 	@Override

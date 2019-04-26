@@ -33,7 +33,7 @@ public class AddToStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
 	public MathImplNode visitAddToStatement(Cobol85Parser.AddToStatementContext ctx) {
 		List<ExpressionNode> summands;
 		List<CalculationResult> results;
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
 		LiteralOrIdentifierVisitor fromVisitor = new LiteralOrIdentifierVisitor();

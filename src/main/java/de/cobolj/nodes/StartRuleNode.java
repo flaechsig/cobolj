@@ -14,8 +14,8 @@ public class StartRuleNode extends RootNode {
 	@Child
 	private CompilationUnitNode compilationUnit;
 
-	public StartRuleNode(TruffleLanguage<?> language, FrameDescriptor descriptor, CompilationUnitNode compilationUnit) {
-		super(language, descriptor);
+	public StartRuleNode(TruffleLanguage<?> language, CompilationUnitNode compilationUnit) {
+		super(language);
 		this.compilationUnit = compilationUnit;
 	}
 

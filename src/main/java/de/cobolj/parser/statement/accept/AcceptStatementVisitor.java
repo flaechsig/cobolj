@@ -1,11 +1,8 @@
 package de.cobolj.parser.statement.accept;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.statement.ChangeElementaryItemNodeGen;
 import de.cobolj.statement.accept.AcceptStatementNode;
 import de.cobolj.statement.accept.InputNode;
 import de.cobolj.statement.accept.StandardInputNode;
@@ -25,7 +22,7 @@ public class AcceptStatementVisitor extends Cobol85BaseVisitor<AcceptStatementNo
 
 	@Override
 	public AcceptStatementNode visitAcceptStatement(Cobol85Parser.AcceptStatementContext ctx) {
-		FrameSlot slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
+		String slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 
 		InputNode input = null;
 		if(ctx.acceptFromDateStatement() != null) {
@@ -40,6 +37,6 @@ public class AcceptStatementVisitor extends Cobol85BaseVisitor<AcceptStatementNo
 			// Kein besonderer Eingabekanal gesetzt -> Stdin
 			input = new StandardInputNode();
 		}
-		return new AcceptStatementNode(ChangeElementaryItemNodeGen.create(input, slot, false));
+		return new AcceptStatementNode(input, slot, false);
 	}
 }

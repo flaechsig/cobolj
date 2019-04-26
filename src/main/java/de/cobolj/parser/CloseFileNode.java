@@ -13,15 +13,15 @@ import de.cobolj.nodes.CobolNode;
 @NodeInfo(shortName="CloseFile")
 public class CloseFileNode extends CobolNode {
 	
-	private FrameSlot fileName;
+	private String fileName;
 
-	public CloseFileNode(FrameSlot fileName) {
+	public CloseFileNode(String fileName) {
 		this.fileName = fileName;
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		FileDescriptionEntryNode fd = getContext().getFileDescriptor(fileName);
+		FileDescriptionEntryNode fd = getContext().getFileDescriptorByName(fileName);
 		Object stream = fd.getStream();
 		if(stream == null) {
 			throw new RuntimeException("File not open");

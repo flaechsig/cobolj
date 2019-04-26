@@ -12,21 +12,17 @@ import de.cobolj.runtime.Picture;
  *
  */
 @NodeInfo(shortName="PictureNode")
-public class PictureNode extends CobolNode{
+public class PictureNode extends ExpressionNode{
 
 	/** Verwaltetes Picture im Node */
-	protected Picture picture;
+	private String slot;
 
-	public PictureNode(Picture picture) {
-		this.picture = picture;
+	public PictureNode(String slot) {
+		this.slot = slot;
 	}
 	
-	public Picture getPicture() {
-		return picture;
-	}
-
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
-		return picture;
+	public Picture executeGeneric(VirtualFrame frame) {
+		return getContext().getPicture(frame, slot);
 	}
 }

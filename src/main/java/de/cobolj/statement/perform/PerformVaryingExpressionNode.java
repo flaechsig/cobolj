@@ -20,7 +20,7 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 	@Child
 	private ExpressionNode condition;
 	/** Schleifenzähler */
-	private final FrameSlot var;
+	private final String var;
 	/** Startwert */
 	@Child
 	private ExpressionNode start;
@@ -31,7 +31,7 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 	private ExpressionNode perform;
 
 	public PerformVaryingExpressionNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform,
-			FrameSlot var, ExpressionNode start, ExpressionNode step) {
+			String var, ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;
 		this.condition = condition;
@@ -42,8 +42,7 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-//		NumericPicture picture= FrameUtil.getNumericPicture(frame, var);
-		NumericPicture picture = (NumericPicture) getContext().getPicture(var);
+		NumericPicture picture = (NumericPicture) getContext().getPicture(frame, var);
 		picture.setValue(start.executeGeneric(frame));
 		BigDecimal stepWidht = BigDecimal.valueOf((long) step.executeGeneric(frame));
 		

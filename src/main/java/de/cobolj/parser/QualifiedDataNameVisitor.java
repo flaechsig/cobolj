@@ -10,14 +10,14 @@ import de.cobolj.nodes.StringNode;
  * @author flaechsig
  *
  */
-public class QualifiedDataNameVisitor extends Cobol85BaseVisitor<StringNode> {
+public class QualifiedDataNameVisitor extends Cobol85BaseVisitor<String> {
 
 	public static QualifiedDataNameVisitor INSTANCE = new QualifiedDataNameVisitor();
 
 	private QualifiedDataNameVisitor() {}
 
 	@Override
-	public StringNode visitQualifiedDataName(Cobol85Parser.QualifiedDataNameContext ctx) {
+	public String visitQualifiedDataName(Cobol85Parser.QualifiedDataNameContext ctx) {
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat2());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat3());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat4());

@@ -9,11 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.oracle.truffle.api.frame.Frame;
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameUtil;
 
 import de.cobolj.parser.FileDescriptionEntryNode;
+import de.cobolj.parser.StartRuleVisitor;
+import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;
-import de.cobolj.statement.WriteElementaryItemNode;
 
 /**
  * Context, der zur Ausführungszeit eines Cobol-Programms benötigt wird. Er
@@ -51,18 +55,6 @@ public class CobolContext {
 		return in;
 	}
 
-	/** Liefert den FileDescriptor zu einem Record-Namen */
-	public FileDescriptionEntryNode getFileDescriptorByRecord(String recordName) {
-		for (FileDescriptionEntryNode fd : fileDescriptor) {
-			for (WriteElementaryItemNode pic : fd.getDataDescriptionEntries()) {
-				if (pic.getValueNode().getPicture().getName().equals(recordName)) {
-					return fd;
-				}
-			}
-		}
-		throw new RuntimeException("FileDescriptor nicht gefunden");
-	}
-
 	/** Liefert den FileDescriptor zu einen Namen */
 	public FileDescriptionEntryNode getFileDescriptorByName(String name) {
 		for (FileDescriptionEntryNode fd : fileDescriptor) {
@@ -72,7 +64,19 @@ public class CobolContext {
 		}
 		throw new RuntimeException("FileDescriptor nicht gefunden");
 	}
-	
+
+	/** Liefert den FileDescriptor zu einen Namen */
+	public FileDescriptionEntryNode getFileDescriptorByRecord(String name) {
+		for (FileDescriptionEntryNode fd : fileDescriptor) {
+			for (Picture pic : fd.getPictures()) {
+				if (pic.getName().equals(name)) {
+					return fd;
+				}
+			}
+		}
+		throw new RuntimeException("FileDescriptor nicht gefunden");
+	}
+
 	@Deprecated
 	public FileDescriptionEntryNode getFileDescriptor(FrameSlot slot) {
 		return getFileDescriptorByName(slot.getIdentifier().toString());
@@ -83,26 +87,66 @@ public class CobolContext {
 		this.fileDescriptor.add(fileDescriptionEntryNode);
 	}
 
-	public void putPicture(Picture pic) {
-		List<Picture> pictures = records.get(pic.getName());
-		if (pictures == null) {
-			pictures = new ArrayList<>();
-			records.put(pic.getName(), pictures);
+	/**
+	 * Fügt ein Picture dem Datenspeicher hinzu. Dabei werden ggf. mehrere Slots
+	 * angelegt, um die unterschiedlichen Zugriffspfade abzubilden. Dabei ist es
+	 * möglich, dass ein Element auf Teilpfaden nicht eindeutig ist. Dies führt beim
+	 * Zugriff auf das Picture zu einer Uneindeutigkeit, die mit einer Exception
+	 * quitiert wird.
+	 * 
+	 * @param frame
+	 * @param pic
+	 */
+	public void putPicture(Frame frame, Picture pic) {
+		assert frame != null : "frame darf nicht null sein";
+		assert pic != null : "Picture muss angegeben werden";
+
+		// Aufbauen aller Zugriffspfade
+		List<String> pfade = new ArrayList<>();
+		Picture actPic = pic;
+		String actPfad = actPic.getName();
+		pfade.add(actPfad);
+		while (actPic.getParent() != null) {
+			actPic = actPic.getParent();
+			actPfad += " OF ";
+			actPfad += actPic.getName();
+			pfade.add(actPfad);
 		}
-		pictures.add(pic);
+
+		// Für jeden Pfad einen Slot anlegen. Vorher prüfen, ob er bereits existiert und
+		// ggf.
+		// durch ein AmbigousPicture (Merker) ersetzen.
+		for (String pfad : pfade) {
+			FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(pfad);
+			if (slot != null) {
+				frame.setObject(slot, AmbigousPicture.INSTANCE);
+			} else {
+				slot = frame.getFrameDescriptor().addFrameSlot(pfad);
+				frame.setObject(slot, pic);
+			}
+		}
 	}
 
-	public Picture getPicture(String name) {
-		List<Picture> pictures = records.get(name);
-		if (pictures == null) {
-			throw new RuntimeException("Angefragter Record existiert nicht: " + name);
-		}
-		return pictures.get(0);
-	}
+	/**
+	 * Liefert das Picture zum Namen. Wenn der Name nicht eindeutig aufgelöst
+	 * wereden kann, wird eine Exception geworfen.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Picture getPicture(Frame frame, String name) {
+		assert frame != null : "frame darf nicht null sein";
+		assert name != null : "Name muss angegeben werden";
 
-	@Deprecated
-	public Picture getPicture(FrameSlot slot) {
-		return getPicture(slot.getIdentifier().toString());
+		FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(name);
+		if (slot == null) {
+			throw new RuntimeException("Picture existiert nicht (" + name + ")");
+		}
+		Picture pic = (Picture) FrameUtil.getObjectSafe(frame, slot);
+		if (pic == AmbigousPicture.INSTANCE) {
+			throw new RuntimeException("Picture nicht eindeutig. Benötigt Qualifizierung (" + name + ")");
+		}
+		return pic;
 	}
 
 }

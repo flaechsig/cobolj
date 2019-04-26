@@ -11,10 +11,9 @@ import com.oracle.truffle.api.frame.FrameSlotKind;
 import de.cobolj.nodes.LiteralNode;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.nodes.StringNode;
+import de.cobolj.parser.Cobol85Parser.GenerateStatementContext;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;
-import de.cobolj.statement.WriteElementaryItemNode;
-import de.cobolj.statement.WriteElementaryItemNodeGen;
 
 /**
  * 
@@ -31,7 +30,7 @@ import de.cobolj.statement.WriteElementaryItemNodeGen;
  * @author flaechsig
  *
  */
-public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<WriteElementaryItemNode> {
+public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Picture> {
 	private static LinkedList<Integer> levelStack = new LinkedList<>();
 	private static LinkedList<PictureGroup> groupStack = new LinkedList<>();
 
@@ -85,31 +84,32 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 		}
 	}
 
+	/**
+	 * FIXME: Nach Umstellung auf Picture muss hier noch einmal überarbeitet werden.
+	 */
 	@Override
-	public WriteElementaryItemNode visitDataDescriptionEntryFormat1(
-			Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
-		StringNode name = null;
-		PictureNode picture = null;
+	public Picture visitDataDescriptionEntryFormat1(Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
+		String name = null; // Name des Picture
+		Picture picture = null;
 		List<LiteralNode> values = new ArrayList<>();
 		// FIXME: Vervollständigen
 		
 		checkLevel(ctx);
 		
 		if (ctx.dataName() != null) {
-			name = ctx.dataName().accept(DataNameVisitor.INSTANCE);
+			name = ctx.dataName().accept(DataNameVisitor.INSTANCE).toString();
 		}
 
 		if (ctx.dataPictureClause().size() > 0) {
-			DataPictureClauseVisitor visitor = new DataPictureClauseVisitor(name.toString());
-			picture = ctx.dataPictureClause().get(0).accept(visitor); // TODO: Bin irritiert, das hier eine List sein
-																		// soll
-			addToGroup(name.toString(), picture.getPicture());
+			DataPictureClauseVisitor visitor = new DataPictureClauseVisitor(name, groupStack.peek());
+			picture = ctx.dataPictureClause().get(0).accept(visitor); // TODO: Bin irritiert, das hier eine List sein soll
+			addToGroup(name, picture);
 		} else {
 			// Es muss sich um eine PictureGroup handeln, da kein Picture angegeben ist
-			PictureGroup group = new PictureGroup(name.toString());
-			picture = new PictureNode(group);
+			PictureGroup group = new PictureGroup(name, groupStack.peek());
+			picture = group;
 			levelStack.push(getLevelNumber(ctx));
-			addToGroup(name.toString(), group);
+			addToGroup(name, group);
 			groupStack.push(group);
 		}
 
@@ -123,9 +123,8 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 		}
 		if (!values.isEmpty()) {
 			// FIXME: Hier wird nur das erste Element verarbeitet. War
-			picture.getPicture().setValue(values.get(0));
+			picture.setValue(values.get(0));
 		}
-		FrameSlot slot = StartRuleVisitor.descriptor.findOrAddFrameSlot(name.toString(), FrameSlotKind.Object);
-		return WriteElementaryItemNodeGen.create(picture, slot);
+		return picture;
 	}
 }

@@ -21,8 +21,8 @@ import de.cobolj.parser.IdentifierVisitor;
 public class MoveCorrespondingToStatementVisitor extends Cobol85BaseVisitor<MoveCorrespondignToStatementNode> {
 	@Override
 	public MoveCorrespondignToStatementNode visitMoveCorrespondingToStatement(MoveCorrespondingToStatementContext ctx) {
-		FrameSlot sending = ctx.moveCorrespondingToSendingArea.accept(IdentifierVisitor.INSTANCE);
-		List<FrameSlot> receiving = ctx.moveCorrespondingToReceivingArea
+		String sending = ctx.moveCorrespondingToSendingArea.accept(IdentifierVisitor.INSTANCE);
+		List<String> receiving = ctx.moveCorrespondingToReceivingArea
 				.stream()
 				.map(result -> result.accept(IdentifierVisitor.INSTANCE))
 				.collect(Collectors.toList());

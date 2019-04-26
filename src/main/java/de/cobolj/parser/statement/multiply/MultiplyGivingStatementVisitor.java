@@ -30,7 +30,7 @@ public class MultiplyGivingStatementVisitor extends Cobol85BaseVisitor<MathImplN
 		List<ExpressionNode> left = new ArrayList<>();
 		ExpressionNode right;
 		List<CalculationResult> results;
-		List<FrameSlot> slots = new ArrayList<>();
+		List<String> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 
 		LiteralOrIdentifierVisitor literaltOrIdentifierVisitor = new LiteralOrIdentifierVisitor();
