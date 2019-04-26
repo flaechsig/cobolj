@@ -2,6 +2,7 @@ package de.cobolj.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -20,15 +21,22 @@ public class CloseFileNode extends CobolNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-
-		FrameSlot fsSlot = StartRuleVisitor.descriptor.findFrameSlot(fileName.getIdentifier().toString()+"_FS");
-		Object stream = com.oracle.truffle.api.frame.FrameUtil.getObjectSafe(frame, fsSlot);
+		FileDescriptionEntryNode fd = getContext().getFileDescriptor(fileName);
+		Object stream = fd.getStream();
 		if(stream == null) {
 			throw new RuntimeException("File not open");
 		}
 		if(stream instanceof InputStream) {
 			try {
 				((InputStream)stream).close();
+				fd.setStream(null);
+			} catch (IOException e) {
+				// Exception beim schließen kann ignoriert werden
+			}
+		} else if(stream instanceof OutputStream) {
+			try {
+				((OutputStream)stream).close();
+				fd.setStream(null);
 			} catch (IOException e) {
 				// Exception beim schließen kann ignoriert werden
 			}

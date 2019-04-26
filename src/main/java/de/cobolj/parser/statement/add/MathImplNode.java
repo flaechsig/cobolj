@@ -12,7 +12,6 @@ import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.runtime.NumericPicture;
-import de.cobolj.util.FrameUtil;
 
 /**
  * Repräsentiert die möglichen mathematischen Implementierungen
@@ -126,7 +125,8 @@ public abstract class MathImplNode extends CobolNode {
 		List<BigDecimal> rightResult = new ArrayList<>();
 		for (int i = 0; i < result.length; i++) {
 			FrameSlot slot = result[i];
-			rightResult.add(FrameUtil.getBigDecimal(frame, slot));
+//			rightResult.add(FrameUtil.getBigDecimal(frame, slot));
+			rightResult.add(((NumericPicture)getContext().getPicture(slot)).getBigDecimal());
 		}
 
 		// Eigentliche Berechnung in Sub-Klassen ausgelagert
@@ -138,7 +138,8 @@ public abstract class MathImplNode extends CobolNode {
 		for (BigDecimal value : results) {
 			FrameSlot slot = result[i];
 			boolean toRound = this.rounded[i];
-			NumericPicture picture  = FrameUtil.getNumericPicture(frame, slot);
+//			NumericPicture picture  = FrameUtil.getNumericPicture(frame, slot);
+			NumericPicture picture = (NumericPicture) getContext().getPicture(slot);
 			if (toRound) {
 				value = value.setScale(picture.getScale(), RoundingMode.HALF_UP);
 			}

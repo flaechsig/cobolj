@@ -2,7 +2,6 @@ package de.cobolj.parser;
 
 import java.io.InputStream;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -33,17 +32,23 @@ public class ReadStatementNode extends StatementNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
+		FileDescriptionEntryNode fd = getContext().getFileDescriptorByName(fileBase);
 		// InputStream Öffnen
-		FrameSlot isSlot = StartRuleVisitor.descriptor.findFrameSlot(fileBase + "_FS");
-		InputStream is = (InputStream) FrameUtil.getObjectSafe(frame, isSlot);
-		// File-Statenstrukturen zum Input-Stream
-		FrameSlot dataSlot = StartRuleVisitor.descriptor.findFrameSlot(fileBase + "_DATA");
-		WriteElementaryItemNode[] fileData = (WriteElementaryItemNode[]) FrameUtil.getObjectSafe(frame, dataSlot);
+		Object stream = fd.getStream();
+		if(stream == null) {
+			throw new RuntimeException("File-Descriptor ist nicht geöffnet");
+		}
+		InputStream is = null;
+		try  {
+			is = (InputStream) stream;
+		} catch( ClassCastException e) {
+			throw new RuntimeException("File-Descriptor ist nicht zum LESEN geöffnet", e);
+		}
 
 		int read = 0;
 		do {
-			for (WriteElementaryItemNode node : fileData) {
-				Picture pic = (Picture) FrameUtil.getObjectSafe(frame, node.getSlot());
+			for (WriteElementaryItemNode node : fd.getDataDescriptionEntries()) {
+				Picture pic = getContext().getPicture(node.getSlot());
 				if (pic instanceof PictureGroup) {
 					read = pic.parse(is);
 					if (readInto != null && read > -1) {

@@ -23,7 +23,7 @@ public class FileControlEntryNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		File file = assign.executeGeneric(frame);
-		frame.setObject(fileName, file);
+		getContext().getFileDescriptorByName(fileName.getIdentifier().toString()).setFile(file);
 		return this;
 	}
 

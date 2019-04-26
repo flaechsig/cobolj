@@ -100,13 +100,13 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<Write
 		}
 
 		if (ctx.dataPictureClause().size() > 0) {
-			DataPictureClauseVisitor visitor = new DataPictureClauseVisitor();
+			DataPictureClauseVisitor visitor = new DataPictureClauseVisitor(name.toString());
 			picture = ctx.dataPictureClause().get(0).accept(visitor); // TODO: Bin irritiert, das hier eine List sein
 																		// soll
 			addToGroup(name.toString(), picture.getPicture());
 		} else {
 			// Es muss sich um eine PictureGroup handeln, da kein Picture angegeben ist
-			PictureGroup group = new PictureGroup();
+			PictureGroup group = new PictureGroup(name.toString());
 			picture = new PictureNode(group);
 			levelStack.push(getLevelNumber(ctx));
 			addToGroup(name.toString(), group);

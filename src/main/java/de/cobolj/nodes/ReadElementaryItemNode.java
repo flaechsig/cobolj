@@ -17,6 +17,7 @@ public abstract class ReadElementaryItemNode extends ExpressionNode {
 
 	@Specialization
 	protected Object readObject(VirtualFrame frame) {
-		return frame.getValue(getSlot());
+//		return frame.getValue(getSlot());
+		return getContext().getPicture(getSlot());
 	}
 }

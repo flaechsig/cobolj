@@ -3466,7 +3466,7 @@ receiveStatus
 
 releaseStatement
 :
-    RELEASE recordName
+    RELEASE recordName=qualifiedDataName
     (
         FROM qualifiedDataName
     )?
@@ -3489,7 +3489,7 @@ returnInto
 
 rewriteStatement
 :
-    REWRITE recordName rewriteFrom? invalidKeyPhrase? notInvalidKeyPhrase?
+    REWRITE recordName=qualifiedDataName rewriteFrom? invalidKeyPhrase? notInvalidKeyPhrase?
     END_REWRITE?
 ;
 
@@ -3986,7 +3986,7 @@ useDebugOn
 
 writeStatement
 :
-    WRITE recordName writeFromPhrase? writeAdvancingPhrase?
+    WRITE recordName=qualifiedDataName writeFromPhrase? writeAdvancingPhrase?
     writeAtEndOfPagePhrase? writeNotAtEndOfPagePhrase? invalidKeyPhrase?
     notInvalidKeyPhrase? END_WRITE?
 ;
@@ -4550,11 +4550,6 @@ programName
 :
     nonNumericLiteral
     | cobolWord
-;
-
-recordName
-:
-    qualifiedDataName
 ;
 
 reportName

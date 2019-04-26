@@ -3,7 +3,9 @@ package de.cobolj.nodes;
 import java.util.Collection;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
+@NodeInfo(shortName="CompilationUnit")
 public class CompilationUnitNode extends CobolNode {
 	@Children
 	private final ProgramUnitNode[] programUnit;

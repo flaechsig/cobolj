@@ -8,7 +8,8 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 @NodeInfo(shortName="InputOutputSecion")
 public class InputOutputSecionNode extends EnvironmentDivisionBodyNode {
 
-	private InputOutputSectionParagraphNode[] paragraphs;
+	@Children
+	private final InputOutputSectionParagraphNode[] paragraphs;
 
 	public InputOutputSecionNode(List<InputOutputSectionParagraphNode> paragraphs) {
 		this.paragraphs = paragraphs.toArray(new InputOutputSectionParagraphNode[] {});

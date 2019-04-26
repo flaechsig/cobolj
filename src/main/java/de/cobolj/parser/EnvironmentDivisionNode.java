@@ -10,7 +10,8 @@ import de.cobolj.nodes.CobolNode;
 @NodeInfo(shortName="EnvironmentDivision")
 public class EnvironmentDivisionNode extends CobolNode {
 	/** Body der Environment-Section */
-	private EnvironmentDivisionBodyNode[] body;
+	@Children
+	private final EnvironmentDivisionBodyNode[] body;
 
 	public EnvironmentDivisionNode(List<EnvironmentDivisionBodyNode> body) {
 		this.body = body.toArray(new EnvironmentDivisionBodyNode[] {});

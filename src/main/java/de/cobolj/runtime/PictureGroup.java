@@ -3,9 +3,7 @@ package de.cobolj.runtime;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
 import com.oracle.truffle.api.interop.MessageResolution;
@@ -15,10 +13,10 @@ import de.cobolj.phrase.SizeOverflowException;
 @MessageResolution(receiverType = PictureX.class)
 public class PictureGroup extends Picture {
 
-	private LinkedHashMap<String, Picture> children = new LinkedHashMap<>();
+	private List<Picture> children = new ArrayList<>();
 
-	public PictureGroup() {
-		super(0);
+	public PictureGroup(String name) {
+		super(name, 0);
 	}
 
 	@Override
@@ -36,17 +34,19 @@ public class PictureGroup extends Picture {
 		PictureGroup other = (PictureGroup) object;
 		
 		clear();
-		for(Entry<String, Picture> entry :  children.entrySet()) {
-			Picture otherPic = other.children.get(entry.getKey());
-			if(otherPic != null) {
-				entry.getValue().setValue(otherPic);
-			}	
+		for(Picture otherPicture : other.children) {
+			for(Picture childPicture : children) {
+				if(otherPicture.name.equals(childPicture.name))  {
+					childPicture.setValue(otherPicture.getValue());
+					break;
+				}
+			}
 		}
 	}
 
 	@Override
 	public Collection<Picture> getValue() {
-		return children.values();
+		return children;
 	}
 
 	/**
@@ -56,10 +56,12 @@ public class PictureGroup extends Picture {
 	 * @param picture Picture-Eintrag, der der Gruppe hinzugefügt wird.
 	 */
 	public void add(String name, Picture picture) {
-		if(children.containsKey(name)) {
-			throw new IllegalArgumentException("PictureGroup :"+name+" bereits vorhanden");
+		for(Picture childPic : children) {
+			if(childPic.name.equals(name)) {
+				throw new IllegalArgumentException("PictureGroup :"+name+" bereits vorhanden");
+			}
 		}
-		this.children.put(name, picture);
+		this.children.add(picture);
 	}
 
 	@Override

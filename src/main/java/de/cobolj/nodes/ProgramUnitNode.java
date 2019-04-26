@@ -11,7 +11,8 @@ public class ProgramUnitNode extends CobolNode {
 	private ProcedureDivisionNode procedureDivision;
 	@Child
 	private DataDivisionNode dataDivision;
-	private EnvironmentDivisionNode environmentDevision;
+	@Child
+	private EnvironmentDivisionNode environmentDivision;
 	
 	public void setProcedureDivision(ProcedureDivisionNode division) {
 		this.procedureDivision = division;
@@ -24,11 +25,11 @@ public class ProgramUnitNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		Object result = null;
-		if(environmentDevision != null) {
-			result = environmentDevision.executeGeneric(frame);
-		}
 		if(dataDivision != null) {
 			result = dataDivision.executeGeneric(frame);
+		}
+		if(environmentDivision != null) {
+			result = environmentDivision.executeGeneric(frame);
 		}
 		if(procedureDivision != null) {
 			result = procedureDivision.executeGeneric(frame);
@@ -37,7 +38,7 @@ public class ProgramUnitNode extends CobolNode {
 	}
 
 	public void setEnvironmentDivision(EnvironmentDivisionNode environmentDivisionNode) {
-		this.environmentDevision = environmentDivisionNode;
+		this.environmentDivision = environmentDivisionNode;
 	}
 
 

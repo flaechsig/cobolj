@@ -26,7 +26,7 @@ public class FileDescriptionEntryVisitor extends Cobol85BaseVisitor<FileDescript
 		String fileName = ctx.fileName.getText();
 		List<WriteElementaryItemNode> dataDescriptionEntries = ctx.dataDescriptionEntry()
 				.stream()
-				.map(result -> result.accept(DataDescriptionEntryVisitor.INSTANCE))
+				.map(result -> result.accept( DataDescriptionEntryVisitor.INSTANCE) )
 				.collect(Collectors.toList());
 		
 		return new FileDescriptionEntryNode(desc, fileName, dataDescriptionEntries);

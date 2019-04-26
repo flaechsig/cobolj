@@ -26,8 +26,8 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 	/** Anzahl der Stellen nach dem Komma */
 	private final int scale;
 
-	public Picture9V(int precession, int scale, boolean signed) {
-		super(precession);
+	public Picture9V(String name, int precession, int scale, boolean signed) {
+		super(name, precession);
 		this.precession = precession;
 		this.signed = signed;
 		this.scale = scale;

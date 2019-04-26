@@ -2,7 +2,6 @@ package de.cobolj.parser.arithmetic;
 
 import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.MultDivContext;
 import de.cobolj.parser.Cobol85Parser.MultDivsContext;
 

@@ -37,15 +37,15 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
-	public Picture9(int size) {
-		this(size, false, 0);
+	public Picture9(String name, int size) {
+		this(name, size, false, 0);
 	}
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
-	public Picture9(int size, boolean signed) {
-		this(size, signed, 0);
+	public Picture9(String name, int size, boolean signed) {
+		this(name, size, signed, 0);
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	 * @param signed Kennzeichen, ob diese Instanz ein Vorzeichen mit sich führt
 	 * @param value  Initialer Wert dieser Instanz
 	 */
-	public Picture9(int size, boolean signed, long value) {
-		super(size);
+	public Picture9(String name, int size, boolean signed, long value) {
+		super(name, size);
 		assert size <= 31 : "Der Parameter 'size' darf maximal 31 sein";
 		this.signed = signed;
 		setValue(value);

@@ -8,7 +8,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.runtime.NumericPicture;
-import de.cobolj.util.FrameUtil;
 
 /**
  * PERFORM AFTER. Mit diesem Konstrukt werden verschachtelte Schleifen
@@ -42,7 +41,8 @@ public class PerformAfterNode extends ExpressionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		NumericPicture picture = FrameUtil.getNumericPicture(frame, var);
+//		NumericPicture picture = FrameUtil.getNumericPicture(frame, var);
+		NumericPicture picture = (NumericPicture) getContext().getPicture(var);
 		picture.setValue(start.executeGeneric(frame));
 		BigDecimal stepWidht = BigDecimal.valueOf((long) step.executeGeneric(frame));
 

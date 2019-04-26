@@ -14,8 +14,8 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 	
 	private String value = "";
 	
-	public PictureX(int size) {
-		super(size);
+	public PictureX(String name, int size) {
+		super(name, size);
 	}
 
 	@Override

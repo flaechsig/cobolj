@@ -9,11 +9,10 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.phrase.PhraseNode;
+import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.runtime.NumericPicture;
 import de.cobolj.statement.StatementNode;
-import de.cobolj.util.FrameUtil;
 
 /**
  * Implementierung des COMPUTE Statement.
@@ -58,7 +57,8 @@ public class ComputeStatementNode extends StatementNode {
 		for (int i = 0; i < slots.length; i++) {
 			FrameSlot slot = slots[i];
 			boolean toRound = this.rounded[i];
-			NumericPicture picture = FrameUtil.getNumericPicture(frame, slot);
+//			NumericPicture picture = FrameUtil.getNumericPicture(frame, slot);
+			NumericPicture picture = (NumericPicture) getContext().getPicture(slot);
 			BigDecimal value = arithmeticResult;
 			if (toRound) {
 				value = value.setScale(picture.getScale(), RoundingMode.HALF_UP);

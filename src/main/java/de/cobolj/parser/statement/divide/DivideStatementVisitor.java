@@ -1,9 +1,8 @@
 package de.cobolj.parser.statement.divide;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.PhraseVisitor;
 import de.cobolj.parser.Cobol85Parser.DivideStatementContext;
+import de.cobolj.parser.PhraseVisitor;
 import de.cobolj.parser.statement.add.MathImplNode;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.MathStatementNode;

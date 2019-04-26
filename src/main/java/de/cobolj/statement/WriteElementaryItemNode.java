@@ -9,6 +9,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureNode;
+import de.cobolj.runtime.Picture;
 
 /**
  * Legt ein PictureNode als FrameSlot an.
@@ -21,6 +22,8 @@ import de.cobolj.nodes.PictureNode;
 @NodeField(name = "slot", type = FrameSlot.class)
 public abstract class WriteElementaryItemNode extends ExpressionNode {
 
+	public abstract PictureNode getValueNode();
+	
 	/**
 	 * @return Liefert den Slot für den Storage.
 	 */
@@ -36,7 +39,9 @@ public abstract class WriteElementaryItemNode extends ExpressionNode {
 	 */
 	@Specialization
 	protected Object write(VirtualFrame frame, Object value) {
+		Picture pic = (Picture) value;
 		frame.setObject(getSlot(), value);
+		getContext().putPicture(pic);
 		return value;
 	}
 

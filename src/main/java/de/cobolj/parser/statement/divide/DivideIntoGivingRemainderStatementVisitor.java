@@ -8,7 +8,6 @@ import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.DivideIntoGivingStatementRemainderContext;
 import de.cobolj.parser.statement.CalculationResult;
 import de.cobolj.parser.statement.LiteralOrIdentifierVisitor;

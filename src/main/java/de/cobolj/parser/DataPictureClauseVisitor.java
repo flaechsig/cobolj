@@ -12,12 +12,18 @@ import de.cobolj.nodes.PictureStringVisitor;
  *
  */
 public class DataPictureClauseVisitor extends Cobol85BaseVisitor<PictureNode> {
+	/** Name des Picture */
+	private String name;
+
+	public DataPictureClauseVisitor(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public PictureNode visitDataPictureClause(Cobol85Parser.DataPictureClauseContext ctx) {
 		String picString = ctx.pictureString().accept(new PictureStringVisitor());
 						
-		return new PictureNode(PictureFactory.create(picString)); 
+		return new PictureNode(PictureFactory.create(name, picString)); 
 	}
 
 }

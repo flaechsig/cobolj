@@ -8,7 +8,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.runtime.Picture;
 import de.cobolj.statement.StatementNode;
-import de.cobolj.util.FrameUtil;
 
 /**
  * Implementierung des "einfachen" MOVE CORR ... TO ...
@@ -35,9 +34,11 @@ public class MoveCorrespondignToStatementNode extends StatementNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Picture sendPic = FrameUtil.getPicture(frame, sending);
+		Picture sendPic = getContext().getPicture(sending.getIdentifier().toString());
+//		Picture sendPic = FrameUtil.getPicture(frame, sending);
 		for (FrameSlot slot : receiving) {
-			Picture pic = FrameUtil.getPicture(frame, slot);
+//			Picture pic = FrameUtil.getPicture(frame, slot);
+			Picture pic = getContext().getPicture(slot.getIdentifier().toString());
 			pic.clear();
 			pic.setValue(sendPic);
 		}

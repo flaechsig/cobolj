@@ -15,7 +15,7 @@ public class PictureFactory {
 	 * @param picture Langform des Picture-Strings
 	 * @return Picture-Node des entsprechden Typs
 	 */
-	public static Picture create(String picture) {
+	public static Picture create(String name, String picture) {
 		// Folgende Zeichen dürfen maximal einmal vorhanden sein
 		assert StringUtils.countMatches(picture, "S") <= 1 : "S darf maximal einmal im Picture-String auftreten";
 		assert StringUtils.countMatches(picture, "V") <= 1 : "V darf maximal einmal im Picture-String auftreten";
@@ -24,27 +24,27 @@ public class PictureFactory {
 		assert StringUtils.countMatches(picture, "DB") <= 1 : "DB darf maximal einmal im Picture-String auftreten";
 		
 		if(StringUtils.containsOnly(picture, 'A')) {
-			return createAlphabeticPicuture(picture);
+			return createAlphabeticPicuture(name, picture);
 		} else if(StringUtils.containsOnly(picture, '9', 'P', 'S', 'V')) {
-			return createNumericPicture(picture);
+			return createNumericPicture(name, picture);
 		} else if(StringUtils.containsOnly(picture, '9', 'A', 'X')) {
-			return createAlphNumericPicuture(picture);
+			return createAlphNumericPicuture(name, picture);
 		} else {
 			throw new RuntimeException("Not implemented");
 		}
 	}
 
-	private static Picture createAlphabeticPicuture(String picture) {
+	private static Picture createAlphabeticPicuture(String name, String picture) {
 		assert picture.length() < 256; // Maximale Lännge dieses Datentyps
-		return new PictureA(picture.length());
+		return new PictureA(name, picture.length());
 	}
 	
-	private static Picture createAlphNumericPicuture(String picture) {
+	private static Picture createAlphNumericPicuture(String name, String picture) {
 		assert picture.length() < 256; // Maximale Lännge dieses Datentyps
-		return new PictureA(picture.length());
+		return new PictureA(name, picture.length());
 	}
 
-	private static Picture createNumericPicture(String picture) {
+	private static Picture createNumericPicture(String name, String picture) {
 		assert StringUtils.countMatches(picture, '9') <=18 : "Maximale Länge 18"; 
 		
 		boolean sign = StringUtils.contains(picture, 'S');
@@ -56,6 +56,6 @@ public class PictureFactory {
 			precission = precission-scale;
 		}
 		
-		return new Picture9V(precission, scale, sign);
+		return new Picture9V(name, precission, scale, sign);
 	}
 }
