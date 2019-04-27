@@ -2,10 +2,14 @@ package de.cobolj.statement.string;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.phrase.PhraseNode;
+import de.cobolj.runtime.NumericPicture;
 import de.cobolj.runtime.Picture;
 import de.cobolj.statement.StatementNode;
 
@@ -17,11 +21,15 @@ public class StringStatementNode extends StatementNode {
 	private PhraseNode onOverflowPhrase;
 	@Child
 	private PhraseNode notOnOverflowPhrase;
-	private String stringIntoPhraseSlot;
+	@Child
+	private PictureNode stringIntoPhrase;
+	@Child
+	private PictureNode stringWithPointerPhrase;
 
-	public StringStatementNode(List<StringSendingPhraseNode> stringSending, String stringIntoPhraseSlot, PhraseNode onOverflowPhrase, PhraseNode notOnOverflowPhrase) {
+	public StringStatementNode(List<StringSendingPhraseNode> stringSending, PictureNode stringIntoPhrase, PictureNode stringWithPointerPhrase, PhraseNode onOverflowPhrase, PhraseNode notOnOverflowPhrase) {
 		this.stringSending = stringSending.toArray(new StringSendingPhraseNode[] {});
-		this.stringIntoPhraseSlot = stringIntoPhraseSlot;
+		this.stringIntoPhrase = stringIntoPhrase;
+		this.stringWithPointerPhrase = stringWithPointerPhrase;
 		this.onOverflowPhrase = onOverflowPhrase;
 		this.notOnOverflowPhrase = notOnOverflowPhrase;
 	}
@@ -30,12 +38,19 @@ public class StringStatementNode extends StatementNode {
 	public Object executeGeneric(VirtualFrame frame) {
 		StringBuffer buf = new StringBuffer();
 		
+		NumericPicture pointer = null;
+		if(stringWithPointerPhrase != null) {
+			pointer = (NumericPicture) stringWithPointerPhrase.executeGeneric(frame);
+			String filler = StringUtils.leftPad("", pointer.getBigDecimal().intValue()-1);
+			buf.append(filler);
+		}
+		
 		for(ExpressionNode sending : stringSending) {
 			buf.append(sending.executeGeneric(frame));
 		}
 		
 		String resultString = buf.toString();
-		Picture pic = getContext().getPicture(frame, stringIntoPhraseSlot);
+		Picture pic = stringIntoPhrase.executeGeneric(frame);
 		pic.setValue(resultString);
 		
 		if(onOverflowPhrase != null && resultString.length() > pic.getSize()) {
@@ -43,6 +58,10 @@ public class StringStatementNode extends StatementNode {
 		}
 		if(notOnOverflowPhrase != null && resultString.length() <= pic.getSize()) {
 			notOnOverflowPhrase.executeGeneric(frame);
+		}
+		if(pointer != null) {
+			int newPos = Math.min(resultString.length(), pic.getSize());
+			pointer.setValue(newPos+1);
 		}
 		
 		return this;

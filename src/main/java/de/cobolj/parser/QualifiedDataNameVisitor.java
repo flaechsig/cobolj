@@ -21,12 +21,11 @@ public class QualifiedDataNameVisitor extends Cobol85BaseVisitor<String> {
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat2());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat3());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat4());
-		// FIXME: Vervollständigen
 		
+		String result = null;
 		if (ctx.qualifiedDataNameFormat1() != null) {
-			return ctx.qualifiedDataNameFormat1().accept(QualifiedDataNameFormat1Visitor.INSTANCE);
-		} else {
-			throw new RuntimeException("Not Implemented");
+			result =  ctx.qualifiedDataNameFormat1().accept(QualifiedDataNameFormat1Visitor.INSTANCE);
 		}
+		return result;
 	}
 }

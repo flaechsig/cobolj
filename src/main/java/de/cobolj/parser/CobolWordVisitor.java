@@ -10,6 +10,6 @@ public class CobolWordVisitor extends Cobol85BaseVisitor<StringNode> {
 
 	@Override
 	public StringNode visitCobolWord(Cobol85Parser.CobolWordContext ctx) {
-		return new StringNode(ctx.getText());
+		return new StringNode(ctx.getText().toUpperCase());
 	}
 }
