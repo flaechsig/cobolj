@@ -3,6 +3,7 @@ package de.cobolj.parser;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.parser.Cobol85Parser.CloseFileContext;
+import de.cobolj.statement.close.CloseFileNode;
 
 /**
  * closeFile : fileName=identifier ( closeReelUnitStatement |

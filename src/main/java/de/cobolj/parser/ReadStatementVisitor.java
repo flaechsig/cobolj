@@ -3,6 +3,7 @@ package de.cobolj.parser;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85Parser.ReadStatementContext;
 import de.cobolj.phrase.PhraseNode;
+import de.cobolj.statement.read.ReadStatementNode;
 
 /**
  * readStatement : READ fileName=IDENTIFIER NEXT? RECORD? readInto? readWith?

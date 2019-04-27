@@ -1,6 +1,7 @@
 package de.cobolj.parser;
 
 import de.cobolj.parser.Cobol85Parser.WriteStatementContext;
+import de.cobolj.statement.write.WriteStatementNode;
 
 /**
  * WRITE recordName writeFromPhrase? writeAdvancingPhrase?

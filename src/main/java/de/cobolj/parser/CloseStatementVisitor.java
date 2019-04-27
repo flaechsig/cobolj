@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85Parser.CloseStatementContext;
+import de.cobolj.statement.close.CloseFileNode;
+import de.cobolj.statement.close.CloseStatementNode;
 
 /**
  * closeStatement : CLOSE closeFile+ ;

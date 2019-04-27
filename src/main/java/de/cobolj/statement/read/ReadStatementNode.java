@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.statement.read;
 
 import java.io.InputStream;
 
@@ -7,6 +7,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.parser.FileDescriptionEntryNode;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;

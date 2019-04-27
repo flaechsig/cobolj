@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.statement.close;
 
 import java.util.List;
 

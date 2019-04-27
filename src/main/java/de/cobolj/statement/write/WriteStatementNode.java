@@ -1,4 +1,4 @@
-package de.cobolj.parser;
+package de.cobolj.statement.write;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,6 +8,7 @@ import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.parser.FileDescriptionEntryNode;
 import de.cobolj.statement.StatementNode;
 
 @NodeInfo(shortName = "WriteStatement")
