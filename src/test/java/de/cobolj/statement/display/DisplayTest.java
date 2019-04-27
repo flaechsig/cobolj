@@ -11,12 +11,4 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class DisplayTest extends CobolBaseTest {
-
-	/**
-	 * @return Liste aller Test-Objekte
-	 */
-	@DataProvider(name = "cobolTests")
-	public Object[] diplayTests() {
-		return new Object[] { "display-1", "display-2", "display-3",};
-	}
 }

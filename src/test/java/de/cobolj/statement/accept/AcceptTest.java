@@ -22,7 +22,6 @@ import mockit.Mock;
 import mockit.MockUp;
 
 /**
- * Testfälle für das ACCEPT Statement
  * 
  * @author flaechsig
  *

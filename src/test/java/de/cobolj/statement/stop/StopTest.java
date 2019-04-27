@@ -11,12 +11,4 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class StopTest extends CobolBaseTest {
-
-	/**
-	 * @return Liste aller Test-Objekte
-	 */
-	@DataProvider(name = "cobolTests")
-	public Object[] diplayTests() {
-		return new Object[] { "stop-1", "stop-2"};
-	}
 }
