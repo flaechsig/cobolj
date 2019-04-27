@@ -3779,47 +3779,13 @@ stopStatement
 
 stringStatement
 :
-    STRING stringSendingPhrase+ stringIntoPhrase stringWithPointerPhrase?
+    STRING stringSendingPhrase+ INTO stringIntoPhrase=identifier stringWithPointerPhrase?
     onOverflowPhrase? notOnOverflowPhrase? END_STRING?
 ;
 
 stringSendingPhrase
 :
-    stringSending+
-    (
-        stringDelimitedByPhrase
-        | stringForPhrase
-    )
-;
-
-stringSending
-:
-    identifier
-    | literal
-;
-
-stringDelimitedByPhrase
-:
-    DELIMITED BY?
-    (
-        SIZE
-        | identifier
-        | literal
-    )
-;
-
-stringForPhrase
-:
-    FOR
-    (
-        identifier
-        | literal
-    )
-;
-
-stringIntoPhrase
-:
-    INTO identifier
+    stringSending+=literalOrIdentifier+ DELIMITED BY? ( SIZE | referenz=literalOrIdentifier ) 
 ;
 
 stringWithPointerPhrase
