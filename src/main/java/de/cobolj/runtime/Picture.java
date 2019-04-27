@@ -84,4 +84,8 @@ public abstract class Picture implements TruffleObject {
 	public PictureGroup getParent() {
 		return parent;
 	}
+
+	public int getSize() {
+		return size;
+	}
 }

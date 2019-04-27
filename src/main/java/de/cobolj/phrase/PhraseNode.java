@@ -19,7 +19,7 @@ import de.cobolj.statement.StatementNode;
  * @author flaechsig
  *
  */
-@NodeInfo(shortName = "NotOnSizeError")
+@NodeInfo(shortName = "Phrase")
 public class PhraseNode extends CobolNode {
 
 	@Children

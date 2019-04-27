@@ -7,6 +7,8 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.StringStatementContext;
 import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.ParserHelper;
+import de.cobolj.parser.PhraseVisitor;
+import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.string.StringSendingPhraseNode;
 import de.cobolj.statement.string.StringStatementNode;
 
@@ -23,12 +25,20 @@ public class StringStatementVisitor extends Cobol85BaseVisitor<StringStatementNo
 	@Override
 	public StringStatementNode visitStringStatement(StringStatementContext ctx) {
 		ParserHelper.notImplemented(ctx.stringWithPointerPhrase());
-		ParserHelper.notImplemented(ctx.onOverflowPhrase());
-		ParserHelper.notImplemented(ctx.notOnOverflowPhrase());
 
+		PhraseNode onOverflowPhrase = null;
+		PhraseNode notOnOverflowPhrase = null;
 		List<StringSendingPhraseNode> stringSendingPhrase = ctx.stringSendingPhrase().stream()
 				.map(result -> result.accept(new StringSendingPhraseVisitor())).collect(Collectors.toList());
 		String stringIntoPhrase = ctx.stringIntoPhrase.accept(IdentifierVisitor.INSTANCE);
-		return new StringStatementNode(stringSendingPhrase, stringIntoPhrase);
+
+		if (ctx.onOverflowPhrase() != null) {
+			onOverflowPhrase = ctx.onOverflowPhrase().accept(new PhraseVisitor());
+		}
+		if (ctx.notOnOverflowPhrase() != null) {
+			notOnOverflowPhrase = ctx.notOnOverflowPhrase().accept(new PhraseVisitor());
+		}
+
+		return new StringStatementNode(stringSendingPhrase, stringIntoPhrase, onOverflowPhrase, notOnOverflowPhrase);
 	}
 }
