@@ -3845,65 +3845,24 @@ terminateStatement
 
 unstringStatement
 :
-    UNSTRING unstringSendingPhrase unstringIntoPhrase
-    unstringWithPointerPhrase? unstringTallyingPhrase? onOverflowPhrase?
+    UNSTRING sending=identifier (unstringDelimitPhrase unstringOrAllPhrase*)? INTO unstringInto+
+    (WITH? POINTER pointer=qualifiedDataName)? (TALLYING IN? tallying=qualifiedDataName)? onOverflowPhrase?
     notOnOverflowPhrase? END_UNSTRING?
 ;
 
-unstringSendingPhrase
+unstringDelimitPhrase
 :
-    identifier
-    (
-        unstringDelimitedByPhrase unstringOrAllPhrase*
-    )?
-;
-
-unstringDelimitedByPhrase
-:
-    DELIMITED BY? ALL?
-    (
-        identifier
-        | literal
-    )
+    DELIMITED BY? ALL? literalOrIdentifier
 ;
 
 unstringOrAllPhrase
 :
-    OR ALL?
-    (
-        identifier
-        | literal
-    )
-;
-
-unstringIntoPhrase
-:
-    INTO unstringInto+
+    OR ALL? literalOrIdentifier
 ;
 
 unstringInto
 :
-    identifier unstringDelimiterIn? unstringCountIn?
-;
-
-unstringDelimiterIn
-:
-    DELIMITER IN? identifier
-;
-
-unstringCountIn
-:
-    COUNT IN? identifier
-;
-
-unstringWithPointerPhrase
-:
-    WITH? POINTER qualifiedDataName
-;
-
-unstringTallyingPhrase
-:
-    TALLYING IN? qualifiedDataName
+    receiving=identifier (DELIMITER IN? delimiter=identifier)? (COUNT IN? countIn=identifier)?
 ;
 
 // use statement

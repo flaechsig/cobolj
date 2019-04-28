@@ -4,3 +4,7 @@ Picture:
   
 MOVE
   Krankes Verhalten der MOVE Group wird noch nicht beherrscht (Move von X auf 9)
+  
+StatementNode liefert StatementNode im execute?
+
+IdentifierVisitor liefert PicktureNode?
