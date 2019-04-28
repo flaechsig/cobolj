@@ -8,6 +8,7 @@ import de.cobolj.parser.Cobol85Parser.NotAtEndPhraseContext;
 import de.cobolj.parser.Cobol85Parser.NotOnOverflowPhraseContext;
 import de.cobolj.parser.Cobol85Parser.OnOverflowPhraseContext;
 import de.cobolj.parser.Cobol85Parser.OnSizeErrorPhraseContext;
+import de.cobolj.parser.statement.StatementVisitor;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.StatementNode;
 

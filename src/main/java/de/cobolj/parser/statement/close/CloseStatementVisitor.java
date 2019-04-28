@@ -1,8 +1,10 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.close;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.CloseStatementContext;
 import de.cobolj.statement.close.CloseFileNode;
 import de.cobolj.statement.close.CloseStatementNode;

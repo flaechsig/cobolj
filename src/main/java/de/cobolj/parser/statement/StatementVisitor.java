@@ -1,7 +1,10 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement;
 
 import org.antlr.v4.runtime.RuleContext;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.Cobol85Parser.StatementContext;
 import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
 import de.cobolj.parser.statement.add.AddStatementVisitor;
 import de.cobolj.parser.statement.compute.ComputeStatementVisitor;

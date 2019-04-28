@@ -1,7 +1,11 @@
-package de.cobolj.parser;
+package de.cobolj.parser.statement.close;
 
 import com.oracle.truffle.api.frame.FrameSlot;
 
+import de.cobolj.parser.Cobol85BaseVisitor;
+import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.IdentifierVisitor;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.CloseFileContext;
 import de.cobolj.statement.close.CloseFileNode;
 

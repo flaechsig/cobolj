@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85Parser.InputOutputSectionContext;
+import de.cobolj.statement.open.InputOutputSecionNode;
 
 /**
  * inputOutputSection: 
