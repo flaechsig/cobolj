@@ -4,6 +4,12 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.statement.stop.StopStatementNode;
 
+/**
+ * stopStatement : STOP ( RUN | literal ) ;
+ * 
+ * @author flaechsig
+ *
+ */
 public class StopStatementVisitor extends Cobol85BaseVisitor<StopStatementNode> {
 
 	@Override

@@ -17,69 +17,67 @@ import de.cobolj.parser.statement.string.StringStatementVisitor;
 import de.cobolj.parser.statement.subtract.SubtractStatementVisitor;
 import de.cobolj.statement.StatementNode;
 
+/**
+ * Das Statement verhält sich wie eine abstrakte Oberklasse zu allen Statements.
+ * 
+ * statement : acceptStatement | addStatement | alterStatement | callStatement |
+ * cancelStatement | closeStatement | computeStatement | continueStatement |
+ * deleteStatement | disableStatement | displayStatement | divideStatement |
+ * enableStatement | entryStatement | evaluateStatement | exhibitStatement |
+ * execCicsStatement | execSqlStatement | execSqlImsStatement | exitStatement |
+ * generateStatement | gobackStatement | goToStatement | ifStatement |
+ * initializeStatement | initiateStatement | inspectStatement | mergeStatement |
+ * moveStatement | multiplyStatement | openStatement | performStatement |
+ * purgeStatement | readStatement | receiveStatement | releaseStatement |
+ * returnStatement | rewriteStatement | searchStatement | sendStatement |
+ * setStatement | sortStatement | startStatement | stopStatement |
+ * stringStatement | subtractStatement | terminateStatement | unstringStatement
+ * | writeStatement ;
+ * 
+ * @author flaechsig
+ *
+ */
 public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 
+	/**
+	 * Der konkrete Typ eines Statements wird über den Namen ermittelt und anhand
+	 * des Namens die korrekte Visitor-Implementierung aufgerufen.
+	 * 
+	 */
 	@Override
 	public StatementNode visitStatement(Cobol85Parser.StatementContext ctx) {
 		Cobol85BaseVisitor<?> visitor = null;
+		// Für jedes konkrete Statement existiert im Context eine Zugriffsmethode.
+		// Allerdings liefert exakt nur eine einen Wert ungleich null. Diese ist
+		// das einzige (relevante) Child-Element bzw. der Child-Context.
 		RuleContext ctx2 = (RuleContext) ctx.getChild(0);
 		int rule = ctx2.getRuleIndex();
-		switch (rule) {
-		case Cobol85Parser.RULE_displayStatement:
-			visitor = new DisplayStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_stopStatement:
-			visitor = new StopStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_acceptStatement:
-			visitor = new AcceptStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_addStatement:
-			visitor = new AddStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_moveStatement:
-			visitor = new MoveStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_performStatement:
-			visitor = new PerformStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_computeStatement:
-			visitor = new ComputeStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_ifStatement:
-			visitor = new IfStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_subtractStatement:
-			visitor = new SubtractStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_multiplyStatement:
-			visitor = new MultiplyStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_divideStatement:
-			visitor = new DivideStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_continueStatement:
-			visitor = new ContinueStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_openStatement:
-			visitor = new OpenStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_readStatement:
-			visitor = new ReadStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_closeStatement:
-			visitor = new CloseStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_writeStatement:
-			visitor = new WriteStatementVisitor();
-			break;
-		case Cobol85Parser.RULE_stringStatement:
-			visitor = new StringStatementVisitor();
-			break;
-		default:
-			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
-		}
+		String statementName = Cobol85Parser.ruleNames[rule];
 
-		return (StatementNode) ctx2.accept(visitor);
+		// Anhande des Statement-Namens den korrekten Visitor konstruieren
+		// <Statement>Visitor -> Der erste Buchstabe ist groß geschrieben
+		// und der Statement-Name bekommte zusätzlich den Suffix "Visitor"
+		String visitorName = statementName.substring(0, 1).toUpperCase() + statementName.substring(1) + "Visitor";
+
+		// Visitor instanziieren. Dazu wird in dem bekannten Packages nach der Visitor-Klasse
+		// gesucht.
+		String statementPackage = statementName.substring(0, statementName.length()-9);
+		String packages[] = {
+				"de.cobolj.parser.statement."+statementPackage+".",
+				"de.cobolj.parser.statement."+statementPackage+"stmt.",
+				"de.cobolj.parser."
+		};
+		try {
+			Class visitorClass = null;
+			for(String packageName : packages) {
+			  try {
+				visitorClass = Class.forName(packageName+visitorName);
+		      } catch (ClassNotFoundException e){}
+			}
+			visitor = (Cobol85BaseVisitor<?>) visitorClass.newInstance();
+			return (StatementNode) ctx2.accept(visitor);
+		} catch (NullPointerException | InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException("Unbekanntes Statement: " + statementName);
+		}
 	}
 }
