@@ -5,8 +5,8 @@ import java.io.File;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 
+import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.CobolNode;
-import de.cobolj.parser.FileDescriptionEntryNode;
 
 /**
  * Repräsentation eines einzelen Files bzw. Input-Streams. Demnach liefert die

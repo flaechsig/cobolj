@@ -10,9 +10,9 @@ import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85Parser.IdentifierContext;
 import de.cobolj.parser.Cobol85Parser.IntegerLiteralContext;
 import de.cobolj.parser.Cobol85Parser.LiteralContext;
+import de.cobolj.parser.division.data.LiteralVisitor;
+import de.cobolj.parser.division.data.NumericalLiteralVisitor;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.LiteralVisitor;
-import de.cobolj.parser.NumericalLiteralVisitor;
 
 public class ExpressionNodeFactory {
 	private ExpressionNodeFactory() {

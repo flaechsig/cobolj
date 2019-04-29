@@ -5,8 +5,8 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.parser.EnvironmentDivisionBodyNode;
-import de.cobolj.parser.InputOutputSectionParagraphNode;
+import de.cobolj.division.data.InputOutputSectionParagraphNode;
+import de.cobolj.division.environtment.EnvironmentDivisionBodyNode;
 
 @NodeInfo(shortName="InputOutputSecion")
 public class InputOutputSecionNode extends EnvironmentDivisionBodyNode {

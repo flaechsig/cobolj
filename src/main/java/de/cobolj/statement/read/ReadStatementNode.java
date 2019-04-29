@@ -6,8 +6,8 @@ import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.parser.FileDescriptionEntryNode;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;

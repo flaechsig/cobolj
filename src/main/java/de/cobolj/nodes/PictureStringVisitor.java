@@ -2,8 +2,8 @@ package de.cobolj.nodes;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.PictureCarinalityVisitor;
-import de.cobolj.parser.PictureCharsVisitor;
+import de.cobolj.parser.division.data.PictureCarinalityVisitor;
+import de.cobolj.parser.division.data.PictureCharsVisitor;
 
 /**
  * 

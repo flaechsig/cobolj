@@ -8,8 +8,8 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.CobolNode;
-import de.cobolj.parser.FileDescriptionEntryNode;
 
 @NodeInfo(shortName="CloseFile")
 public class CloseFileNode extends CobolNode {

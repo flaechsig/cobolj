@@ -14,7 +14,7 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
 
-import de.cobolj.parser.FileDescriptionEntryNode;
+import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.parser.StartRuleVisitor;
 import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;

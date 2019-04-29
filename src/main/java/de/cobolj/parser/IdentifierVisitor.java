@@ -5,6 +5,7 @@ import org.antlr.v4.runtime.RuleContext;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.StringNode;
+import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
 
 /**
  * 

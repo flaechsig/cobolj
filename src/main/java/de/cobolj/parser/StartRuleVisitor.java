@@ -18,7 +18,7 @@ import de.cobolj.parser.condition.CompilationUnitVisitor;
 public class StartRuleVisitor extends Cobol85BaseVisitor<StartRuleNode>{
 
 	/** Zugrundeliegende Sprache für den Truffle-AST */
-	static CobolLanguage language;
+	static public CobolLanguage language;
 	
 	/**
 	 * Stack über Level einer Storage-Beschreibung. Wenn der Level eines 

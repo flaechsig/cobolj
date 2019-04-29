@@ -3,7 +3,7 @@ package de.cobolj.nodes;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.parser.EnvironmentDivisionNode;
+import de.cobolj.division.environtment.EnvironmentDivisionNode;
 
 @NodeInfo(shortName="ProgramUnit")
 public class ProgramUnitNode extends CobolNode {
