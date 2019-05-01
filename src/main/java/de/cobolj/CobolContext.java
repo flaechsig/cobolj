@@ -35,6 +35,8 @@ public class CobolContext {
 	private List<FileDescriptionEntryNode> fileDescriptor = new ArrayList<>();
 	/** Records */
 	private Map<String, List<Picture>> records = new HashMap<>();
+	/** Name des Cobol-Programms */
+	private String programName;
 
 	public CobolContext(InputStream in, OutputStream out) {
 		assert in != null : "in darf nicht null sein";
@@ -147,6 +149,10 @@ public class CobolContext {
 			throw new RuntimeException("Picture nicht eindeutig. Benötigt Qualifizierung (" + name + ")");
 		}
 		return pic;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
 	}
 
 }
