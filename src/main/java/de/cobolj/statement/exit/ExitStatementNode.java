@@ -8,8 +8,8 @@ public class ExitStatementNode extends StatementNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		System.out.println("ExitStatementNode nicht implementiert");
-		return "ExitStatementNode nicht implementiert";
+		// Exit-Statement hat keine weitere Funktionalität, sondern dient eher der Dokumentation
+		return this;
 	}
 
 }

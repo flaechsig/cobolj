@@ -42,9 +42,9 @@ public class ProcedureDivisionNode extends CobolNode {
 	private void initHost(VirtualFrame frame) {
 		Context ctx = Context.getCurrent();
 		Value value = ctx.getPolyglotBindings().getMember(CobolExec.USING_HOST);
-		long size = value.getArraySize();
-		
-		for(int i = 0; i<size; i++) {
+		long size = value == null ? 0 : value.getArraySize();
+
+		for (int i = 0; i < size; i++) {
 			Picture pic = getContext().getPicture(frame, usingDatanames[i]);
 			value.getArrayElement(i).as(By.class).checkAndSetValue(pic.getValue());
 		}
@@ -53,13 +53,13 @@ public class ProcedureDivisionNode extends CobolNode {
 	private void initUsing(VirtualFrame frame) {
 		Context ctx = Context.getCurrent();
 		Value value = ctx.getPolyglotBindings().getMember(CobolExec.USING_HOST);
-		long size = value.getArraySize();
-		if (usingDatanames.length != value.getArraySize()) {
+		long size = value == null ? 0 : value.getArraySize();
+		if (usingDatanames.length != size) {
 			throw new RuntimeException("Länge der USING-Liste (" + usingDatanames.length
 					+ ") stimmt nicht mit den übergebenen Parametern (" + size + ") überein");
 		}
-		
-		for(int i = 0; i<size; i++) {
+
+		for (int i = 0; i < size; i++) {
 			Picture pic = getContext().getPicture(frame, usingDatanames[i]);
 			pic.setValue(value.getArrayElement(i).as(By.class).getValue());
 		}
