@@ -2136,17 +2136,9 @@ dataWithLowerBoundsClause
 
 procedureDivision
 :
-    PROCEDURE DIVISION procedureDivisionUsingClause?
+    PROCEDURE DIVISION (USING usingDataName+=identifier+)?
     procedureDivisionGivingClause? DOT_FS procedureDeclaratives?
     procedureDivisionBody
-;
-
-procedureDivisionUsingClause
-:
-    (
-        USING
-        | CHAINING
-    ) procedureDivisionUsingParameter+
 ;
 
 procedureDivisionGivingClause
@@ -2157,42 +2149,6 @@ procedureDivisionGivingClause
     ) dataName
 ;
 
-procedureDivisionUsingParameter
-:
-    procedureDivisionByReferencePhrase
-    | procedureDivisionByValuePhrase
-;
-
-procedureDivisionByReferencePhrase
-:
-    (
-        BY? REFERENCE
-    )? procedureDivisionByReference+
-;
-
-procedureDivisionByReference
-:
-    (
-        OPTIONAL?
-        (
-            identifier
-            | fileName=IDENTIFIER
-        )
-    )
-    | ANY
-;
-
-procedureDivisionByValuePhrase
-:
-    BY? VALUE procedureDivisionByValue+
-;
-
-procedureDivisionByValue
-:
-    identifier
-    | literal
-    | ANY
-;
 
 procedureDeclaratives
 :

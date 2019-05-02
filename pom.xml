@@ -27,7 +27,7 @@
 			<plugin>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>4.7.1</version>
+				<version>4.7.2</version>
 				<configuration>
 					<visitor>true</visitor>
 					<listener>false</listener>
@@ -54,27 +54,20 @@
 	</build>
 
 	<dependencies>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4-runtime</artifactId>
-			<version>4.7.1</version>
-		</dependency>
+			<version>4.7.2</version>
+		</dependency-->
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4</artifactId>
-			<version>4.7.1</version>
-			<scope>provided</scope>
+			<version>4.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.truffle</groupId>
 			<artifactId>truffle-api</artifactId>
-			<version>1.0.0-rc5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.truffle</groupId>
-			<artifactId>truffle-dsl-processor</artifactId>
-			<version>1.0.0-rc5</version>
-			<scope>provided</scope>
+			<version>1.0.0-rc7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

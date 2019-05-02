@@ -20,9 +20,8 @@ public class DataDivisionVisitor extends Cobol85BaseVisitor<DataDivisionNode> {
 
 	@Override
 	public DataDivisionNode visitDataDivision(Cobol85Parser.DataDivisionContext ctx) {
-		DataDivisionSectionVisitor visitor = DataDivisionSectionVisitor.INSTANCE;
 		List<DataDivisionSectionNode> sections = ctx.dataDivisionSection().stream()
-				.map(division -> division.accept(visitor)).collect(Collectors.toList());
+				.map(division -> division.accept(DataDivisionSectionVisitor.INSTANCE)).collect(Collectors.toList());
 		return new DataDivisionNode(sections);
 	}
 }

@@ -1,13 +1,19 @@
 package de.cobolj.parser.division.procedure;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import de.cobolj.nodes.ProcedureDivisionBodyNode;
 import de.cobolj.nodes.ProcedureDivisionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.ProcedureDivisionContext;
+import de.cobolj.parser.IdentifierVisitor;
+import de.cobolj.parser.ParserHelper;
 
 /**
- * Die Procedure Division enthält die Ablauf-Logik eines Cobol-Programms
+ * procedureDivision : PROCEDURE DIVISION (USING usingDataName+=identifier+)?
+ * procedureDivisionGivingClause? DOT_FS procedureDeclaratives?
+ * procedureDivisionBody ;
  * 
  * @author flaechsig
  *
@@ -16,14 +22,15 @@ public class ProcedureDivisionVisitor extends Cobol85BaseVisitor<ProcedureDivisi
 
 	@Override
 	public ProcedureDivisionNode visitProcedureDivision(Cobol85Parser.ProcedureDivisionContext ctx) {
-		// FIXME: PROCEDURE DIVISION procedureDivisionUsingClause?  procedureDivisionGivingClause? DOT_FS procedureDeclaratives?  procedureDivisionBody
-		// FIXME: Bisher nur der Body umgesetzt
-		ProcedureDivisionBodyVisitor visitor = new ProcedureDivisionBodyVisitor();
-		ProcedureDivisionBodyNode bodyNode = ctx.procedureDivisionBody().accept(visitor);
-		
-		ProcedureDivisionNode division = new ProcedureDivisionNode();
-		division.setBody(bodyNode);
-		
+		ParserHelper.notImplemented(ctx.procedureDivisionGivingClause());
+		ParserHelper.notImplemented(ctx.procedureDeclaratives());
+
+		List<String> usingDatanames = ctx.usingDataName.stream().map(result -> result.accept(IdentifierVisitor.INSTANCE))
+				.collect(Collectors.toList());
+		ProcedureDivisionBodyNode bodyNode = ctx.procedureDivisionBody().accept(new ProcedureDivisionBodyVisitor());
+
+		ProcedureDivisionNode division = new ProcedureDivisionNode(usingDatanames, bodyNode);
+
 		return division;
 	}
 }

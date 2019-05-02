@@ -22,7 +22,8 @@ public class StartRuleNode extends RootNode {
 	@Override
 	public Object execute(VirtualFrame frame) {
 		try {
-			return compilationUnit.executeGeneric(frame);
+			compilationUnit.executeGeneric(frame);
+			return true;
 		} catch (StopStatementException e) {
 			// Fängt das Stop-Signal und beendet die Anwendung
 			return true;

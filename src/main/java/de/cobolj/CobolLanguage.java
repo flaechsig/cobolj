@@ -27,7 +27,7 @@ import de.cobolj.parser.StartRuleVisitor;
  * @author flaechsig
  *
  */
-@TruffleLanguage.Registration(id = CobolLanguage.ID, name = "COBOL", mimeType = CobolLanguage.MIME_TYPE, contextPolicy = ContextPolicy.SHARED)
+@TruffleLanguage.Registration(id = CobolLanguage.ID, name = "COBOL",version="85", characterMimeTypes = CobolLanguage.MIME_TYPE)
 public class CobolLanguage extends TruffleLanguage<CobolContext> {
 	public final static String ID = "cob";
 	public final static String MIME_TYPE = "application/x-cobol";

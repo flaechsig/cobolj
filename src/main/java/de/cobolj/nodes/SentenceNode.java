@@ -27,7 +27,8 @@ public class SentenceNode extends StructureNode {
 	public Object executeGeneric(VirtualFrame frame) {
 		Object last = null;
 		for (StatementNode node : statements) {
-			last = node.executeGeneric(frame);
+			node.executeGeneric(frame);
+			last = node;
 		}
 		return last;
 	}
