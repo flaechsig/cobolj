@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +29,6 @@ import mockit.MockUp;
  *
  */
 public class AcceptTest extends CobolBaseTest {
-	private static int ANZAHL_TESTFAELLE = 1;
 
 	static {
 		new MockUp<LocalDateTime>() {
@@ -43,10 +44,11 @@ public class AcceptTest extends CobolBaseTest {
 	 */
 	@DataProvider(name = "cobolTests")
 	public Object[] acceptTest() {
-		ArrayList<String> result = new ArrayList<>();
-		for (int i = 1; i <= ANZAHL_TESTFAELLE; i++) {
-			result.add("accept-" + i);
-		}
+		Collection<List<String>> result = new ArrayList<>();
+		ArrayList<String> tmpList = new ArrayList<>();
+		
+		tmpList.add("accept-1");
+		result.add(tmpList);
 		return result.toArray();
 	}
 

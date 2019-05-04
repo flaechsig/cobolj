@@ -1,6 +1,6 @@
 package de.cobolj.parser.condition;
 
-import static de.cobolj.parser.ParserUtil.check;
+import static de.cobolj.parser.ParserHelper.check;
 
 import de.cobolj.nodes.ArithmeticNode;
 import de.cobolj.nodes.ConditionNode;

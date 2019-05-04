@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -37,29 +39,36 @@ public abstract class CobolBaseTest {
 	 * @param input Name des Testfall-Tripels
 	 */
 	@Test(dataProvider = "cobolTests")
-	public void cobolTest(String input) {
+	public void cobolTest(List<String> input) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 		try {
+			int idx = this.getClass().getName().lastIndexOf('.');
+			String packageName = this.getClass().getName().substring(0,idx);
+			packageName = packageName.replace('.', '/');
+			for (String i : input) {
+				CobolExec.register("/" +packageName + "/"+ i + ".cob");
+			}
+
 			// Input File
-			InputStream fileStream = this.getClass().getResourceAsStream(input + ".cob");
+			InputStream fileStream = this.getClass().getResourceAsStream(input.get(0) + ".cob");
 			InputStreamReader fileReader = new InputStreamReader(fileStream);
 
 			// Expected Result
-			InputStream expectedStream = this.getClass().getResourceAsStream(input + ".out");
+			InputStream expectedStream = this.getClass().getResourceAsStream(input.get(0) + ".out");
 			String expected = IOUtils.toString(expectedStream, Charset.defaultCharset());
 
 			// Error-Message
-			InputStream errorStream = this.getClass().getResourceAsStream(input + ".err");
+			InputStream errorStream = this.getClass().getResourceAsStream(input.get(0) + ".err");
 			String error = IOUtils.toString(errorStream, Charset.defaultCharset());
 
-			InputStream inputStream = this.getClass().getResourceAsStream(input + ".in");
+			InputStream inputStream = this.getClass().getResourceAsStream(input.get(0) + ".in");
 			if (inputStream == null) {
 				inputStream = System.in;
 			}
 
 			CobolExec.execute(fileReader, inputStream, out);
-			Assert.assertEquals(out.toString(), expected, input + ": " + error);
+			Assert.assertEquals(out.toString(), expected, input.get(0) + ": " + error);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -71,18 +80,19 @@ public abstract class CobolBaseTest {
 	 */
 	@DataProvider(name = "cobolTests")
 	public Object[] acceptTest() {
-		Collection<String> result;
+		Collection<List<String>> result;
 		String name = this.getClass().getName();
 		int idx = name.lastIndexOf('.');
 		name = name.substring(0, idx);
 		name = name.replace('.', '/');
 
 		result = getResourceFiles(name);
-		return result.toArray(new String[] {});
+		return result.toArray();
 	}
 
-	private Collection<String> getResourceFiles(String path) {
-		Set<String> filenames = new TreeSet<>();
+	private Collection<List<String>> getResourceFiles(String path) {
+		Set<String> allFilenames = new TreeSet<>();
+		Collection<List<String>> result = new ArrayList<>();
 
 		try (InputStream in = getResourceAsStream(path);
 				BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
@@ -92,13 +102,34 @@ public abstract class CobolBaseTest {
 				if (!resource.endsWith(".cob")) {
 					continue;
 				}
-				filenames.add(resource.substring(0, resource.length() - 4));
+				allFilenames.add(resource.substring(0, resource.length() - 4));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return filenames;
+		// Cluster mit Dateigruppen erstellen
+		Iterator<String> iter = allFilenames.iterator();
+		while (iter.hasNext()) {
+			List<String> group = new ArrayList<>();
+			String firstItem = iter.next();
+			group.add(firstItem);
+			while (iter.hasNext()) {
+				String nextItem = iter.next();
+				if (nextItem.startsWith(firstItem+"-")) {
+					// Folgeeintrag ist vorne identisch;
+					group.add(nextItem);
+				} else {
+					// nächste Gruppe
+					result.add(group);
+					firstItem = nextItem;
+					group = new ArrayList<>();
+					group.add(firstItem);
+				}
+			}
+			result.add(group);
+		}
+		return result;
 	}
 
 	private InputStream getResourceAsStream(String resource) {

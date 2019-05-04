@@ -2366,8 +2366,7 @@ callStatement
 :
     CALL
     (
-        identifier
-        | literal
+        progName=literalOrIdentifier
     ) callUsingPhrase? callGivingPhrase? onOverflowPhrase? onExceptionClause?
     notOnExceptionClause? END_CALL?
 ;
@@ -2380,7 +2379,6 @@ callUsingPhrase
 callUsingParameter
 :
     callByReferencePhrase
-    | callByValuePhrase
     | callByContentPhrase
 ;
 
@@ -2388,53 +2386,12 @@ callByReferencePhrase
 :
     (
         BY? REFERENCE
-    )? callByReference+
-;
-
-callByReference
-:
-    (
-        (
-            ADDRESS OF
-            | INTEGER
-            | STRING
-        )? identifier
-        | literal
-        | fileName=IDENTIFIER
-    )
-    | OMITTED
-;
-
-callByValuePhrase
-:
-    BY? VALUE callByValue+
-;
-
-callByValue
-:
-    (
-        ADDRESS OF
-        | LENGTH OF?
-    )?
-    (
-        identifier
-        | literal
-    )
+    )? usingVar+=identifier+
 ;
 
 callByContentPhrase
 :
-    BY? CONTENT callByContent+
-;
-
-callByContent
-:
-    (
-        ADDRESS OF
-        | LENGTH OF?
-    )? identifier
-    | literal
-    | OMITTED
+    BY? CONTENT usingVar+=identifier+
 ;
 
 callGivingPhrase

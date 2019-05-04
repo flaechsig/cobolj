@@ -14,8 +14,10 @@ public class StandardInputNode extends InputNode {
 
 	@Override
 	public String executeGeneric(VirtualFrame frame) {
-		Scanner sc = getContext().getIn(); 
-		return sc.nextLine();
+		Scanner sc = new Scanner(getContext().getIn()); 
+		String line = sc.nextLine();
+		sc.close();
+		return line;
 	}
 
 }

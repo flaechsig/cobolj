@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,15 @@ import org.graalvm.polyglot.Value;
 import de.cobolj.CobolExec.By.Type;
 
 public class CobolExec {
+	/** Kennzeichnung, ob der Aufruf für ein Main- oder Sub-Programm erfolgte */
+	public enum ProgramType { MAIN, SUB };
+	
 	/** Speicherplatz für die zu übergebenden Parameter */
 	public static final String USING_HOST = "usingHost";
+	
+	/** Speicherplatz für die Programm-Kennzeichnung */
+	public static final String PROG_TYP = "progType";
+	
 	/**
 	 * Map mit allen registrierten Cobol-Programmen
 	 */
@@ -96,6 +104,24 @@ public class CobolExec {
 	public static void execute(Reader file, InputStream in, OutputStream out) throws IOException {
 		Context context = org.graalvm.polyglot.Context.newBuilder(CobolLanguage.ID).in(in).out(out).build();
 		Source source = Source.newBuilder(CobolLanguage.ID, file, "static-in").build();
+
+		Value val = context.getPolyglotBindings();
+		val.putMember(PROG_TYP, ProgramType.MAIN.toString());
+
+		context.eval(source);
+		context.close();
+	}
+	
+	/**
+	 * 
+	 */
+	public static void execute(InputStream in, OutputStream out, String name) {
+		Context context = org.graalvm.polyglot.Context.newBuilder(CobolLanguage.ID).in(in).out(out).build();
+		Source source = PROGRAM_MAP.get(name);
+
+		Value val = context.getPolyglotBindings();
+		val.putMember(PROG_TYP, ProgramType.MAIN.toString());
+
 		context.eval(source);
 		context.close();
 	}
@@ -156,8 +182,16 @@ public class CobolExec {
 
 		Value val = context.getPolyglotBindings();
 		val.putMember(USING_HOST, using);
+		val.putMember(PROG_TYP, ProgramType.SUB.toString());
 
 		context.eval(program);
+	}
+
+	/**
+	 * @see #call(InputStream, OutputStream, String, By[]) 
+	 */
+	public static void call(InputStream in, OutputStream out, String name, Collection<By> using) {
+		call(in, out, name, using.toArray(new By[0]));
 	}
 
 	/**
@@ -214,5 +248,13 @@ public class CobolExec {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * @see #register(String...)
+	 * @param stream
+	 */
+	public static void register(InputStream stream) {
+		
 	}
 }

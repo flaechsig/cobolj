@@ -1,6 +1,11 @@
 package de.cobolj.parser;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.antlr.v4.runtime.ParserRuleContext;
+
+import de.cobolj.parser.Cobol85Parser.IdentifierContext;
 
 /**
  * Hilfsklasse für das Parsing.
@@ -39,4 +44,34 @@ public final class ParserHelper {
 	}
 
 
+	/**
+	 * Liefert true, wenn ctx ungleich null ist;
+	 * @param ctx
+	 */
+	public static boolean check(Object ctx) {
+		return ctx != null;
+	}
+	
+	/**
+	 * Kappselt den Standard-Code für den Aufruf von Child-Visitor-Elementen
+	 * 
+	 * @param ctx Context-Child-Element
+	 * @param visitor Aufzurufender Visitor
+	 * @return null, wenn ctx <code>null</code> ist. Ansonsten den Wert des Visitors
+	 */
+	public static <T>  T accept( ParserRuleContext ctx, Cobol85BaseVisitor<? extends T> visitor) {
+		if(ctx == null) {
+			return null;
+		} else {
+			return ctx.accept(visitor);
+		}
+	}
+
+	public static <T> List<T> accept(List<? extends ParserRuleContext> ctx, Cobol85BaseVisitor<? extends T>  visitor) {
+		if(ctx == null) {
+			return null;
+		} else {
+			return ctx.stream().map(result -> result.accept(visitor)).collect(Collectors.toList());
+		}
+	}
 }

@@ -30,7 +30,7 @@ public class CobolContext {
 	/** Output-Stream für das Cobol-Programm */
 	private PrintStream out;
 	/** Input-Stream für das Cobol-Programm */
-	private Scanner in;
+	private InputStream in;
 	/** File Descriptors */
 	private List<FileDescriptionEntryNode> fileDescriptor = new ArrayList<>();
 	/** Records */
@@ -42,7 +42,7 @@ public class CobolContext {
 		assert in != null : "in darf nicht null sein";
 		assert out != null : "out darf nicht null sein";
 
-		this.in = new Scanner(in);
+		this.in = in;
 		this.out = new PrintStream(out);
 	}
 
@@ -53,7 +53,7 @@ public class CobolContext {
 		return out;
 	}
 
-	public Scanner getIn() {
+	public InputStream getIn() {
 		return in;
 	}
 

@@ -39,7 +39,7 @@ public class DataDivisionSectionVisitor extends Cobol85BaseVisitor<DataDivisionS
 			result = ctx.fileSection().accept(new FileSectionVisitor());
 		} 
 		if(ctx.linkageSection() != null) {
-			result = ctx.linkageSection().accept(new LinkageSectioVisitor());
+			result = ctx.linkageSection().accept(new LinkageSectionVisitor());
 		}
 		return result;
 	}

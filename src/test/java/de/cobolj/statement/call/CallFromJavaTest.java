@@ -2,9 +2,13 @@ package de.cobolj.statement.call;
 
 import static de.cobolj.CobolExec.By.reference;
 import static de.cobolj.CobolExec.By.value;
+import static org.testng.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.math.BigDecimal;
 
 import org.testng.Assert;
@@ -26,7 +30,7 @@ public class CallFromJavaTest {
 	@Test
 	public void testSimpleCall() throws Exception {
 		CobolExec.register("/de/cobolj/statement/call/call-1.cob");
-		CobolExec.call(System.in, out, "HELLO-WORLD");
+		CobolExec.call(System.in, out, "CALL-1");
 		Assert.assertEquals(out.toString(), "Hello world!" + System.lineSeparator());
 	}
 
@@ -110,9 +114,21 @@ public class CallFromJavaTest {
 
 	@Test
 	public void testSubprogrammUeberExcecuteIstVerboten() {
-		Assert.fail();
-//		Reader r = new InputStreamReader(this.getClass().getResourceAsStream("/de/cobolj/statement/call/call-1.cob"));
-//		CobolExec.execute(r, System.in, System.out);
+		try {
+			CobolExec.execute(System.in, System.out, "CALL-1");
+			fail("Aufruf über execute ist nicht erlaubt");
+		} catch (RuntimeException e) {
+			// OK. Aufruf nur über call erlaubt
+		}
 	}
 
+	@Test
+	public void testMainprogrammUeberCallIstVerboten() {
+		try {
+			CobolExec.call(System.in, System.out, "CALL2-1");
+			fail("Aufruf über call ist nicht erlaubt");
+		} catch (RuntimeException e) {
+			// OK. Aufruf nur über execute erlaubt
+		}
+	}
 }

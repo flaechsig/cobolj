@@ -15,7 +15,7 @@ import de.cobolj.runtime.Picture;
  * @author flaechsig
  *
  */
-public class LinkageSectioVisitor extends Cobol85BaseVisitor<LinkageSectionNode> {
+public class LinkageSectionVisitor extends Cobol85BaseVisitor<LinkageSectionNode> {
 	@Override
 	public LinkageSectionNode visitLinkageSection(LinkageSectionContext ctx) {
 		List<Picture> dataDescriptionEntryNodes = ctx.dataDescriptionEntry()
