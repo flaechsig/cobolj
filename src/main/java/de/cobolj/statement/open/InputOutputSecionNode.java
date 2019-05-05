@@ -15,7 +15,7 @@ public class InputOutputSecionNode extends EnvironmentDivisionBodyNode {
 	private final InputOutputSectionParagraphNode[] paragraphs;
 
 	public InputOutputSecionNode(List<InputOutputSectionParagraphNode> paragraphs) {
-		this.paragraphs = paragraphs.toArray(new InputOutputSectionParagraphNode[] {});
+		this.paragraphs = paragraphs.toArray(new InputOutputSectionParagraphNode[0]);
 	}
 
 	@Override

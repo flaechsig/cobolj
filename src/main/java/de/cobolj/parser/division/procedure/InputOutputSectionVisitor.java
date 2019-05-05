@@ -7,6 +7,7 @@ import de.cobolj.division.data.InputOutputSectionParagraphNode;
 import de.cobolj.division.environtment.EnvironmentDivisionBodyNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.InputOutputSectionContext;
 import de.cobolj.statement.open.InputOutputSecionNode;
 
@@ -20,10 +21,7 @@ import de.cobolj.statement.open.InputOutputSecionNode;
 public class InputOutputSectionVisitor extends Cobol85BaseVisitor<EnvironmentDivisionBodyNode> {
 	@Override
 	public EnvironmentDivisionBodyNode visitInputOutputSection(InputOutputSectionContext ctx) {
-		List<InputOutputSectionParagraphNode> paragraphs =  ctx.inputOutputSectionParagraph()
-				.stream()
-				.map(result -> result.accept(new InputOutputSectioinParagraphVisitor()))
-				.collect(Collectors.toList());
+		List<InputOutputSectionParagraphNode> paragraphs = ParserHelper.accept(ctx.inputOutputSectionParagraph(), new InputOutputSectioinParagraphVisitor());
 		return new InputOutputSecionNode(paragraphs);
 	}
 }

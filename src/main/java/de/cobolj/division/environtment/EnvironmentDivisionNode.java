@@ -14,7 +14,7 @@ public class EnvironmentDivisionNode extends CobolNode {
 	private final EnvironmentDivisionBodyNode[] body;
 
 	public EnvironmentDivisionNode(List<EnvironmentDivisionBodyNode> body) {
-		this.body = body.toArray(new EnvironmentDivisionBodyNode[] {});
+		this.body = body.toArray(new EnvironmentDivisionBodyNode[0]);
 	}
 
 	@Override

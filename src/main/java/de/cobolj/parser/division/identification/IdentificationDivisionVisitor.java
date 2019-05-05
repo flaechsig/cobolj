@@ -1,9 +1,11 @@
 package de.cobolj.parser.division.identification;
 
-import de.cobolj.division.identification.ProgramIdParagraphNode;
+import static de.cobolj.parser.ParserHelper.accept;
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import de.cobolj.division.identification.IdentificationDivisionNode;
+import de.cobolj.division.identification.ProgramIdParagraphNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.IdentificationDivisionContext;
 
 /**
@@ -16,9 +18,9 @@ import de.cobolj.parser.Cobol85Parser.IdentificationDivisionContext;
 public class IdentificationDivisionVisitor extends Cobol85BaseVisitor<IdentificationDivisionNode> {
 	@Override
 	public IdentificationDivisionNode visitIdentificationDivision(IdentificationDivisionContext ctx) {
-		ParserHelper.notImplemented(ctx.identificationDivisionBody());
+		notImplemented(ctx.identificationDivisionBody());
 		
-		ProgramIdParagraphNode programIdParagraph = ctx.programIdParagraph().accept(new ProgramIdParagraphVisitor());
+		ProgramIdParagraphNode programIdParagraph = accept(ctx.programIdParagraph(), new ProgramIdParagraphVisitor());
 		return new IdentificationDivisionNode(programIdParagraph);
 	}
 

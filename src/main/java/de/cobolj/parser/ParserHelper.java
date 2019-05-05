@@ -1,5 +1,7 @@
 package de.cobolj.parser;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +73,7 @@ public final class ParserHelper {
 		if(ctx == null) {
 			return null;
 		} else {
-			return ctx.stream().map(result -> result.accept(visitor)).collect(Collectors.toList());
+			return ctx.stream().map(r -> r.accept(visitor)).collect(Collectors.toList());
 		}
 	}
 }

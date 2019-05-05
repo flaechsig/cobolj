@@ -63,7 +63,7 @@ identificationDivisionBody
 
 programIdParagraph
 :
-    PROGRAM_ID DOT_FS programName
+    PROGRAM_ID DOT_FS progName=identifier
     (
         IS?
         (
@@ -2367,7 +2367,7 @@ callStatement
     CALL
     (
         progName=literalOrIdentifier
-    ) callUsingPhrase? callGivingPhrase? onOverflowPhrase? onExceptionClause?
+    ) callUsingPhrase? onOverflowPhrase? onExceptionClause?
     notOnExceptionClause? END_CALL?
 ;
 
@@ -2392,14 +2392,6 @@ callByReferencePhrase
 callByContentPhrase
 :
     BY? CONTENT usingVar+=identifier+
-;
-
-callGivingPhrase
-:
-    (
-        GIVING
-        | RETURNING
-    ) identifier
 ;
 
 // cancel statement

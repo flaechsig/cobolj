@@ -1,5 +1,8 @@
 package de.cobolj.parser;
 
+import static de.cobolj.parser.ParserHelper.accept;
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import org.antlr.v4.runtime.RuleContext;
 
 import com.oracle.truffle.api.frame.FrameSlot;
@@ -21,14 +24,12 @@ public class IdentifierVisitor extends Cobol85BaseVisitor<String> {
 
 	@Override
 	public String visitIdentifier(Cobol85Parser.IdentifierContext ctx) {
-		ParserHelper.notImplemented(ctx.tableCall());
-		ParserHelper.notImplemented(ctx.functionCall());
-		ParserHelper.notImplemented(ctx.specialRegister());
+		notImplemented(ctx.tableCall());
+		notImplemented(ctx.functionCall());
+		notImplemented(ctx.specialRegister());
 
-		String result = null;
-		if(ctx.qualifiedDataName()!=null) {
-			result = ctx.qualifiedDataName().accept(QualifiedDataNameVisitor.INSTANCE);
-		}
+		String result = accept(ctx.qualifiedDataName(), QualifiedDataNameVisitor.INSTANCE);
+		
 		return result;
 	}
 }

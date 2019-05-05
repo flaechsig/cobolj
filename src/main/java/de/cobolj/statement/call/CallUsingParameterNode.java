@@ -16,11 +16,11 @@ import de.cobolj.runtime.Picture;
 public class CallUsingParameterNode extends CobolNode {
 	public static enum Type {REFERNCE, CONTENT};
 	private final Type type;
-	private final List<String> parameterList;
+	private final String[] parameterList;
 	
 	public CallUsingParameterNode(Type type, List<String> parameterList) {
 		this.type =  type;
-		this.parameterList = parameterList;
+		this.parameterList = parameterList.toArray(new String[0]);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CallUsingParameterNode extends CobolNode {
 		return parameters;
 	}
 
-	public List<String> getParameterList() {
+	public String[] getParameterList() {
 		return parameterList;
 	}
 

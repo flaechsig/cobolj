@@ -1,5 +1,7 @@
 package de.cobolj.parser.division.data;
 
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import org.antlr.v4.runtime.RuleContext;
 
 import de.cobolj.nodes.LiteralNode;
@@ -28,6 +30,10 @@ public class LiteralVisitor extends Cobol85BaseVisitor<LiteralNode> {
 
 	@Override
 	public LiteralNode visitLiteral(Cobol85Parser.LiteralContext ctx) {
+		notImplemented(ctx.booleanLiteral());
+		notImplemented(ctx.cicsDfhRespLiteral());
+		notImplemented(ctx.cicsDfhValueLiteral());
+		
 		RuleContext ctx2 = (RuleContext) ctx.getChild(0);
 		int rule = ctx2.getRuleIndex();
 		switch (rule) {

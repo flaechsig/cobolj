@@ -1,16 +1,24 @@
 package de.cobolj.parser;
 
+import static de.cobolj.parser.ParserHelper.accept;
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import de.cobolj.division.environtment.EnvironmentDivisionNode;
+import de.cobolj.division.identification.IdentificationDivisionNode;
 import de.cobolj.nodes.DataDivisionNode;
 import de.cobolj.nodes.ProcedureDivisionNode;
 import de.cobolj.nodes.ProgramUnitNode;
 import de.cobolj.parser.division.data.DataDivisionVisitor;
 import de.cobolj.parser.division.environment.EnvironmentDivisionVisitor;
+import de.cobolj.parser.division.identification.IdentificationDivisionVisitor;
 import de.cobolj.parser.division.procedure.ProcedureDivisionVisitor;
 
 /**
- * Oberster Knoten wir ein Cobol-Programm. Ab diesen Knoten wird ein
- * vollständiges Cobol-Programm geparst.
+ * 
+ * programUnit : identificationDivision environmentDivision? dataDivision?
+ * procedureDivision? programUnit* endProgramStatement? ; Oberster Knoten wir
+ * ein Cobol-Programm. Ab diesen Knoten wird ein vollständiges Cobol-Programm
+ * geparst.
  * 
  * programUnit: identificationDivision environmentDivision? dataDivision?
  * procedureDivision? programUnit* endProgramStatement?;
@@ -22,28 +30,18 @@ public class ProgramUnitVisitor extends Cobol85BaseVisitor<ProgramUnitNode> {
 
 	@Override
 	public ProgramUnitNode visitProgramUnit(Cobol85Parser.ProgramUnitContext ctx) {
-//		ParserHelper.notImplemented(ctx.identificationDivision());
+		notImplemented(ctx.programUnit());
+		notImplemented(ctx.endProgramStatement());
 		
-		EnvironmentDivisionNode environmentDivisionNode = null;
-		ProcedureDivisionNode procedureDivisionNode = null;
-		DataDivisionNode dataDivisionNode = null;
+		IdentificationDivisionNode identificationDivision = accept(ctx.identificationDivision(),
+				new IdentificationDivisionVisitor());
+		EnvironmentDivisionNode environmentDivision = accept(ctx.environmentDivision(),
+				new EnvironmentDivisionVisitor());
+		ProcedureDivisionNode procedureDivision = accept(ctx.procedureDivision(),
+				new ProcedureDivisionVisitor());
+		DataDivisionNode dataDivision = accept(ctx.dataDivision(), new DataDivisionVisitor());
 
-		if(ctx.environmentDivision()!=null) {
-			environmentDivisionNode = ctx.environmentDivision().accept(new EnvironmentDivisionVisitor());
-		}
-		if(ctx.dataDivision() != null) {
-			DataDivisionVisitor visitor = new DataDivisionVisitor();
-			dataDivisionNode = ctx.dataDivision().accept(visitor);
-		}
-		if (ctx.procedureDivision() != null) {
-			ProcedureDivisionVisitor visitor = new ProcedureDivisionVisitor();
-			procedureDivisionNode = ctx.procedureDivision().accept(visitor);
-		}
-
-		ProgramUnitNode programUnit = new ProgramUnitNode();
-		programUnit.setEnvironmentDivision(environmentDivisionNode);
-		programUnit.setDataDivision(dataDivisionNode);
-		programUnit.setProcedureDivision(procedureDivisionNode);
+		ProgramUnitNode programUnit = new ProgramUnitNode(identificationDivision, environmentDivision, dataDivision, procedureDivision);
 
 		return programUnit;
 	}

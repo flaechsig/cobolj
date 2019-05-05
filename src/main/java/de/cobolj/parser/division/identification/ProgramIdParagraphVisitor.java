@@ -1,11 +1,14 @@
 package de.cobolj.parser.division.identification;
 
+import static de.cobolj.parser.ParserHelper.accept;
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import de.cobolj.division.identification.ProgramIdParagraphNode;
 import de.cobolj.nodes.LiteralNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ProgramIdParagraphContext;
-import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.division.data.LiteralVisitor;
+import de.cobolj.parser.IdentifierVisitor;
+import de.cobolj.parser.division.data.NonNumericalLiteralVisitor;
 
 /**
  * programIdParagraph : PROGRAM_ID DOT_FS programName ( IS? ( COMMON | INITIAL |
@@ -17,15 +20,15 @@ import de.cobolj.parser.division.data.LiteralVisitor;
 public class ProgramIdParagraphVisitor extends Cobol85BaseVisitor<ProgramIdParagraphNode> {
 	@Override
 	public ProgramIdParagraphNode visitProgramIdParagraph(ProgramIdParagraphContext ctx) {
-		ParserHelper.notImplemented(ctx.COMMON());
-		ParserHelper.notImplemented(ctx.INITIAL());
-		ParserHelper.notImplemented(ctx.LIBRARY());
-		ParserHelper.notImplemented(ctx.DEFINITION());
-		ParserHelper.notImplemented(ctx.RECURSIVE());
-		ParserHelper.notImplemented(ctx.PROGRAM());
-		ParserHelper.notImplemented(ctx.commentEntry());
+		notImplemented(ctx.COMMON());
+		notImplemented(ctx.INITIAL());
+		notImplemented(ctx.LIBRARY());
+		notImplemented(ctx.DEFINITION());
+		notImplemented(ctx.RECURSIVE());
+		notImplemented(ctx.PROGRAM());
+		notImplemented(ctx.commentEntry());
 		
-		LiteralNode programName = ctx.programName().accept(LiteralVisitor.INSTANCE);
+		String programName = accept(ctx.progName, IdentifierVisitor.INSTANCE);
 		
 		return new ProgramIdParagraphNode(programName);
 	}

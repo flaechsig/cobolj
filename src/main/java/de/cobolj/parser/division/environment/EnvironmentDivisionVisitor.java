@@ -7,6 +7,7 @@ import de.cobolj.division.environtment.EnvironmentDivisionBodyNode;
 import de.cobolj.division.environtment.EnvironmentDivisionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.EnvironmentDivisionContext;
 
 /**
@@ -19,11 +20,7 @@ import de.cobolj.parser.Cobol85Parser.EnvironmentDivisionContext;
 public class EnvironmentDivisionVisitor extends Cobol85BaseVisitor<EnvironmentDivisionNode> {
 @Override
 public EnvironmentDivisionNode visitEnvironmentDivision(EnvironmentDivisionContext ctx) {
-	List<EnvironmentDivisionBodyNode> body = ctx.environmentDivisionBody()
-			.stream()
-			.map(result -> result.accept(new EnvironmentDivisionBodyVisitor()))
-			.collect(Collectors.toList());
-	
+	List<EnvironmentDivisionBodyNode> body = ParserHelper.accept(ctx.environmentDivisionBody(), new EnvironmentDivisionBodyVisitor());
 	return new EnvironmentDivisionNode(body);
 }
 }
