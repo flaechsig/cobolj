@@ -1,5 +1,6 @@
 package de.cobolj;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -14,7 +15,10 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
 
+import de.cobolj.division.data.DataDescriptionEntryNode;
+import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.division.data.FileDescriptionEntryNode;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.StartRuleVisitor;
 import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;
@@ -70,8 +74,8 @@ public class CobolContext {
 	/** Liefert den FileDescriptor zu einen Namen */
 	public FileDescriptionEntryNode getFileDescriptorByRecord(String name) {
 		for (FileDescriptionEntryNode fd : fileDescriptor) {
-			for (Picture pic : fd.getPictures()) {
-				if (pic.getName().equals(name)) {
+			for (DataDescriptionEntryNode entry : fd.getDataDescriptionEntry()) {
+				if (entry.getName().equals(name)) {
 					return fd;
 				}
 			}
@@ -79,14 +83,13 @@ public class CobolContext {
 		throw new RuntimeException("FileDescriptor nicht gefunden");
 	}
 
-	@Deprecated
-	public FileDescriptionEntryNode getFileDescriptor(FrameSlot slot) {
-		return getFileDescriptorByName(slot.getIdentifier().toString());
-	}
-
 	/** Fügt dem Context einen File-Descriptor hinzu. */
 	public void addFileDescriptor(FileDescriptionEntryNode fileDescriptionEntryNode) {
 		this.fileDescriptor.add(fileDescriptionEntryNode);
+	}
+	
+	public void putDataDescriptionEntry(Frame frame, DataDescriptionEntryNode entry ) {
+		putPicture(frame, entry.getPicture(), entry.getOccurs());
 	}
 
 	/**
@@ -99,9 +102,15 @@ public class CobolContext {
 	 * @param frame
 	 * @param pic
 	 */
-	public void putPicture(Frame frame, Picture pic) {
+	private void putPicture(Frame frame, Picture pic, DataOccursClause occurs) {
 		assert frame != null : "frame darf nicht null sein";
 		assert pic != null : "Picture muss angegeben werden";
+		ParserHelper.notImplemented(occurs);
+		
+		if(pic.isFiller()) {
+			// Filler sind nicht zugreifbar
+			return;
+		}
 
 		// Aufbauen aller Zugriffspfade
 		List<String> pfade = new ArrayList<>();

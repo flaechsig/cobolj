@@ -1,13 +1,14 @@
 package de.cobolj.parser.division.data;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.nodes.WorkingStorageSectionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.WorkingStorageSectionContext;
-import de.cobolj.runtime.Picture;
 
 /**
  * 
@@ -19,10 +20,9 @@ import de.cobolj.runtime.Picture;
 public class WorkingStorageSectionVisitor extends Cobol85BaseVisitor<WorkingStorageSectionNode> {
 	@Override
 	public WorkingStorageSectionNode visitWorkingStorageSection(Cobol85Parser.WorkingStorageSectionContext ctx) {
-		List<Picture> dataDescriptionEntryNodes = ctx.dataDescriptionEntry()
-				.stream()
-				.map(dataEntry -> dataEntry.accept(DataDescriptionEntryVisitor.INSTANCE))
-				.collect(Collectors.toList());
+		
+		List<DataDescriptionEntryNode> dataDescriptionEntryNodes = accept(ctx.dataDescriptionEntry(),
+				DataDescriptionEntryVisitor.INSTANCE);
 
 		return new WorkingStorageSectionNode(dataDescriptionEntryNodes);
 	}

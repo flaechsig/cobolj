@@ -112,9 +112,7 @@ public class CobolExec {
 		context.close();
 	}
 	
-	/**
-	 * 
-	 */
+
 	public static void execute(InputStream in, OutputStream out, String name) {
 		Context context = org.graalvm.polyglot.Context.newBuilder(CobolLanguage.ID).in(in).out(out).build();
 		Source source = PROGRAM_MAP.get(name);
@@ -197,6 +195,8 @@ public class CobolExec {
 	/**
 	 * Registriert die übergebenen Cobol-Programme.
 	 * 
+	 * Bei den Programmen wird davon ausgegangen, dass sie in der übergebenen Form 
+	 * 
 	 * Es wird eine interne Map der Cobol-Programme zu den zugehörigen
 	 * Source-Dateien aufgebaut.
 	 * 
@@ -229,15 +229,30 @@ public class CobolExec {
 					}
 					idxStart += 11; // Länge der gefundenen Zeichenkette aufaddieren
 					int idxEnd = line.indexOf('.', idxStart); // Nach der Program-ID das Ende suchen
-					if (idxEnd == -1) {
-						throw new RuntimeException("Syntax-Problem: Ex wurde nicht das Ende der Zeile gefunden");
+					if (idxEnd != -1) {
+						progName = line.substring(idxStart, idxEnd);
+					} else {
+						// Programmname nicht in der selben Zeile -> weitersuchen
+						while((line = br.readLine()) != null) {
+							if(line.startsWith("*")) {
+								// Kommentarzeile überpringen
+								continue;
+							}
+							if(line.trim().equals(""))  {
+								// leere Zeile überspringen
+								continue;
+							}
+							idxEnd = line.indexOf('.');
+							progName = line.substring(0, idxEnd);
+							break;
+						}
 					}
-					progName = line.substring(idxStart, idxEnd).trim().toUpperCase();
 					break;
 				}
 				if (progName == null) {
 					throw new RuntimeException("Es wurde kein Cobol-Programmname gefunden");
 				}
+				progName = progName.trim().toUpperCase();
 				CobolExec.PROGRAM_MAP
 						.put(progName,
 								Source.newBuilder(CobolLanguage.ID,
@@ -248,13 +263,5 @@ public class CobolExec {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	/**
-	 * @see #register(String...)
-	 * @param stream
-	 */
-	public static void register(InputStream stream) {
-		
 	}
 }

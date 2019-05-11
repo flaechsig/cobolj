@@ -1,17 +1,16 @@
 package de.cobolj.parser.division.data;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.commons.lang3.ObjectUtils;
 
+import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.FileDescriptionEntryContext;
-import de.cobolj.runtime.Picture;
 
 /**
  * fileDescriptionEntry: 
@@ -24,15 +23,13 @@ import de.cobolj.runtime.Picture;
 public class FileDescriptionEntryVisitor extends Cobol85BaseVisitor<FileDescriptionEntryNode> {
 	@Override
 	public FileDescriptionEntryNode visitFileDescriptionEntry(FileDescriptionEntryContext ctx) {
-		ParserHelper.notImplemented(ctx.fileDescriptionEntryClause());
 		
+		List<FileDescriptionEntryClauseNode> fileDescriptionEntryClause = accept(ctx.fileDescriptionEntryClause(), new FileDescriptionEntryClauseVisitor());
 		String desc = ((TerminalNode)ObjectUtils.firstNonNull(ctx.FD(), ctx.SD())).getText();
 		String fileName = ctx.fileName.getText();
-		List<Picture> dataDescriptionEntries = ctx.dataDescriptionEntry()
-				.stream()
-				.map(result -> result.accept( DataDescriptionEntryVisitor.INSTANCE) )
-				.collect(Collectors.toList());
+		List<DataDescriptionEntryNode> dataDescriptionEntries = accept(ctx.dataDescriptionEntry(), DataDescriptionEntryVisitor.INSTANCE);
 		
-		return new FileDescriptionEntryNode(desc, fileName, dataDescriptionEntries);
+		
+		return new FileDescriptionEntryNode(desc, fileName, fileDescriptionEntryClause, dataDescriptionEntries);
 	}
 }

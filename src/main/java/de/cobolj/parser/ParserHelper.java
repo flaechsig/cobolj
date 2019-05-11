@@ -1,13 +1,10 @@
 package de.cobolj.parser;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-
-import de.cobolj.parser.Cobol85Parser.IdentifierContext;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  * Hilfsklasse für das Parsing.
@@ -41,6 +38,9 @@ public final class ParserHelper {
 		}
 	}
 
+	/**
+	 * @see ParserHelper#notImplemented(Object)
+	 */
 	public static void notImplemented() {
 		throw new RuntimeException("Not Implemented");
 	}
@@ -68,12 +68,22 @@ public final class ParserHelper {
 			return ctx.accept(visitor);
 		}
 	}
-
+	
+	/** 
+	 * @see #accept(ParserRuleContext, Cobol85BaseVisitor)
+	 */
 	public static <T> List<T> accept(List<? extends ParserRuleContext> ctx, Cobol85BaseVisitor<? extends T>  visitor) {
 		if(ctx == null) {
 			return null;
 		} else {
 			return ctx.stream().map(r -> r.accept(visitor)).collect(Collectors.toList());
 		}
+	}
+	
+	/**
+	 * @see #accept(ParserRuleContext, Cobol85BaseVisitor)
+	 */
+	public static boolean accept(TerminalNode ctx) {
+		return ctx!=null?true:false;
 	}
 }

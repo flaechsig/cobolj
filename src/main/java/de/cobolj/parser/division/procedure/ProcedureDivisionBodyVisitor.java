@@ -7,6 +7,7 @@ import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.ProcedureDivisionBodyNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.ProcedureDivisionBodyContext;
 
 /**
@@ -21,10 +22,11 @@ public class ProcedureDivisionBodyVisitor extends Cobol85BaseVisitor<ProcedureDi
 
 	@Override
 	public ProcedureDivisionBodyNode visitProcedureDivisionBody(Cobol85Parser.ProcedureDivisionBodyContext ctx) {
-		// Fixme: Vervollständigen
+		ParserHelper.notImplemented(ctx.procedureSection());
+		
 		List<CobolNode> paragraphsOrProcedureSection = new ArrayList<>();
-		ParagraphsVisitor visitor = new ParagraphsVisitor();
-		paragraphsOrProcedureSection.add(ctx.paragraphs().accept(visitor));
+		paragraphsOrProcedureSection.add(ParserHelper.accept(ctx.paragraphs(), new ParagraphsVisitor()));
+
 
 		return new ProcedureDivisionBodyNode(paragraphsOrProcedureSection);
 	}

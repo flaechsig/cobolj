@@ -16,6 +16,9 @@ import de.cobolj.phrase.SizeOverflowException;
  *
  */
 public abstract class Picture implements TruffleObject {
+	/** Konstante für die Markierung eines Fillers. */
+	public final static String FILLER = "FILLER";
+	
 	/** Übergeodnete PictureGroup */
 	protected final PictureGroup parent;
 	/** Name des Pictures */
@@ -87,5 +90,9 @@ public abstract class Picture implements TruffleObject {
 
 	public int getSize() {
 		return size;
+	}
+	
+	public boolean isFiller() {
+		return FILLER.equals(name);
 	}
 }

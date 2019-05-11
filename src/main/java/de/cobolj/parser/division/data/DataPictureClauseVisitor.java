@@ -1,5 +1,6 @@
 package de.cobolj.parser.division.data;
 
+import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.nodes.PictureFactory;
 import de.cobolj.nodes.PictureStringVisitor;
 import de.cobolj.parser.Cobol85BaseVisitor;
@@ -19,8 +20,10 @@ public class DataPictureClauseVisitor extends Cobol85BaseVisitor<Picture> {
 	/** Name des Picture */
 	private final String name;
 	private final PictureGroup parent;
+	private final  DataOccursClause occurs;
 
-	public DataPictureClauseVisitor(String name, PictureGroup parent) {
+	public DataPictureClauseVisitor(String name, PictureGroup parent, DataOccursClause dataOccursClause) {
+		this.occurs = dataOccursClause;
 		this.name = name;
 		this.parent = parent;
 	}

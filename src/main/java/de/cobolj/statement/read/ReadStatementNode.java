@@ -6,6 +6,7 @@ import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.phrase.PhraseNode;
@@ -47,7 +48,8 @@ public class ReadStatementNode extends StatementNode {
 
 		int read = 0;
 		do {
-			for (Picture pic : fd.getPictures()) {
+			for (DataDescriptionEntryNode entry : fd.getDataDescriptionEntry()) {
+				Picture pic = entry.getPicture();
 				if (pic instanceof PictureGroup) {
 					read = pic.parse(is);
 					if (readInto != null && read > -1) {

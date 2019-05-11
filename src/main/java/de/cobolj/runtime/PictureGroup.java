@@ -57,7 +57,7 @@ public class PictureGroup extends Picture {
 	 */
 	public void add(String name, Picture picture) {
 		for(Picture childPic : children) {
-			if(childPic.name.equals(name)) {
+			if(childPic.name.equals(name) && !childPic.isFiller()) {
 				throw new IllegalArgumentException("PictureGroup :"+name+" bereits vorhanden");
 			}
 		}

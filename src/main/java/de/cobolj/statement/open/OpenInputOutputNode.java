@@ -1,6 +1,9 @@
 package de.cobolj.statement.open;
 
 import java.io.File;
+import java.io.IOException;
+
+import javax.management.RuntimeErrorException;
 
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -10,8 +13,8 @@ import de.cobolj.nodes.CobolNode;
 
 /**
  * Repräsentation eines einzelen Files bzw. Input-Streams. Demnach liefert die
- * Methode {@link #executeGeneric(VirtualFrame)} einen InputStream oder OutputStream
- * zurück.
+ * Methode {@link #executeGeneric(VirtualFrame)} einen InputStream oder
+ * OutputStream zurück.
  * 
  * @author flaechsig
  *
@@ -23,8 +26,9 @@ public abstract class OpenInputOutputNode extends CobolNode {
 	public OpenInputOutputNode(String fileSlot) {
 		this.fileName = fileSlot;
 	}
-	
-	/** Liefert einen Input- bzw. OutputStream 
+
+	/**
+	 * Liefert einen Input- bzw. OutputStream
 	 * 
 	 * @param file Zu öffnendes File
 	 * @return Stream
@@ -35,12 +39,25 @@ public abstract class OpenInputOutputNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		FileDescriptionEntryNode fd = getContext().getFileDescriptorByName(fileName);
-		if(fd.getStream() != null) {
+		if (fd.getStream() != null) {
 			throw new RuntimeException("File-Descriptor ist bereits geöffnet");
 		}
 		File file = fd.getFile();
-		fd.setStream( getStream(file));
-		
+		if (!file.exists()) {
+			if (fd.isOptional()) {
+				file.getParentFile().mkdirs();
+				try {
+					file.createNewFile();
+					fd.getStream();
+				} catch (IOException e) {
+					throw new RuntimeException("Datei "+file+" kann nicht angelegt werden",e);
+				}
+			} else {
+				// FIXME: FileStatus auf 35 setzen.
+			}
+		} else {
+			fd.setStream(getStream(file));
+		}
 		return this;
 	}
 

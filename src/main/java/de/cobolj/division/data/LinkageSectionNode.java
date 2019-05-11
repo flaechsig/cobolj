@@ -1,5 +1,7 @@
 package de.cobolj.division.data;
 
+import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
+
 import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -10,19 +12,17 @@ import de.cobolj.runtime.Picture;
 
 @NodeInfo(shortName = "LinkageSection")
 public class LinkageSectionNode extends DataDivisionSectionNode {
-	private final Picture[] dataDescriptionEntries;
+	@Children
+	private final DataDescriptionEntryNode[] dataDescriptionEntries;
 
-	public LinkageSectionNode(List<Picture> dataDescriptionEntryNodes) {
-		this.dataDescriptionEntries = dataDescriptionEntryNodes.toArray(new Picture[] {});
+	public LinkageSectionNode(List<DataDescriptionEntryNode> dataDescriptionEntryNodes) {
+		this.dataDescriptionEntries = dataDescriptionEntryNodes.toArray(new DataDescriptionEntryNode[0]);
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Picture last = null;
-		for(Picture entry : this.dataDescriptionEntries) {
-			getContext().putPicture(frame, entry);
-			last = entry;
-		}
+		Object last = null;
+		last =  excecuteGeneric(dataDescriptionEntries, last, frame);
 		return last;
 	}
 

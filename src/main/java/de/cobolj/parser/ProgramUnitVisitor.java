@@ -37,9 +37,9 @@ public class ProgramUnitVisitor extends Cobol85BaseVisitor<ProgramUnitNode> {
 				new IdentificationDivisionVisitor());
 		EnvironmentDivisionNode environmentDivision = accept(ctx.environmentDivision(),
 				new EnvironmentDivisionVisitor());
+		DataDivisionNode dataDivision = accept(ctx.dataDivision(), new DataDivisionVisitor());
 		ProcedureDivisionNode procedureDivision = accept(ctx.procedureDivision(),
 				new ProcedureDivisionVisitor());
-		DataDivisionNode dataDivision = accept(ctx.dataDivision(), new DataDivisionVisitor());
 
 		ProgramUnitNode programUnit = new ProgramUnitNode(identificationDivision, environmentDivision, dataDivision, procedureDivision);
 

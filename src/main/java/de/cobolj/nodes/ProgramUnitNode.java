@@ -30,10 +30,10 @@ public class ProgramUnitNode extends CobolNode {
 	public Object executeGeneric(VirtualFrame frame) {
 		Object result = null;
 		
-		NodeHelper.excecuteGeneric(identificationDivision, result, frame);
-		NodeHelper.excecuteGeneric(dataDivision, result, frame);
-		NodeHelper.excecuteGeneric(environmentDivision, result, frame);
-		NodeHelper.excecuteGeneric(procedureDivision, result, frame);
+		result = NodeHelper.excecuteGeneric(identificationDivision, result, frame);
+		result = NodeHelper.excecuteGeneric(dataDivision, result, frame);
+		result = NodeHelper.excecuteGeneric(environmentDivision, result, frame);
+		result = NodeHelper.excecuteGeneric(procedureDivision, result, frame);
 		
 		return result;
 	}

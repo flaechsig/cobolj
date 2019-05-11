@@ -2,6 +2,7 @@ package de.cobolj.runtime;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
@@ -38,7 +39,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
 	public Picture9(String name, int size, PictureGroup parent) {
-		this(name, size, false, 0, parent);
+		this(name, size, false, parent);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	 * 
 	 * @param value zu setzender Wert für die Instanz.
 	 */
-	public void setValue(long value) {
+	public void setValue(int idx, long value) {
 		int mul;
 		if (!signed) {
 			value = Math.abs(value);

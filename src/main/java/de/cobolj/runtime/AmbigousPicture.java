@@ -10,7 +10,7 @@ public class AmbigousPicture extends Picture {
 	public static AmbigousPicture INSTANCE = new AmbigousPicture();
 	
 	private AmbigousPicture() {
-		super("AmbigousPicture",0, null);
+		super("AmbigousPicture", 0, null);
 	}
 	
 	@Override

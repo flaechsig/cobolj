@@ -1,29 +1,29 @@
 package de.cobolj.nodes;
 
+import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
+
 import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.runtime.Picture;
+import de.cobolj.division.data.DataDescriptionEntryNode;
 
 @NodeInfo(shortName="WorkingStorageSection")
 public class WorkingStorageSectionNode extends DataDivisionSectionNode {
-	private final Picture[] dataDescriptionEntries;
+	@Children
+	private final DataDescriptionEntryNode[] dataDescriptionEntries;
 	
 
-	public WorkingStorageSectionNode(List<Picture> dataDescEntry) {
-		this.dataDescriptionEntries = dataDescEntry.toArray(new Picture[] {});
+	public WorkingStorageSectionNode(List<DataDescriptionEntryNode> dataDescriptionEntryNodes) {
+		this.dataDescriptionEntries = dataDescriptionEntryNodes.toArray(new DataDescriptionEntryNode[0]);
 	}
 
 	@Override
-	public Picture executeGeneric(VirtualFrame frame) {
-		Picture last = null;
-		for(Picture entry : this.dataDescriptionEntries) {
-			getContext().putPicture(frame, entry);
-			last = entry;
-		}
-		return last;
+	public Object executeGeneric(VirtualFrame frame) {
+		Object result = null;
+		result = excecuteGeneric(dataDescriptionEntries, result, frame);
+		return result;
 	}
 
 }

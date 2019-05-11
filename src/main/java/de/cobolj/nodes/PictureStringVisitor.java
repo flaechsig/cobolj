@@ -1,5 +1,7 @@
 package de.cobolj.nodes;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.division.data.PictureCarinalityVisitor;
@@ -20,9 +22,11 @@ public class PictureStringVisitor extends Cobol85BaseVisitor<String> {
 	@Override
 	public String visitPictureString(Cobol85Parser.PictureStringContext ctx) {
 		String fullString = "";
-		for(int i=0; i<ctx.pictureChars().size();i++) {
-			String pictureChar = ctx.pictureChars(i).accept(new PictureCharsVisitor());
-			fullString += ctx.pictureCardinality(i).accept(new PictureCarinalityVisitor(pictureChar));
+		for (int i = 0; i < ctx.pictureChars().size(); i++) {
+			String pictureChar = accept(ctx.pictureChars(i), (new PictureCharsVisitor()));
+			if (ctx.pictureCardinality(i) != null) {
+				fullString += accept(ctx.pictureCardinality(i), new PictureCarinalityVisitor(pictureChar));
+			}
 		}
 		return fullString;
 	}

@@ -10,7 +10,7 @@ import de.cobolj.statement.call.CallUsingPhraseNode;
 
 /**
  * callStatement : CALL ( progName=literalOrIdentifier ) callUsingPhrase?
- * callGivingPhrase? onOverflowPhrase? onExceptionClause? notOnExceptionClause?
+ * onOverflowPhrase? onExceptionClause? notOnExceptionClause?
  * END_CALL? ;
  * 
  * @author flaechsig
@@ -19,7 +19,6 @@ import de.cobolj.statement.call.CallUsingPhraseNode;
 public class CallStatementVisitor extends Cobol85BaseVisitor<CallStatementNode> {
 	@Override
 	public CallStatementNode visitCallStatement(CallStatementContext ctx) {
-		notImplemented(ctx.callGivingPhrase());
 		notImplemented(ctx.onOverflowPhrase());
 		notImplemented(ctx.onExceptionClause());
 		notImplemented(ctx.notOnExceptionClause());

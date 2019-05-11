@@ -19,7 +19,7 @@ public class EnvironmentDivisionNode extends CobolNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Object last = null;
+		Object last = this;
 		for( EnvironmentDivisionBodyNode node : body) {
 			last = node.executeGeneric(frame);
 		}

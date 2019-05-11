@@ -6,7 +6,10 @@ import java.util.List;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.division.environment.OrganizationClause.FileForm;
+import de.cobolj.division.environment.OrganizationClause.RecordForm;
 import de.cobolj.nodes.DataDivisionSectionNode;
+import de.cobolj.parser.division.data.FileDescriptionEntryClauseNode;
 import de.cobolj.runtime.Picture;
 
 /**
@@ -22,33 +25,40 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 	/** Symbolischer File-Name */
 	private String name;
 	/** Strukturelle Beschreibung der Datei */
-	private final Picture[] pictures;
+	@Children
+	private final DataDescriptionEntryNode[] dataDescriptionEntry;
 	/** Assoziierte Datei */
 	private File file = null;
 	/** Assoziierter Stream. Kann sowohl für Input und Output dienen */
 	private Object stream = null;
+	/** Kennzeichen, ob das File optional ist (und ggf. erzeugt wird) */
+	private boolean optional;
+	private FileForm fileForm;
+	private RecordForm recordForm;
+	@Children
+	private FileDescriptionEntryClauseNode[] fileDescriptionEntryClause;
 
-	public FileDescriptionEntryNode(String desc, String fileName, List<Picture> pictures) {
+	public FileDescriptionEntryNode(String desc, String fileName, List<FileDescriptionEntryClauseNode> fileDescriptionEntryClause, List<DataDescriptionEntryNode> dataDescriptionEntry) {
 		this.desc = desc;
 		this.name = fileName;
-		this.pictures = pictures.toArray(new Picture[] {});
+		this.fileDescriptionEntryClause = fileDescriptionEntryClause.toArray(new FileDescriptionEntryClauseNode[0]);
+		this.dataDescriptionEntry = dataDescriptionEntry.toArray(new DataDescriptionEntryNode[0]);
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		getContext().addFileDescriptor(this);
-		for(Picture entry : pictures) {
-			getContext().putPicture(frame, entry);
+		for(DataDescriptionEntryNode entry : dataDescriptionEntry) {
+			entry.executeGeneric(frame);
+		}
+		for(FileDescriptionEntryClauseNode fileDescription : fileDescriptionEntryClause) {
+			fileDescription.executeGeneric(frame);
 		}
 		return this;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public Picture[] getPictures() {
-		return pictures;
 	}
 
 	public void setFile(File file) {
@@ -65,5 +75,29 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 
 	public Object getStream() {
 		return stream;
+	}
+
+	public void setOptional(boolean optional) {
+		this.optional = optional;
+	}
+
+	public boolean isOptional() {
+		return optional;
+	}
+
+	public void setFileForm(FileForm fileForm) {
+		this.fileForm = fileForm;
+	}
+	
+	public void setRecordForm(RecordForm recordForm) {
+		this.recordForm = recordForm;
+	}
+
+	public FileForm getFileForm() {
+		return fileForm;
+	}
+
+	public DataDescriptionEntryNode[] getDataDescriptionEntry() {
+		return dataDescriptionEntry;
 	}
 }

@@ -9,7 +9,7 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.InputOutputSectionContext;
-import de.cobolj.statement.open.InputOutputSecionNode;
+import de.cobolj.statement.open.InputOutputSectionNode;
 
 /**
  * inputOutputSection: 
@@ -18,10 +18,10 @@ import de.cobolj.statement.open.InputOutputSecionNode;
  * @author flaechsig
  *
  */
-public class InputOutputSectionVisitor extends Cobol85BaseVisitor<EnvironmentDivisionBodyNode> {
+public class InputOutputSectionVisitor extends Cobol85BaseVisitor<InputOutputSectionNode> {
 	@Override
-	public EnvironmentDivisionBodyNode visitInputOutputSection(InputOutputSectionContext ctx) {
+	public InputOutputSectionNode visitInputOutputSection(InputOutputSectionContext ctx) {
 		List<InputOutputSectionParagraphNode> paragraphs = ParserHelper.accept(ctx.inputOutputSectionParagraph(), new InputOutputSectioinParagraphVisitor());
-		return new InputOutputSecionNode(paragraphs);
+		return new InputOutputSectionNode(paragraphs);
 	}
 }
