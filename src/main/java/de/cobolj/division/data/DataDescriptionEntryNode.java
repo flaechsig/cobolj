@@ -38,5 +38,9 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	public String getName() {
 		return name;
 	}
+	
+	public String getQualifiedName() {
+		return picture.getQualifiedName();
+	}
 
 }

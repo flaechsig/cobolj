@@ -2,6 +2,7 @@ package de.cobolj.runtime;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import com.oracle.truffle.api.interop.TruffleObject;
 
@@ -15,7 +16,7 @@ import de.cobolj.phrase.SizeOverflowException;
  * @author flaechsig
  *
  */
-public abstract class Picture implements TruffleObject {
+public abstract class Picture implements TruffleObject, Serializable {
 	/** Konstante für die Markierung eines Fillers. */
 	public final static String FILLER = "FILLER";
 	
@@ -94,5 +95,13 @@ public abstract class Picture implements TruffleObject {
 	
 	public boolean isFiller() {
 		return FILLER.equals(name);
+	}
+
+	public String getQualifiedName() {
+		if(parent == null) {
+			return name;
+		} else {
+			return name + " OF " + parent.getQualifiedName();
+		}
 	}
 }

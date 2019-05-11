@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
@@ -102,19 +104,28 @@ public class CobolContext {
 	 * @param frame
 	 * @param pic
 	 */
-	private void putPicture(Frame frame, Picture pic, DataOccursClause occurs) {
+	private void putPicture(Frame frame, Picture picTemplate, DataOccursClause occurs) {
 		assert frame != null : "frame darf nicht null sein";
-		assert pic != null : "Picture muss angegeben werden";
-		ParserHelper.notImplemented(occurs);
-		
-		if(pic.isFiller()) {
+		assert picTemplate != null : "Picture muss angegeben werden";
+		final Picture[] storage = new Picture[occurs!=null?occurs.getOccurs():1];
+
+		if(picTemplate.isFiller()) {
 			// Filler sind nicht zugreifbar
 			return;
 		}
+		
+		// FIXME: Das Anlegen der Arrays arbeitet mit PictureGroup noch nicht 
+		// sauber zusammen. Vermutlich wird eine Trennung zwischen Picture und 
+		// Speicher notwendig
+		storage[0] = picTemplate; // 
+		for(int i=1; i<storage.length; i++) { 
+			storage[i] = SerializationUtils.clone(picTemplate);
+		}
+		
 
 		// Aufbauen aller Zugriffspfade
 		List<String> pfade = new ArrayList<>();
-		Picture actPic = pic;
+		Picture actPic = storage[0];
 		String actPfad = actPic.getName();
 		pfade.add(actPfad);
 		while (actPic.getParent() != null) {
@@ -130,10 +141,11 @@ public class CobolContext {
 		for (String pfad : pfade) {
 			FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(pfad);
 			if (slot != null) {
-				frame.setObject(slot, AmbigousPicture.INSTANCE);
+				Picture[] ambigius = {AmbigousPicture.INSTANCE};
+				frame.setObject(slot, ambigius);
 			} else {
 				slot = frame.getFrameDescriptor().addFrameSlot(pfad);
-				frame.setObject(slot, pic);
+				frame.setObject(slot, storage);
 			}
 		}
 	}
@@ -153,11 +165,14 @@ public class CobolContext {
 		if (slot == null) {
 			throw new RuntimeException("Picture existiert nicht (" + name + ")");
 		}
-		Picture pic = (Picture) FrameUtil.getObjectSafe(frame, slot);
-		if (pic == AmbigousPicture.INSTANCE) {
+		Picture[] pic = (Picture[]) FrameUtil.getObjectSafe(frame, slot);
+		if (pic[0] == AmbigousPicture.INSTANCE) {
 			throw new RuntimeException("Picture nicht eindeutig. Benötigt Qualifizierung (" + name + ")");
 		}
-		return pic;
+		if(pic.length > 1) {
+			throw new RuntimeException("'"+name+"' requires one subscript");
+		}
+		return pic[0];
 	}
 
 	public void setProgramName(String programName) {
