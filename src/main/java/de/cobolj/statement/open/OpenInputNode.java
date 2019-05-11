@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.nodes.NodeInfo;
+
+import de.cobolj.nodes.PictureNode;
 
 @NodeInfo(shortName = "OpenInput")
 public class OpenInputNode extends OpenInputOutputNode {

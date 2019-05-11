@@ -1,13 +1,12 @@
 package de.cobolj.parser.statement;
 
-import com.oracle.truffle.api.frame.FrameSlot;
+import de.cobolj.nodes.PictureNode;
 
 public class CalculationResult {
-
-	public String slot;
+	public PictureNode slot;
 	public boolean rounded;
 
-	public CalculationResult(String slot, boolean rounded) {
+	public CalculationResult(PictureNode slot, boolean rounded) {
 		this.slot = slot;
 		this.rounded = rounded;
 	}

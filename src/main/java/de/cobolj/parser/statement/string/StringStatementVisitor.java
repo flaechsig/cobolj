@@ -1,5 +1,7 @@
 package de.cobolj.parser.statement.string;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +11,6 @@ import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.StringStatementContext;
 import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.PhraseVisitor;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.string.StringSendingPhraseNode;
@@ -27,23 +28,12 @@ public class StringStatementVisitor extends Cobol85BaseVisitor<StringStatementNo
 
 	@Override
 	public StringStatementNode visitStringStatement(StringStatementContext ctx) {
-		PhraseNode onOverflowPhrase = null;
-		PhraseNode notOnOverflowPhrase = null;
-		PictureNode stringWithPointerPhrase = null;
 		
-		List<StringSendingPhraseNode> stringSendingPhrase = ctx.stringSendingPhrase().stream()
-				.map(result -> result.accept(new StringSendingPhraseVisitor())).collect(Collectors.toList());
-		PictureNode stringIntoPhrase = new PictureNode(ctx.stringIntoPhrase.accept(IdentifierVisitor.INSTANCE));
-
-		if (ctx.onOverflowPhrase() != null) {
-			onOverflowPhrase = ctx.onOverflowPhrase().accept(new PhraseVisitor());
-		}
-		if (ctx.notOnOverflowPhrase() != null) {
-			notOnOverflowPhrase = ctx.notOnOverflowPhrase().accept(new PhraseVisitor());
-		}
-		if (ctx.stringWithPointerPhrase() != null) {
-			stringWithPointerPhrase = new PictureNode(ctx.stringWithPointerPhrase().accept(QualifiedDataNameVisitor.INSTANCE));
-		}
+		List<StringSendingPhraseNode> stringSendingPhrase = accept(ctx.stringSendingPhrase(), new StringSendingPhraseVisitor());
+		PictureNode stringIntoPhrase = accept(ctx.stringIntoPhrase, IdentifierVisitor.INSTANCE);
+		PhraseNode onOverflowPhrase = accept(ctx.onOverflowPhrase(), new PhraseVisitor());
+		PhraseNode notOnOverflowPhrase = accept(ctx.notOnOverflowPhrase(), new PhraseVisitor());;
+		ExpressionNode stringWithPointerPhrase = accept(ctx.stringWithPointerPhrase(), QualifiedDataNameVisitor.INSTANCE);
 
 		return new StringStatementNode(stringSendingPhrase, stringIntoPhrase, stringWithPointerPhrase, onOverflowPhrase, notOnOverflowPhrase);
 	}

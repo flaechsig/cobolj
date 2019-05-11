@@ -55,20 +55,7 @@ public class ExpressionNodeFactory {
 	 */
 	public static ExpressionNode create(IdentifierContext identifier) {
 		if (identifier != null) {
-			return new PictureNode(identifier.accept(IdentifierVisitor.INSTANCE));
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * 
-	 * @see ExpressionNodeFactory#create(LiteralContext, IdentifierContext)
-	 * 
-	 */
-	public static ExpressionNode create(String identifier) {
-		if (identifier != null) {
-			return new NumberStorageNode(identifier);
+			return identifier.accept(IdentifierVisitor.INSTANCE);
 		} else {
 			return null;
 		}

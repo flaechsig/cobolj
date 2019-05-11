@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.statement.add.MathImplNode;
 
 /** 
@@ -20,7 +19,7 @@ public class AddToGivingStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public AddToGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<String> slots, List<Boolean> roundeds) {
+	public AddToGivingStatementNode(List<ExpressionNode> summands, ExpressionNode mid, List<PictureNode> slots, List<Boolean> roundeds) {
 		super(summands, mid, slots, roundeds);
 	}
 

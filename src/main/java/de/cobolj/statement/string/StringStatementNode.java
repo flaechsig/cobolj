@@ -24,9 +24,9 @@ public class StringStatementNode extends StatementNode {
 	@Child
 	private PictureNode stringIntoPhrase;
 	@Child
-	private PictureNode stringWithPointerPhrase;
+	private ExpressionNode stringWithPointerPhrase;
 
-	public StringStatementNode(List<StringSendingPhraseNode> stringSending, PictureNode stringIntoPhrase, PictureNode stringWithPointerPhrase, PhraseNode onOverflowPhrase, PhraseNode notOnOverflowPhrase) {
+	public StringStatementNode(List<StringSendingPhraseNode> stringSending, PictureNode stringIntoPhrase, ExpressionNode stringWithPointerPhrase, PhraseNode onOverflowPhrase, PhraseNode notOnOverflowPhrase) {
 		this.stringSending = stringSending.toArray(new StringSendingPhraseNode[] {});
 		this.stringIntoPhrase = stringIntoPhrase;
 		this.stringWithPointerPhrase = stringWithPointerPhrase;

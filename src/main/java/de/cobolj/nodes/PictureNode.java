@@ -15,7 +15,7 @@ import de.cobolj.runtime.Picture;
 public class PictureNode extends ExpressionNode{
 
 	/** Verwaltetes Picture im Node */
-	private String slot;
+	private final String slot;
 
 	public PictureNode(String slot) {
 		this.slot = slot;
@@ -24,5 +24,9 @@ public class PictureNode extends ExpressionNode{
 	@Override
 	public Picture executeGeneric(VirtualFrame frame) {
 		return getContext().getPicture(frame, slot);
+	}
+
+	public String getSlot() {
+		return slot;
 	}
 }

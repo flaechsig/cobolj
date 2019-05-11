@@ -1,10 +1,10 @@
 package de.cobolj.parser.division.data;
 
 import de.cobolj.nodes.LiteralNode;
+import de.cobolj.nodes.StringNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.CobolWordVisitor;
-import de.cobolj.parser.Cobol85Parser.DataValueIntervalFromContext;
 
 /**
  * 
@@ -24,7 +24,7 @@ public class DataValueIntervalFromVisitor extends Cobol85BaseVisitor<LiteralNode
 		if(ctx.literal()!=null) {
 			return ctx.literal().accept(LiteralVisitor.INSTANCE);
 		} else {
-			return ctx.cobolWord().accept(CobolWordVisitor.INSTANCE);
+			return new StringNode(ctx.cobolWord().accept(CobolWordVisitor.INSTANCE));
 		}
 	}
 }

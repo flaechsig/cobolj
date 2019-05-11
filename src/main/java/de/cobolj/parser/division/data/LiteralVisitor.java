@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.RuleContext;
 import de.cobolj.nodes.LiteralNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.LiteralContext;
 
 /**
@@ -34,17 +35,15 @@ public class LiteralVisitor extends Cobol85BaseVisitor<LiteralNode> {
 		notImplemented(ctx.cicsDfhRespLiteral());
 		notImplemented(ctx.cicsDfhValueLiteral());
 		
-		RuleContext ctx2 = (RuleContext) ctx.getChild(0);
-		int rule = ctx2.getRuleIndex();
-		switch (rule) {
-		case Cobol85Parser.RULE_nonNumericLiteral:
-			return ctx2.accept(new NonNumericalLiteralVisitor());
-		case Cobol85Parser.RULE_numericLiteral:
-			return ctx2.accept(new NumericalLiteralVisitor());
-		case Cobol85Parser.RULE_figurativeConstant:
-			return ctx2.accept(new FigurativeConstantVisitor());
-		default:
-			throw new RuntimeException("Unbekanntes Statement :" + Cobol85Parser.ruleNames[rule]);
+		LiteralNode result = null;
+		result = ParserHelper.accept(ctx.nonNumericLiteral(), new NonNumericalLiteralVisitor());
+		if(result == null) {
+			result = ParserHelper.accept(ctx.numericLiteral(), new NumericalLiteralVisitor());
 		}
+		if(result == null) {
+			result = ParserHelper.accept(ctx.figurativeConstant(), new FigurativeConstantVisitor());
+		}
+		
+		return result;
 	}
 }

@@ -1,5 +1,6 @@
 package de.cobolj.parser.statement.unstring;
 
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.UnstringIntoContext;
 import de.cobolj.parser.IdentifierVisitor;
@@ -17,12 +18,12 @@ public class UnstringIntoVisitor extends Cobol85BaseVisitor<UnstringInto> {
 
 	@Override
 	public UnstringInto visitUnstringInto(UnstringIntoContext ctx) {
-		String receiving = ctx.receiving.accept(IdentifierVisitor.INSTANCE);
-		String delimiter = null;
+		PictureNode receiving = ctx.receiving.accept(IdentifierVisitor.INSTANCE);
+		PictureNode delimiter = null;
 		if (ctx.delimiter != null) {
 			delimiter = ctx.delimiter.accept(IdentifierVisitor.INSTANCE);
 		}
-		String count = null;
+		PictureNode count = null;
 		if (ctx.countIn != null) {
 			count = ctx.countIn.accept(IdentifierVisitor.INSTANCE);
 		}

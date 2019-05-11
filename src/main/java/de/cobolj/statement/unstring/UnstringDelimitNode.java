@@ -6,7 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.ExpressionNode;
 
-@NodeInfo(shortName = "UnstringDelimit")
 public class UnstringDelimitNode extends CobolNode {
 	private boolean all = false;
 	@Child
@@ -24,21 +23,6 @@ public class UnstringDelimitNode extends CobolNode {
 	public Object executeGeneric(VirtualFrame frame) {
 		delim = delimiter.executeGeneric(frame).toString();
 		return null;
-	}
-	
-	/**
-	 * Ermittelt die nächste Endposition anhand des Delimiters.
-	 * 
-	 * @param quelle
-	 * @param startPos
-	 * @return
-	 */
-	public int nextEndPosition(String quelle, int startPos) {
-		int idx = quelle.indexOf(delim, startPos);
-		if(idx == -1) {
-			idx = quelle.length();
-		}
-		return idx;
 	}
 
 	public int getSize() {

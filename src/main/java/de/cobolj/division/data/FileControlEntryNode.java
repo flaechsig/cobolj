@@ -2,7 +2,6 @@ package de.cobolj.division.data;
 
 import java.io.File;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
@@ -10,11 +9,11 @@ import de.cobolj.division.environment.OrganizationClause;
 import de.cobolj.division.environment.OrganizationClause.FileForm;
 import de.cobolj.division.environment.OrganizationClause.RecordForm;
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.PictureNode;
 
 @NodeInfo(shortName = "FileControlEntry")
 public class FileControlEntryNode extends CobolNode {
-
-	private final String fileName;
+	private String fileName;
 	private final boolean optional;
 	private final RecordForm recordForm;
 	private final FileForm fileForm;

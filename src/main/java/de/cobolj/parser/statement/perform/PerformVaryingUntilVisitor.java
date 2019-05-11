@@ -1,8 +1,7 @@
 package de.cobolj.parser.statement.perform;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformUntilContext;
 import de.cobolj.parser.condition.ConditionVisitor;
@@ -25,7 +24,7 @@ public class PerformVaryingUntilVisitor extends Cobol85BaseVisitor<ExpressionNod
 	/** Auszuführender Perform-Block */
 	private ExpressionNode perform;
 	/** Speicher für den Schleifenzähler */
-	private String var;
+	private PictureNode var;
 	/** Startwert des Schleifenzählers */
 	private ExpressionNode start;
 	/** Schrittweite des Schleifenzählers */
@@ -33,7 +32,7 @@ public class PerformVaryingUntilVisitor extends Cobol85BaseVisitor<ExpressionNod
 	/** Kennzeichen, ob der Test vor oder nach dem Schleifenrumpf stattfindet */
 	private boolean testBefore;
 
-	public PerformVaryingUntilVisitor(ExpressionNode perform, boolean testBefore, String var, ExpressionNode start,
+	public PerformVaryingUntilVisitor(ExpressionNode perform, boolean testBefore, PictureNode var, ExpressionNode start,
 			ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;

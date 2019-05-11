@@ -2,11 +2,11 @@ package de.cobolj.parser.statement.perform;
 
 import java.math.BigDecimal;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.NumericPicture;
 
 /**
@@ -19,7 +19,8 @@ import de.cobolj.runtime.NumericPicture;
 @NodeInfo(shortName = "PerformAfter")
 public class PerformAfterNode extends ExpressionNode {
 	private final boolean testBefore;
-	private String var;
+	@Child
+	private PictureNode var;
 	@Child
 	private ExpressionNode perform;
 	@Child
@@ -29,7 +30,7 @@ public class PerformAfterNode extends ExpressionNode {
 	@Child
 	private ExpressionNode step;
 
-	public PerformAfterNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform, String var,
+	public PerformAfterNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform, PictureNode var,
 			ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;
@@ -41,7 +42,7 @@ public class PerformAfterNode extends ExpressionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		NumericPicture picture = (NumericPicture) getContext().getPicture(frame, var);
+		NumericPicture picture = (NumericPicture)var.executeGeneric(frame);
 		picture.setValue(start.executeGeneric(frame));
 		BigDecimal stepWidht = BigDecimal.valueOf((long) step.executeGeneric(frame));
 

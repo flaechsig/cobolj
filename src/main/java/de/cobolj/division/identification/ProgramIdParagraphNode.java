@@ -7,7 +7,6 @@ import de.cobolj.nodes.CobolNode;
 
 @NodeInfo(shortName="ProgramIdParagraph")
 public class ProgramIdParagraphNode extends CobolNode {
-
 	private String programName;
 
 	public ProgramIdParagraphNode(String programName) {

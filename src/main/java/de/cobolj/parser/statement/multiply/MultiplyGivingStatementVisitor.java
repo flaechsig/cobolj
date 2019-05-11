@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.MultiplyGivingStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
@@ -30,7 +29,7 @@ public class MultiplyGivingStatementVisitor extends Cobol85BaseVisitor<MathImplN
 		List<ExpressionNode> left = new ArrayList<>();
 		ExpressionNode right;
 		List<CalculationResult> results;
-		List<String> slots = new ArrayList<>();
+		List<PictureNode> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 
 		LiteralOrIdentifierVisitor literaltOrIdentifierVisitor = new LiteralOrIdentifierVisitor();

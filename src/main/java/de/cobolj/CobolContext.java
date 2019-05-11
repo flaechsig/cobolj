@@ -82,7 +82,7 @@ public class CobolContext {
 				}
 			}
 		}
-		throw new RuntimeException("FileDescriptor nicht gefunden");
+		throw new RuntimeException("FileDescriptor ("+name+") nicht gefunden");
 	}
 
 	/** Fügt dem Context einen File-Descriptor hinzu. */

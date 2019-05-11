@@ -1,8 +1,7 @@
 package de.cobolj.parser.statement.perform;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.PerformVaryingPhraseContext;
 import de.cobolj.parser.IdentifierVisitor;
@@ -26,7 +25,7 @@ public class PerformVaryingPhraseVisitor extends Cobol85BaseVisitor<ExpressionNo
 
 	@Override
 	public ExpressionNode visitPerformVaryingPhrase(PerformVaryingPhraseContext ctx) {
-		String var;
+		PictureNode var;
 		if(ctx.identifier()!=null) {
 			var = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		} else  /* index */ {

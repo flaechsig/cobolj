@@ -1,5 +1,7 @@
 package de.cobolj.parser.statement.add;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +9,7 @@ import java.util.stream.Collectors;
 import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.statement.CalculationResult;
@@ -31,22 +34,12 @@ public class AddToStatementVisitor extends Cobol85BaseVisitor<MathImplNode> {
 
 	@Override
 	public MathImplNode visitAddToStatement(Cobol85Parser.AddToStatementContext ctx) {
-		List<ExpressionNode> summands;
-		List<CalculationResult> results;
-		List<String> slots = new ArrayList<>();
+		List<PictureNode> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
-		LiteralOrIdentifierVisitor fromVisitor = new LiteralOrIdentifierVisitor();
-		summands = ctx.literalOrIdentifier()
-				.stream()
-				.map(operand -> operand.accept(fromVisitor))
-				.collect(Collectors.toList());
-		
-		ResultIdentifierVisitor toVisitor = new ResultIdentifierVisitor();
-		results = ctx.resultIdentifier()
-				.stream()
-				.map(result -> result.accept(toVisitor))
-				.collect(Collectors.toList());
+		List<ExpressionNode> summands = accept(ctx.literalOrIdentifier(), new LiteralOrIdentifierVisitor());	
+		List<CalculationResult> results = accept(ctx.resultIdentifier(), new ResultIdentifierVisitor());
+
 		
 		for(CalculationResult singleResult : results) {
 			slots.add(singleResult.slot);

@@ -18,6 +18,13 @@ public class NodeHelper {
 		return oldResult;
 	}
 	
+	public static Object excecuteGeneric(CobolNode node, VirtualFrame frame) {
+		if(node != null) {
+			return node.executeGeneric(frame);
+		}	
+		return null;
+	}
+	
 
 	/** @see #excecuteGeneric(CobolNode, Object, VirtualFrame) */
 	public static <T> T excecuteGeneric(CobolNode[] nodeArray, T oldResult, VirtualFrame frame) {

@@ -3,13 +3,11 @@ package de.cobolj.statement.open;
 import java.io.File;
 import java.io.IOException;
 
-import javax.management.RuntimeErrorException;
-
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.PictureNode;
 
 /**
  * Repräsentation eines einzelen Files bzw. Input-Streams. Demnach liefert die
@@ -20,7 +18,6 @@ import de.cobolj.nodes.CobolNode;
  *
  */
 public abstract class OpenInputOutputNode extends CobolNode {
-
 	private String fileName;
 
 	public OpenInputOutputNode(String fileSlot) {

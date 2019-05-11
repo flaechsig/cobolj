@@ -1,5 +1,6 @@
 package de.cobolj.statement.unstring;
 
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.statement.unstring.UnstringIntoVisitor;
 
 /**
@@ -9,14 +10,13 @@ import de.cobolj.parser.statement.unstring.UnstringIntoVisitor;
  *
  */
 public class UnstringInto {
-	final String receiver;
-	final String delimiter;
-	final String count;
+	PictureNode receiver;
+	PictureNode delimiter;
+	PictureNode count;
 
-	public UnstringInto(String identifier, String delimiter, String count) {
+	public UnstringInto(PictureNode identifier, PictureNode delimiter, PictureNode count) {
 		this.receiver = identifier;
 		this.delimiter = delimiter;
 		this.count = count;
 	}
-
 }

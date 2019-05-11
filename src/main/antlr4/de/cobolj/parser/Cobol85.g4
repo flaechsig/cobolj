@@ -63,7 +63,7 @@ identificationDivisionBody
 
 programIdParagraph
 :
-	PROGRAM_ID DOT_FS progName = identifier
+	PROGRAM_ID DOT_FS progName = cobolWord
 	(
 		IS?
 		(
@@ -484,7 +484,7 @@ fileControlParagraph
 
 fileControlEntryFormat1
 :
-	SELECT OPTIONAL? fileName = identifier assignClause reserveClause?
+	SELECT OPTIONAL? fileName = cobolWord assignClause reserveClause?
 	organizationClause? paddingCharacterClause? recordDelimiterClause?
 	accessModeClause? fileStatusClause?
 ;
@@ -535,7 +535,7 @@ assignClause
 		| REMOTE
 		| TAPE
 		| VIRTUAL
-		| assignmentName = IDENTIFIER
+		| assignmentName = identifier
 		| literal
 	)
 ;
@@ -1914,7 +1914,7 @@ dataJustifiedClause
 
 dataOccursClause
 :
-	OCCURS integerLiteral dataOccursTo? TIMES?
+	OCCURS numericLiteral dataOccursTo? TIMES?
 	(
 		DEPENDING ON? qualifiedDataName
 	)? dataOccursSort*
@@ -2455,7 +2455,7 @@ closeStatement
 
 closeFile
 :
-	fileName = identifier
+	fileName = cobolWord
 	(
 		closeReelUnitStatement
 		| closeRelativeStatement
@@ -3157,7 +3157,7 @@ openInputStatement
 
 openInput
 :
-	fileName = identifier
+	fileName = cobolWord
 	(
 		REVERSED
 		| WITH? NO REWIND
@@ -3875,7 +3875,7 @@ useDebugOn
 
 writeStatement
 :
-	WRITE recordName = qualifiedDataName writeFromPhrase? writeAdvancingPhrase?
+	WRITE recordName = cobolWord writeFromPhrase? writeAdvancingPhrase?
 	writeAtEndOfPagePhrase? writeNotAtEndOfPagePhrase? invalidKeyPhrase?
 	notInvalidKeyPhrase? END_WRITE?
 ;

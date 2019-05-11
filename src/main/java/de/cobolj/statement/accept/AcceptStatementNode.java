@@ -3,6 +3,7 @@ package de.cobolj.statement.accept;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.statement.StatementNode;
 
@@ -19,19 +20,20 @@ public class AcceptStatementNode extends StatementNode {
 	
 	@Child
 	private InputNode input;
-	private final String slot;
+	@Child
+	private PictureNode slot;
 	private final boolean rounded;
 	
-	public AcceptStatementNode(InputNode input, String slot, boolean rounded) {
+	public AcceptStatementNode(InputNode input, PictureNode slot, boolean rounded) {
 		this.input = input;
 		this.slot = slot;
 		this.rounded = rounded;
 	}
 	@Override
 	public Picture executeGeneric(VirtualFrame frame) {
-		Picture pic = getContext().getPicture(frame, slot);
+		Picture pic = slot.executeGeneric(frame);
 		pic.setValue(input.executeGeneric(frame));
-		// TODO: Was ist mit rounded
+		// Fixme: Was ist mit rounded
 		return pic;
 	}
 

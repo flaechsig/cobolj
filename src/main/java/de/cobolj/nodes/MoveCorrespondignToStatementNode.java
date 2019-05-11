@@ -23,20 +23,22 @@ import de.cobolj.statement.StatementNode;
 public class MoveCorrespondignToStatementNode extends StatementNode {
 
 	/** Quellfeld für den Move-Befehl */
-	private String sending;
+	@Child
+	private PictureNode sending;
 	/** Liste der Slots, in die das Quellfeld übertragen wird. */
-	private final String[] receiving;
+	@Children
+	private final PictureNode[] receiving;
 
-	public MoveCorrespondignToStatementNode(String sending, List<String> receiving) {
+	public MoveCorrespondignToStatementNode(PictureNode sending, List<PictureNode> receiving) {
 		this.sending = sending;
-		this.receiving = receiving.toArray(new String[] {});
+		this.receiving = receiving.toArray(new PictureNode[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Picture sendPic = getContext().getPicture(frame, sending);
-		for (String slot : receiving) {
-			Picture pic = getContext().getPicture(frame, slot);
+		Picture sendPic = sending.executeGeneric(frame);
+		for (PictureNode slot : receiving) {
+			Picture pic = slot.executeGeneric(frame);
 			pic.clear();
 			pic.setValue(sendPic);
 		}

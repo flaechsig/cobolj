@@ -15,14 +15,14 @@ import de.cobolj.statement.exit.ExitStatementNode;
 
 @NodeInfo(shortName = "ProcedureDivision")
 public class ProcedureDivisionNode extends CobolNode {
-
-	private final String[] usingDatanames;
+	@Children
+	private final PictureNode[] usingDatanames;
 	@Child
 	private ProcedureDivisionBodyNode body;
 	// FIXME: Die restlichen Member ergänzen
 
-	public ProcedureDivisionNode(List<String> usingDatanames, ProcedureDivisionBodyNode body) {
-		this.usingDatanames = usingDatanames.toArray(new String[] {});
+	public ProcedureDivisionNode(List<PictureNode> usingDatanames, ProcedureDivisionBodyNode body) {
+		this.usingDatanames = usingDatanames.toArray(new PictureNode[] {});
 		this.body = body;
 	}
 
@@ -45,7 +45,7 @@ public class ProcedureDivisionNode extends CobolNode {
 		long size = value == null ? 0 : value.getArraySize();
 
 		for (int i = 0; i < size; i++) {
-			Picture pic = getContext().getPicture(frame, usingDatanames[i]);
+			Picture pic =usingDatanames[i].executeGeneric(frame);
 			value.getArrayElement(i).as(By.class).checkAndSetValue(pic.getValue());
 		}
 	}
@@ -60,7 +60,7 @@ public class ProcedureDivisionNode extends CobolNode {
 		}
 
 		for (int i = 0; i < size; i++) {
-			Picture pic = getContext().getPicture(frame, usingDatanames[i]);
+			Picture pic =usingDatanames[i].executeGeneric(frame);
 			pic.setValue(value.getArrayElement(i).as(By.class).getValue());
 		}
 	}

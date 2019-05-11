@@ -1,10 +1,12 @@
 package de.cobolj.parser.division.data;
 
-import de.cobolj.nodes.StringNode;
+import static de.cobolj.parser.ParserHelper.accept;
+
+import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.Cobol85Parser.QualifiedDataNameContext;
 
 /**
  * 
@@ -14,22 +16,21 @@ import de.cobolj.parser.Cobol85Parser.QualifiedDataNameContext;
  * @author flaechsig
  *
  */
-public class QualifiedDataNameVisitor extends Cobol85BaseVisitor<String> {
+public class QualifiedDataNameVisitor extends Cobol85BaseVisitor<PictureNode> {
 
 	public static QualifiedDataNameVisitor INSTANCE = new QualifiedDataNameVisitor();
 
 	private QualifiedDataNameVisitor() {}
 
 	@Override
-	public String visitQualifiedDataName(Cobol85Parser.QualifiedDataNameContext ctx) {
+	public PictureNode visitQualifiedDataName(Cobol85Parser.QualifiedDataNameContext ctx) {
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat2());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat3());
 		ParserHelper.notImplemented(ctx.qualifiedDataNameFormat4());
 		
-		String result = null;
-		if (ctx.qualifiedDataNameFormat1() != null) {
-			result =  ctx.qualifiedDataNameFormat1().accept(QualifiedDataNameFormat1Visitor.INSTANCE);
-		}
+		PictureNode result = null;
+		result = accept(ctx.qualifiedDataNameFormat1(), QualifiedDataNameFormat1Visitor.INSTANCE);
+		
 		return result;
 	}
 }

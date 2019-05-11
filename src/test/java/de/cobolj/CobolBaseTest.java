@@ -44,10 +44,10 @@ public abstract class CobolBaseTest {
 
 		try {
 			int idx = this.getClass().getName().lastIndexOf('.');
-			String packageName = this.getClass().getName().substring(0,idx);
+			String packageName = this.getClass().getName().substring(0, idx);
 			packageName = packageName.replace('.', '/');
 			for (String i : input) {
-				CobolExec.register("/" +packageName + "/"+ i + ".cob");
+				CobolExec.register("/" + packageName + "/" + i + ".cob");
 			}
 
 			// Input File
@@ -81,16 +81,18 @@ public abstract class CobolBaseTest {
 	@DataProvider(name = "cobolTests")
 	public Object[] acceptTest() {
 		Collection<List<String>> result;
-		String name = this.getClass().getName();
-		int idx = name.lastIndexOf('.');
-		name = name.substring(0, idx);
-		name = name.replace('.', '/');
+		String packageName = this.getClass().getName();
+		int idx = packageName.lastIndexOf('.');
+		packageName = packageName.substring(0, idx);
+		packageName = packageName.replace('.', '/');
+		String startWith = this.getClass().getSimpleName();
+		startWith = startWith.substring(0, startWith.length()-4).toLowerCase();
 
-		result = getResourceFiles(name);
+		result = getResourceFiles(packageName, startWith);
 		return result.toArray();
 	}
 
-	private Collection<List<String>> getResourceFiles(String path) {
+	private Collection<List<String>> getResourceFiles(String path, String startWith) {
 		Set<String> allFilenames = new TreeSet<>();
 		Collection<List<String>> result = new ArrayList<>();
 
@@ -99,7 +101,7 @@ public abstract class CobolBaseTest {
 			String resource;
 
 			while ((resource = br.readLine()) != null) {
-				if (!resource.endsWith(".cob")) {
+				if (!resource.endsWith(".cob") || !resource.startsWith(startWith)) {
 					continue;
 				}
 				allFilenames.add(resource.substring(0, resource.length() - 4));
@@ -116,7 +118,7 @@ public abstract class CobolBaseTest {
 			group.add(firstItem);
 			while (iter.hasNext()) {
 				String nextItem = iter.next();
-				if (nextItem.startsWith(firstItem+"-")) {
+				if (nextItem.startsWith(firstItem + "-")) {
 					// Folgeeintrag ist vorne identisch;
 					group.add(nextItem);
 				} else {

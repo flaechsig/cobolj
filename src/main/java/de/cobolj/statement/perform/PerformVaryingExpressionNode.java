@@ -2,11 +2,11 @@ package de.cobolj.statement.perform;
 
 import java.math.BigDecimal;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.NumericPicture;
 
 @NodeInfo(shortName = "PerformVarying")
@@ -20,7 +20,8 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 	@Child
 	private ExpressionNode condition;
 	/** Schleifenzähler */
-	private final String var;
+	@Child
+	private PictureNode var;
 	/** Startwert */
 	@Child
 	private ExpressionNode start;
@@ -31,7 +32,7 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 	private ExpressionNode perform;
 
 	public PerformVaryingExpressionNode(boolean testBefore, ExpressionNode condition, ExpressionNode perform,
-			String var, ExpressionNode start, ExpressionNode step) {
+			PictureNode var, ExpressionNode start, ExpressionNode step) {
 		this.perform = perform;
 		this.testBefore = testBefore;
 		this.condition = condition;
@@ -42,17 +43,17 @@ public class PerformVaryingExpressionNode extends ExpressionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		NumericPicture picture = (NumericPicture) getContext().getPicture(frame, var);
+		NumericPicture picture = (NumericPicture) var.executeGeneric(frame);
 		picture.setValue(start.executeGeneric(frame));
 		BigDecimal stepWidht = BigDecimal.valueOf((long) step.executeGeneric(frame));
-		
-		while(true) {
+
+		while (true) {
 			boolean conditionResult = (boolean) condition.executeGeneric(frame);
-			if(testBefore && conditionResult) {
+			if (testBefore && conditionResult) {
 				break;
 			}
 			perform.executeGeneric(frame);
-			if(!testBefore && conditionResult) {
+			if (!testBefore && conditionResult) {
 				break;
 			}
 			picture.setValue(picture.getBigDecimal().add(stepWidht));

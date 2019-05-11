@@ -1,10 +1,9 @@
 package de.cobolj.parser.division.data;
 
-import de.cobolj.nodes.StringNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.CobolWordVisitor;
-import de.cobolj.parser.Cobol85Parser.DataNameContext;
 
 /**
  * 
@@ -13,14 +12,14 @@ import de.cobolj.parser.Cobol85Parser.DataNameContext;
  * @author flaechsig
  *
  */
-public class DataNameVisitor extends Cobol85BaseVisitor<StringNode> {
+public class DataNameVisitor extends Cobol85BaseVisitor<PictureNode> {
 	
 	public static DataNameVisitor INSTANCE = new DataNameVisitor();
 	
 	private DataNameVisitor() {	}
 
 	@Override
-	public StringNode visitDataName(Cobol85Parser.DataNameContext ctx) {
-		return ctx.cobolWord().accept(CobolWordVisitor.INSTANCE);
+	public PictureNode visitDataName(Cobol85Parser.DataNameContext ctx) {
+		return new PictureNode(ctx.cobolWord().accept(CobolWordVisitor.INSTANCE));
 	}
 }

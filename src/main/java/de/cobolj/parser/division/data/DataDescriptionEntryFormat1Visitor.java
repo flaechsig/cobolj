@@ -101,13 +101,16 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		notImplemented(ctx.dataSynchronizedClause());
 		notImplemented(ctx.dataJustifiedClause());
 		notImplemented(ctx.dataBlankWhenZeroClause());
-		notImplemented(ctx.dataOccursClause());
 
 		int level = checkLevel(ctx);
 
 		// Es ist entweder FILLER oder der Name gesetzt
-		String name = accept(ctx.FILLER()) ? Picture.FILLER
-				: accept(ctx.dataName(), DataNameVisitor.INSTANCE).toString();
+		String name;
+		if(accept(ctx.FILLER())) {
+			name = Picture.FILLER;
+		} else {
+			name = accept(ctx.dataName(), DataNameVisitor.INSTANCE).getSlot();
+		}
 		DataOccursClause dataOccursClause = accept(ctx.dataOccursClause(0), new DataOccursClauseVisitor());
 		Picture picture = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor(name, groupStack.peek(), dataOccursClause));
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);

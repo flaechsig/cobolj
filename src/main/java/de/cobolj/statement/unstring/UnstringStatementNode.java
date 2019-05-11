@@ -1,5 +1,7 @@
 package de.cobolj.statement.unstring;
 
+import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
+
 import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -24,9 +26,13 @@ public class UnstringStatementNode extends StatementNode {
 	private PictureNode sending;
 	@Children
 	private UnstringDelimitNode[] delimiters;
-	private UnstringInto[] unstringInto;
+	@Children
+	private final PictureNode[] dataReceivingField;
+	@Children
+	private final PictureNode[] delimiterReceivingField;
+	@Children 
+	private final PictureNode[] dataCountField;
 	private UnstringDelimitNode actDelim;
-	private int position;
 	@Child
 	private PictureNode tallying;
 	@Child
@@ -41,11 +47,19 @@ public class UnstringStatementNode extends StatementNode {
 			PhraseNode notOnOverflow) {
 		this.sending = sending;
 		this.delimiters = delimiters.toArray(new UnstringDelimitNode[] {});
-		this.unstringInto = unstringInto.toArray(new UnstringInto[] {});
+		this.dataReceivingField = new PictureNode[unstringInto.size()];
+		this.delimiterReceivingField = new PictureNode[unstringInto.size()];
+		this.dataCountField = new PictureNode[unstringInto.size()];
 		this.tallying = tallying;
 		this.pointer = pointer;
 		this.onOverflow = onOverflow;
 		this.notOnOverflow = notOnOverflow;
+		
+		for(int i=0; i<unstringInto.size();i++) {
+			dataReceivingField[i] = unstringInto.get(i).receiver;
+			delimiterReceivingField[i] = unstringInto.get(i).delimiter;
+			dataCountField[i] = unstringInto.get(i).count;
+		}
 	}
 
 	/**
@@ -62,9 +76,9 @@ public class UnstringStatementNode extends StatementNode {
 		if (tallying != null) {
 			tallyPic = (NumericPicture) tallying.executeGeneric(frame);
 		}
-		String quelle = sending.executeGeneric(frame).toString();
 
-		position = 0;
+		String quelle = sending.executeGeneric(frame).toString();
+		int position=0;
 		if (pointer != null) {
 			NumericPicture pointerPic = (NumericPicture) pointer.executeGeneric(frame);
 			position = pointerPic.getBigDecimal().intValue() - 1;
@@ -76,24 +90,50 @@ public class UnstringStatementNode extends StatementNode {
 			return this;
 		}
 
-		for (UnstringInto into : unstringInto) {
-			Picture pic = getContext().getPicture(frame, into.receiver);
-			int newPos = nextEndPostion(quelle, pic.getSize());
-			pic.setValue(quelle.substring(position, newPos));
-			if (into.delimiter != null) {
-				getContext().getPicture(frame, into.delimiter).setValue(actDelim.getDelim());
+		quelle = quelle.substring(position);
+
+		for (int i=0; i<dataReceivingField.length; i++) {
+			Picture receiving = (Picture) excecuteGeneric(dataReceivingField[i], frame);
+			Picture delimiter = (Picture) excecuteGeneric(delimiterReceivingField[i], frame);
+			Picture counter = (Picture) excecuteGeneric(dataCountField[i], frame);
+			
+			int size;
+			if(delimiters.length==0) {
+				// Nach der Feldgröße des Empfängers schneiden
+				size = receiving.getSize();
+				receiving.setValue(quelle.substring(0, size));
+				quelle = quelle.substring(size);
+			} else {
+				// Delimiter verwenden und nächste Position finden
+				size = nextPosition(quelle);
+				if(size==Integer.MAX_VALUE) {
+					size = Math.max(quelle.length(), receiving.getSize());
+				}
+				receiving.setValue(quelle.substring(0, size));
+				quelle = quelle.substring(size);
+				if( actDelim != null && quelle.startsWith(actDelim.delim)) {
+					quelle = quelle.substring(actDelim.getSize());
+				}
+				while(actDelim != null && this.actDelim.isAll() && quelle.startsWith(actDelim.delim)) {
+					quelle = quelle.substring(actDelim.getSize());
+				} 
 			}
-			if (into.count != null) {
-				getContext().getPicture(frame, into.count).setValue(newPos - position);
+			if(actDelim != null) {
+				if(delimiter!=null) {
+					delimiter.setValue(actDelim.delim);
+				}
+				if(counter != null) {
+					counter.setValue(size);
+				}
 			}
-			position = newPos;
+			
 			if (tallyPic != null) {
 				tallyPic.setValue(tallyPic.getBigDecimal().longValue() + 1);
 			}
 		}
-		
+
 		// Zweiter Overflow-Check. Sending-Feld hat noch Zeichen übrig
-		if (onOverflow != null && (position < quelle.length())) {
+		if (onOverflow != null && !quelle.isEmpty()) {
 			onOverflow.executeGeneric(frame);
 			return this;
 		}
@@ -104,26 +144,16 @@ public class UnstringStatementNode extends StatementNode {
 		return this;
 	}
 
-	private int nextEndPostion(String quelle, int defaultSize) {
-		// Wenn keine Delimiter gegeben sind, dann sofort zurück
-		if (delimiters.length == 0) {
-			return position + defaultSize;
-		}
-
-		// Start-Postion korrigieren
-		if (actDelim != null) {
-			do {
-				position += actDelim.getSize();
-			} while (actDelim.isAll() && quelle.substring(position).startsWith(actDelim.getDelim()));
-		}
-
+	/** Ermittelt in dem übergebenen String die nächste Position des "kleinsten" delimiters. */
+	private int nextPosition(String quelle) {
 		int result = Integer.MAX_VALUE;
-		for (UnstringDelimitNode delim : delimiters) {
-			int tmpStart = position;
-			int tmpIdx = delim.nextEndPosition(quelle, tmpStart);
-			if (tmpIdx < result) {
-				result = tmpIdx;
-				actDelim = delim;
+		actDelim = null;
+		for(UnstringDelimitNode delimiter : delimiters) {
+			String delimiterString = delimiter.delim;
+			int idx = quelle.indexOf(delimiterString);
+			if(idx < result && idx > -1) {
+				result = idx;
+				actDelim = delimiter;
 			}
 		}
 		return result;

@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.statement.add.MathImplNode;
 
 /**
@@ -22,7 +22,7 @@ public class SubtractFromStatementNode extends MathImplNode {
 	/**
 	 * @see MathImplNode
 	 */
-	public SubtractFromStatementNode(List<ExpressionNode> summands, List<String> results, List<Boolean> rounded) {
+	public SubtractFromStatementNode(List<ExpressionNode> summands, List<PictureNode> results, List<Boolean> rounded) {
 		super(summands, results, rounded);
 	}
 

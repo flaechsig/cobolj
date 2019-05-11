@@ -1,7 +1,6 @@
 package de.cobolj.parser.statement.add;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ResultIdentifierContext;
 import de.cobolj.parser.IdentifierVisitor;
@@ -18,7 +17,7 @@ public class ResultIdentifierVisitor extends Cobol85BaseVisitor<CalculationResul
 
 	@Override
 	public CalculationResult visitResultIdentifier(ResultIdentifierContext ctx) {
-		String slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
+		PictureNode slot = ctx.identifier().accept(IdentifierVisitor.INSTANCE);
 		boolean rounded = (ctx.ROUNDED() != null);
 		
 		return new CalculationResult(slot,  rounded);

@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.phrase.SizeOverflowException;
 import de.cobolj.runtime.NumericPicture;
@@ -27,7 +27,8 @@ public class ComputeStatementNode extends StatementNode {
 	@Child
 	private ExpressionNode arithmetic;
 	/** Storage, in den das Ergebnis geschrieben wird */
-	private final String[] slots;
+	@Children
+	private final PictureNode[] slots;
 	/**
 	 * Kennzeichen, ob der Store (selber Index wie bei slots) gerundet werden soll
 	 */
@@ -39,10 +40,10 @@ public class ComputeStatementNode extends StatementNode {
 	@Child
 	private PhraseNode error;
 
-	public ComputeStatementNode(ExpressionNode arithmeticEx, List<String> slots, List<Boolean> rounded,
+	public ComputeStatementNode(ExpressionNode arithmeticEx, List<PictureNode> slots, List<Boolean> rounded,
 			PhraseNode successPhrase, PhraseNode errorPhrase) {
 		this.arithmetic = arithmeticEx;
-		this.slots = slots.toArray(new String[] {});
+		this.slots = slots.toArray(new PictureNode[] {});
 		this.rounded = rounded.toArray(new Boolean[] {});
 		this.success = successPhrase;
 		this.error = errorPhrase;
@@ -55,9 +56,9 @@ public class ComputeStatementNode extends StatementNode {
 
 		boolean hasSizeError = false;
 		for (int i = 0; i < slots.length; i++) {
-			String slot = slots[i];
+			PictureNode slot = slots[i];
 			boolean toRound = this.rounded[i];
-			NumericPicture picture = (NumericPicture) getContext().getPicture(frame, slot);
+			NumericPicture picture = (NumericPicture)slot.executeGeneric(frame);
 			BigDecimal value = arithmeticResult;
 			if (toRound) {
 				value = value.setScale(picture.getScale(), RoundingMode.HALF_UP);

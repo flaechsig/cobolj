@@ -1,15 +1,13 @@
 package de.cobolj.parser;
 
-import de.cobolj.nodes.StringNode;
-
-public class CobolWordVisitor extends Cobol85BaseVisitor<StringNode> {
+public class CobolWordVisitor extends Cobol85BaseVisitor<String> {
 	
 	public static CobolWordVisitor INSTANCE = new CobolWordVisitor();
 	
 	private CobolWordVisitor() {	}
 
 	@Override
-	public StringNode visitCobolWord(Cobol85Parser.CobolWordContext ctx) {
-		return new StringNode(ctx.getText().toUpperCase());
+	public String visitCobolWord(Cobol85Parser.CobolWordContext ctx) {
+		return ctx.getText().toUpperCase();
 	}
 }

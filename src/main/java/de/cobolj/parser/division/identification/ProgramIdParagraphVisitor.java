@@ -5,10 +5,12 @@ import static de.cobolj.parser.ParserHelper.notImplemented;
 
 import de.cobolj.division.identification.ProgramIdParagraphNode;
 import de.cobolj.nodes.LiteralNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ProgramIdParagraphContext;
+import de.cobolj.parser.CobolWordVisitor;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.division.data.NonNumericalLiteralVisitor;
+import de.cobolj.parser.division.data.LiteralVisitor;
 
 /**
  * programIdParagraph : PROGRAM_ID DOT_FS programName ( IS? ( COMMON | INITIAL |
@@ -28,7 +30,7 @@ public class ProgramIdParagraphVisitor extends Cobol85BaseVisitor<ProgramIdParag
 		notImplemented(ctx.PROGRAM());
 		notImplemented(ctx.commentEntry());
 		
-		String programName = accept(ctx.progName, IdentifierVisitor.INSTANCE);
+		String programName = accept(ctx.progName, CobolWordVisitor.INSTANCE);
 		
 		return new ProgramIdParagraphNode(programName);
 	}

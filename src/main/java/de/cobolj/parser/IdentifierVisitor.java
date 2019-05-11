@@ -3,11 +3,8 @@ package de.cobolj.parser;
 import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
-import org.antlr.v4.runtime.RuleContext;
-
-import com.oracle.truffle.api.frame.FrameSlot;
-
-import de.cobolj.nodes.StringNode;
+import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
 
 /**
@@ -17,18 +14,18 @@ import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
  * @author flaechsig
  *
  */
-public class IdentifierVisitor extends Cobol85BaseVisitor<String> {
+public class IdentifierVisitor extends Cobol85BaseVisitor<PictureNode> {
 	public static IdentifierVisitor INSTANCE = new IdentifierVisitor();
 	
 	private IdentifierVisitor() {}
 
 	@Override
-	public String visitIdentifier(Cobol85Parser.IdentifierContext ctx) {
+	public PictureNode visitIdentifier(Cobol85Parser.IdentifierContext ctx) {
 		notImplemented(ctx.tableCall());
 		notImplemented(ctx.functionCall());
 		notImplemented(ctx.specialRegister());
 
-		String result = accept(ctx.qualifiedDataName(), QualifiedDataNameVisitor.INSTANCE);
+		PictureNode result = accept(ctx.qualifiedDataName(), QualifiedDataNameVisitor.INSTANCE);
 		
 		return result;
 	}

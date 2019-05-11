@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.oracle.truffle.api.frame.FrameSlot;
-
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.SubtractFromStatementContext;
 import de.cobolj.parser.statement.CalculationResult;
@@ -26,7 +25,7 @@ public class SubtractFromStatementVisitor extends Cobol85BaseVisitor<SubtractFro
 public SubtractFromStatementNode visitSubtractFromStatement(SubtractFromStatementContext ctx) {
 		List<ExpressionNode> left;
 		List<CalculationResult> results;
-		List<String> slots = new ArrayList<>();
+		List<PictureNode> slots = new ArrayList<>();
 		List<Boolean> roundeds = new ArrayList<>();
 		
 		LiteralOrIdentifierVisitor literalOrIdentifierVisitor = new LiteralOrIdentifierVisitor();

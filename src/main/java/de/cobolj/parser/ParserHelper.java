@@ -69,6 +69,20 @@ public final class ParserHelper {
 		}
 	}
 	
+	/**
+	 * @see #accept(ParserRuleContext, Cobol85BaseVisitor)
+	 * 
+	 * Zusätzlich wird eine Condition übergeben, die null sein muss, damit der Visitor aufgerufen wird. Andernfalls 
+	 * wird die Condition zurückgeliefert. 
+	 * 
+	 */
+	public static <T>  T accept(T condition, ParserRuleContext ctx, Cobol85BaseVisitor<? extends T> visitor) {
+		if(condition != null) {
+			return condition;
+		}
+		return accept(ctx, visitor);
+	}
+	
 	/** 
 	 * @see #accept(ParserRuleContext, Cobol85BaseVisitor)
 	 */

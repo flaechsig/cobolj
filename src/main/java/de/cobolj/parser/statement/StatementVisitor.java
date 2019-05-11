@@ -80,7 +80,7 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 			visitor = (Cobol85BaseVisitor<?>) visitorClass.newInstance();
 			return (StatementNode) ctx2.accept(visitor);
 		} catch (NullPointerException | InstantiationException | IllegalAccessException e) {
-			throw new RuntimeException("Unbekanntes Statement: " + statementName);
+			throw new RuntimeException("Unbekanntes Statement: " + statementName, e);
 		}
 	}
 }
