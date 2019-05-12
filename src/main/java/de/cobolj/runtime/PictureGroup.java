@@ -10,6 +10,7 @@ import com.oracle.truffle.api.interop.MessageResolution;
 
 import de.cobolj.phrase.SizeOverflowException;
 
+@SuppressWarnings("serial")
 @MessageResolution(receiverType = PictureX.class)
 public class PictureGroup extends Picture {
 

@@ -16,6 +16,7 @@ import de.cobolj.phrase.SizeOverflowException;
  * @author flaechsig
  *
  */
+@SuppressWarnings("serial")
 public abstract class Picture implements TruffleObject, Serializable {
 	/** Konstante für die Markierung eines Fillers. */
 	public final static String FILLER = "FILLER";

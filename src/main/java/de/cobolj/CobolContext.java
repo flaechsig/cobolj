@@ -154,27 +154,42 @@ public class CobolContext {
 	 * Liefert das Picture zum Namen. Wenn der Name nicht eindeutig aufgelöst
 	 * wereden kann, wird eine Exception geworfen.
 	 * 
-	 * @param name
+	 * @param frame Ausführender Frame
+	 * @param name Name des Pictures, wie es in der Data Devision deklariert wurde
+	 * @param subscript Tabellen-Index (mit 1 startend)
 	 * @return
 	 */
-	public Picture getPicture(Frame frame, String name) {
+	public Picture getPicture(Frame frame, String name, Number... subscript) {
 		assert frame != null : "frame darf nicht null sein";
 		assert name != null : "Name muss angegeben werden";
-
+		assert subscript.length <= 1: "Zur Zeit werden nur Arrays unterstützt";
+		
+		int idx = subscript.length>0?subscript[0].intValue()-1:0;
+		
 		FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(name);
 		if (slot == null) {
 			throw new RuntimeException("Picture existiert nicht (" + name + ")");
 		}
 		Picture[] pic = (Picture[]) FrameUtil.getObjectSafe(frame, slot);
-		if (pic[0] == AmbigousPicture.INSTANCE) {
+		if (pic[idx] == AmbigousPicture.INSTANCE) {
 			throw new RuntimeException("Picture nicht eindeutig. Benötigt Qualifizierung (" + name + ")");
 		}
-		if(pic.length > 1) {
+		if(pic.length > 1 && subscript.length==0) {
 			throw new RuntimeException("'"+name+"' requires one subscript");
 		}
-		return pic[0];
+		return pic[idx];
 	}
 
+	/** 
+	 * @see #getPicture(Frame, String, int).
+	 * 
+	 * Subscript wird hierbei mit 1 belegt.
+	 * 
+	 */
+	public Picture getPicture(Frame frame, String name) {
+		return getPicture(frame, name, 1);
+	}
+	
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}

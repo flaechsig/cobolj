@@ -9,6 +9,7 @@ import com.oracle.truffle.api.interop.TruffleObject;
 import de.cobolj.phrase.SizeOverflowException;
 
 
+@SuppressWarnings("serial")
 @MessageResolution(receiverType = PictureA.class)
 public class PictureA extends Picture implements Comparable<PictureA> {
 	
