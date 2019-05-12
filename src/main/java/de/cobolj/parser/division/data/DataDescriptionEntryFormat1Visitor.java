@@ -3,7 +3,12 @@ package de.cobolj.parser.division.data;
 import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.lang3.SerializationUtils;
 
 import de.cobolj.division.data.DataDescriptionEntryFormat1Node;
 import de.cobolj.division.data.DataDescriptionEntryNode;
@@ -86,11 +91,12 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 	 * dataDescriptionEntryFormat1 : ( INTEGERLITERAL | LEVEL_NUMBER_77 ) ( FILLER |
 	 * dataName )? dataRedefinesClause? dataExternalClause? dataBlankWhenZeroClause?
 	 * dataFormatClause? dataGlobalClause? dataJustifiedClause? dataOccursClause?
-	 * dataPictureClause? dataOccursClause? dataSignClause? dataValueClause? dataSynchronizedClause?
-	 * dataTypeClause? dataUsageClause? DOT_FS ;
+	 * dataPictureClause? dataOccursClause? dataSignClause? dataValueClause?
+	 * dataSynchronizedClause? dataTypeClause? dataUsageClause? DOT_FS ;
 	 */
 	@Override
-	public DataDescriptionEntryFormat1Node visitDataDescriptionEntryFormat1(Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
+	public DataDescriptionEntryFormat1Node visitDataDescriptionEntryFormat1(
+			Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
 		notImplemented(ctx.LEVEL_NUMBER_77());
 		notImplemented(ctx.dataRedefinesClause());
 		notImplemented(ctx.dataExternalClause());
@@ -102,33 +108,47 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		notImplemented(ctx.dataJustifiedClause());
 		notImplemented(ctx.dataBlankWhenZeroClause());
 
+		List<Picture> pictureToAdd = new ArrayList<>();
+
 		int level = checkLevel(ctx);
 
 		// Es ist entweder FILLER oder der Name gesetzt
 		String name;
-		if(accept(ctx.FILLER())) {
+		if (accept(ctx.FILLER())) {
 			name = Picture.FILLER;
 		} else {
 			name = accept(ctx.dataName(), DataNameVisitor.INSTANCE).getSlot();
 		}
 		DataOccursClause dataOccursClause = accept(ctx.dataOccursClause(0), new DataOccursClauseVisitor());
-		Picture picture = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor(name, groupStack.peek(), dataOccursClause));
+		Picture picTemplate = accept(ctx.dataPictureClause(),
+				new DataPictureClauseVisitor(name, groupStack.peek(), dataOccursClause));
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);
 
-		if (picture != null) {
-			addToGroup(name, picture);
+		// Bei Occurs mehrere Elemente anlegen
+		int occurs = 1; // Eins wird auf alle Fälle angelegt
+		if (dataOccursClause != null) {
+			occurs = dataOccursClause.getOccurs();
+		}
+		if (picTemplate != null) {
 			if (value != null) {
-				picture.setValue(value);
+				picTemplate.setValue(value);
+			}
+			for (int i = 0; i < occurs; i++) {
+				Picture pic = SerializationUtils.clone(picTemplate);
+				addToGroup(name, pic);
+				pictureToAdd.add(pic);
 			}
 		} else {
 			// Es muss sich um eine PictureGroup handeln, da kein Picture angegeben ist
-			PictureGroup group = new PictureGroup(name, groupStack.peek());
-			picture = group;
-			levelStack.push(getLevelNumber(ctx));
-			addToGroup(name, group);
-			groupStack.push(group);
+			for (int i = 0; i < occurs; i++) {
+				PictureGroup group = new PictureGroup(name, groupStack.peek());
+				pictureToAdd.add(group);
+				levelStack.push(getLevelNumber(ctx));
+				addToGroup(name, group);
+				groupStack.push(group);
+			}
 		}
 
-		return new DataDescriptionEntryFormat1Node(level, name, picture, dataOccursClause);
+		return new DataDescriptionEntryFormat1Node(level, name, pictureToAdd, dataOccursClause);
 	}
 }

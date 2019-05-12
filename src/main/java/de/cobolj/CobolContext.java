@@ -104,24 +104,19 @@ public class CobolContext {
 	 * @param frame
 	 * @param pic
 	 */
-	private void putPicture(Frame frame, Picture picTemplate, DataOccursClause occurs) {
+	private void putPicture(Frame frame, List<Picture> pic, DataOccursClause occurs) {
 		assert frame != null : "frame darf nicht null sein";
-		assert picTemplate != null : "Picture muss angegeben werden";
+		assert pic != null : "Picture muss angegeben werden";
 		final Picture[] storage = new Picture[occurs!=null?occurs.getOccurs():1];
 
-		if(picTemplate.isFiller()) {
+		if(pic.get(0).isFiller()) {
 			// Filler sind nicht zugreifbar
 			return;
 		}
 		
-		// FIXME: Das Anlegen der Arrays arbeitet mit PictureGroup noch nicht 
-		// sauber zusammen. Vermutlich wird eine Trennung zwischen Picture und 
-		// Speicher notwendig
-		storage[0] = picTemplate; // 
-		for(int i=1; i<storage.length; i++) { 
-			storage[i] = SerializationUtils.clone(picTemplate);
-		}
-		
+		for(int i=0; i<storage.length; i++) { 
+			storage[i] = pic.get(i);
+		}	
 
 		// Aufbauen aller Zugriffspfade
 		List<String> pfade = new ArrayList<>();

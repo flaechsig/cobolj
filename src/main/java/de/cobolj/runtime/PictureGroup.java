@@ -57,11 +57,12 @@ public class PictureGroup extends Picture {
 	 * @param picture Picture-Eintrag, der der Gruppe hinzugefügt wird.
 	 */
 	public void add(String name, Picture picture) {
-		for(Picture childPic : children) {
-			if(childPic.name.equals(name) && !childPic.isFiller()) {
-				throw new IllegalArgumentException("PictureGroup :"+name+" bereits vorhanden");
-			}
-		}
+		// FIXME: durch die Einführung von OCCURS wieder rausgenommen. Überlegen was richtig ist.
+//		for(Picture childPic : children) {
+//			if(childPic.name.equals(name) && !childPic.isFiller()) {
+//				throw new IllegalArgumentException("PictureGroup :"+name+" bereits vorhanden");
+//			}
+//		}
 		this.children.add(picture);
 	}
 

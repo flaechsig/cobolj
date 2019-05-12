@@ -1,5 +1,7 @@
 package de.cobolj.division.data;
 
+import java.util.List;
+
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
@@ -11,10 +13,10 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 
 	protected final int level;
 	protected final String name;
-	protected final Picture picture;
+	protected final List<Picture> picture;
 	protected final DataOccursClause occurs;
 
-	public DataDescriptionEntryNode(int level, String name, Picture picture, DataOccursClause dataOccursClause) {
+	public DataDescriptionEntryNode(int level, String name, List<Picture> picture, DataOccursClause dataOccursClause) {
 		this.level = level;
 		this.name = name;
 		this.picture = picture;
@@ -27,7 +29,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 		return this;
 	}
 
-	public Picture getPicture() {
+	public List<Picture> getPicture() {
 		return picture;
 	}
 
@@ -40,7 +42,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	}
 	
 	public String getQualifiedName() {
-		return picture.getQualifiedName();
+		return picture.get(0).getQualifiedName();
 	}
 
 }
