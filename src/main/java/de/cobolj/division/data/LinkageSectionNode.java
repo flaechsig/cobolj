@@ -21,9 +21,13 @@ public class LinkageSectionNode extends DataDivisionSectionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		Object last = null;
-		last =  excecuteGeneric(dataDescriptionEntries, last, frame);
-		return last;
+
+		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntries,0);
+		for (Picture pic : rootLevelPictures) {
+			addToStorage(frame, pic);
+		}
+		
+		return this;
 	}
 
 }

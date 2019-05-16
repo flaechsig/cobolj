@@ -3,8 +3,6 @@ package de.cobolj.division.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.crypto.Data;
-
 import org.apache.commons.lang3.SerializationUtils;
 
 import com.oracle.truffle.api.frame.VirtualFrame;

@@ -8,9 +8,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.division.environment.OrganizationClause.FileForm;
 import de.cobolj.division.environment.OrganizationClause.RecordForm;
-import de.cobolj.nodes.DataDivisionSectionNode;
+import de.cobolj.nodes.CobolNode;
 import de.cobolj.parser.division.data.FileDescriptionEntryClauseNode;
 import de.cobolj.runtime.Picture;
+import de.cobolj.runtime.PictureGroup;
 
 /**
  * Beschreibung eines Dateiformats.
@@ -19,7 +20,7 @@ import de.cobolj.runtime.Picture;
  *
  */
 @NodeInfo(shortName="FileDescriptionEntry")
-public class FileDescriptionEntryNode extends DataDivisionSectionNode {
+public class FileDescriptionEntryNode extends CobolNode {
 	/** Beschreibung FD oder SD */
 	private String desc;
 	/** Symbolischer File-Name */
@@ -48,9 +49,14 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		getContext().addFileDescriptor(this);
-		for(DataDescriptionEntryNode entry : dataDescriptionEntry) {
-			entry.executeGeneric(frame);
+
+		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntry,0);
+		// Die Liste enhält die First-Level-Elemente mit den Kindelementen,
+		// die in dem Speicher angelegt werden müssen
+		for (Picture pic : rootLevelPictures) {
+			addToStorage(frame, pic);
 		}
+
 		for(FileDescriptionEntryClauseNode fileDescription : fileDescriptionEntryClause) {
 			fileDescription.executeGeneric(frame);
 		}
@@ -99,5 +105,19 @@ public class FileDescriptionEntryNode extends DataDivisionSectionNode {
 
 	public DataDescriptionEntryNode[] getDataDescriptionEntry() {
 		return dataDescriptionEntry;
+	}
+	
+	/**
+	 * Trägt ein Picture und alle Kind-Picture in den Storage ein.
+	 * 
+	 * @param pic
+	 */
+	public void addToStorage(VirtualFrame frame, Picture pic) {
+		getContext().putPicture(frame, pic);
+		if (pic instanceof PictureGroup) {
+			for (Picture child : ((PictureGroup) pic).getChildren()) {
+				addToStorage(frame, child);
+			}
+		}
 	}
 }

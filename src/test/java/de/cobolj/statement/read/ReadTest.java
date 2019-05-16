@@ -1,9 +1,5 @@
 package de.cobolj.statement.read;
 
-import java.util.ArrayList;
-
-import org.testng.annotations.DataProvider;
-
 import de.cobolj.CobolBaseTest;
 
 /**
@@ -13,4 +9,13 @@ import de.cobolj.CobolBaseTest;
  *
  */
 public class ReadTest extends CobolBaseTest {
+//	@DataProvider(name = "cobolTests")
+//	public Object[] acceptTest() {
+//		Collection<List<String>> result = new ArrayList<List<String>>();
+//		ArrayList<String> elements = new ArrayList<>();
+//		result.add(elements);
+//
+//		elements.add("read-1");
+//		return result.toArray();
+//	}
 }

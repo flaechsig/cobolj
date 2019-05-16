@@ -13,7 +13,6 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
-import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;
@@ -109,16 +108,26 @@ public class CobolContext {
 		// Pictures mit allen Zugriffspfaden eintragen
 		String actPfad = picture.getName();
 		String subscript = picture.getSubscript();
+		addToSlot(frame, actPfad + subscript, picture);
 
-		FrameSlot slot = frame.getFrameDescriptor().addFrameSlot(actPfad + subscript);
-		frame.setObject(slot, picture);
-		while (picture.getParent() != null) {
-			picture = picture.getParent();
+		Picture actPicture = picture;
+		while (actPicture.getParent() != null) {
+			actPicture = actPicture.getParent();
 			actPfad += " OF ";
-			actPfad += picture.getName();
+			actPfad += actPicture.getName();
 
-			slot = frame.getFrameDescriptor().addFrameSlot(actPfad + subscript);
-			frame.setObject(slot, picture);
+			addToSlot(frame, actPfad + subscript, picture);
+		}
+	}
+
+	private void addToSlot(Frame frame, String name, Picture pic) {
+		FrameSlot slot = null;
+		try {
+			slot = frame.getFrameDescriptor().addFrameSlot(name);
+			frame.setObject(slot, pic);
+		} catch (IllegalArgumentException e) {
+			slot = frame.getFrameDescriptor().findFrameSlot(name);
+			frame.setObject(slot, AmbigousPicture.INSTANCE);
 		}
 	}
 
@@ -159,7 +168,7 @@ public class CobolContext {
 	 * 
 	 */
 	public Picture getPicture(Frame frame, String name) {
-		return getPicture(frame, name, 1);
+		return getPicture(frame, name, new Number[0]);
 	}
 
 	public void setProgramName(String programName) {
