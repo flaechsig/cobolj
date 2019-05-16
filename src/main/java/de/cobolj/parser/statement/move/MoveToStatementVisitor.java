@@ -1,5 +1,7 @@
 package de.cobolj.parser.statement.move;
 
+import static de.cobolj.parser.ParserHelper.accept;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,14 +23,9 @@ public class MoveToStatementVisitor extends Cobol85BaseVisitor<MoveToStatementNo
 
 	@Override
 	public MoveToStatementNode visitMoveToStatement(Cobol85Parser.MoveToStatementContext ctx) {
-		ExpressionNode sending;
-		List<PictureNode> receiving;
-
-		sending = ctx.moveToSendingArea().accept(new MoveToSendingAreaVisitor());
-
-		receiving = ctx.identifier().stream().map(id -> id.accept(IdentifierVisitor.INSTANCE))
-				.collect(Collectors.toList());
-
+		ExpressionNode sending = accept(ctx.moveToSendingArea(), new MoveToSendingAreaVisitor());
+		List<PictureNode> receiving = accept(ctx.identifier(), IdentifierVisitor.INSTANCE);
+		
 		return new MoveToStatementNode(sending, receiving);
 	}
 

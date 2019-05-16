@@ -71,7 +71,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		if (accept(ctx.FILLER())) {
 			name = Picture.FILLER;
 		} else {
-			name = accept(ctx.dataName(), DataNameVisitor.INSTANCE).getSlot();
+			name = accept(ctx.dataName(), new DataNameVisitor(null)).getSlot();
 		}
 		DataOccursClause dataOccursClause = accept(ctx.dataOccursClause(0), new DataOccursClauseVisitor());
 		Picture picture;

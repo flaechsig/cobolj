@@ -4258,14 +4258,7 @@ qualifiedDataName
 
 qualifiedDataNameFormat1
 :
-	(
-		dataName
-		| conditionName
-	)
-	(
-		qualifiedInData+ inFile?
-		| inFile
-	)?
+	(dataName | conditionName)	((IN | OF) dataName)* ((IN | OF) tableCall)? inFile?
 ;
 
 qualifiedDataNameFormat2
@@ -4281,12 +4274,6 @@ qualifiedDataNameFormat3
 qualifiedDataNameFormat4
 :
 	LINAGE_COUNTER inFile
-;
-
-qualifiedInData
-:
-	inData
-	| inTable
 ;
 
 // in ----------------------------------

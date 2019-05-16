@@ -9,7 +9,8 @@ import de.cobolj.parser.Cobol85Parser;
 
 /**
  * 
- * qualifiedDataNameFormat1:  (dataName | conditionName)(qualifiedInData+ inFile? | inFile)?
+ * qualifiedDataNameFormat1 : (dataName | conditionName) ((IN | OF) dataName)*
+ * ((IN | OF) tableCall)? inFile? *
  * 
  * @author flaechsig
  *
@@ -17,18 +18,17 @@ import de.cobolj.parser.Cobol85Parser;
 public class QualifiedDataNameFormat1Visitor extends Cobol85BaseVisitor<PictureNode> {
 
 	public static final QualifiedDataNameFormat1Visitor INSTANCE = new QualifiedDataNameFormat1Visitor();
-	
-	private QualifiedDataNameFormat1Visitor() {	}
+
+	private QualifiedDataNameFormat1Visitor() {
+	}
 
 	@Override
 	public PictureNode visitQualifiedDataNameFormat1(Cobol85Parser.QualifiedDataNameFormat1Context ctx) {
 		notImplemented(ctx.conditionName());
-		notImplemented(ctx.qualifiedInData());
 		notImplemented(ctx.inFile());
-		
-		PictureNode result = null;
-		result = accept(ctx.dataName(), DataNameVisitor.INSTANCE);
-		
-		return result;
+		notImplemented(ctx.dataName().size() > 1);
+
+		PictureNode tableCall = accept(ctx.tableCall(), new TableCallVisitor());
+		return accept(ctx.dataName(0), new DataNameVisitor(tableCall));
 	}
 }

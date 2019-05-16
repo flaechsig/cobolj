@@ -1,6 +1,7 @@
 package de.cobolj.nodes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.antlr.v4.runtime.misc.Array2DHashSet;
@@ -30,6 +31,14 @@ public class PictureNode extends ExpressionNode{
 		this(slot, new ArrayList<SubscriptNode>());
 	}
 	
+	public PictureNode(String slot, PictureNode parent) {
+		this(slot + (parent!=null?" OF " + parent.getSlot():""), (parent!=null?parent.getSubscripts():new ArrayList<>()));
+	}
+	
+	private List<SubscriptNode> getSubscripts() {
+		return Arrays.asList(this.subscript);
+	}
+
 	public PictureNode(String slot, List<SubscriptNode> subscript) {
 		this.slot = slot;
 		this.subscript = subscript.toArray(new SubscriptNode[0]);

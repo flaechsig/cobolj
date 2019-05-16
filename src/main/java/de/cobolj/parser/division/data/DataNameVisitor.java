@@ -13,13 +13,15 @@ import de.cobolj.parser.CobolWordVisitor;
  *
  */
 public class DataNameVisitor extends Cobol85BaseVisitor<PictureNode> {
-	
-	public static DataNameVisitor INSTANCE = new DataNameVisitor();
-	
-	private DataNameVisitor() {	}
+
+	private PictureNode parent;
+
+	public DataNameVisitor(PictureNode parent) {
+		this.parent = parent;
+	}
 
 	@Override
 	public PictureNode visitDataName(Cobol85Parser.DataNameContext ctx) {
-		return new PictureNode(ctx.cobolWord().accept(CobolWordVisitor.INSTANCE));
+		return new PictureNode(ctx.cobolWord().accept(CobolWordVisitor.INSTANCE), parent);
 	}
 }
