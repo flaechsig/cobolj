@@ -49,7 +49,7 @@ public class ReadStatementNode extends StatementNode {
 		int read = 0;
 		do {
 			for (DataDescriptionEntryNode entry : fd.getDataDescriptionEntry()) {
-				Picture pic = getContext().getPicture(frame, entry.getQualifiedName());
+				Picture pic = getContext().getPicture(frame, entry.getPicture().getQualifiedName());
 				if (pic instanceof PictureGroup) {
 					read = pic.parse(is);
 					if (readInto != null && read > -1) {

@@ -1,6 +1,5 @@
 package de.cobolj;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -8,20 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-
-import org.apache.commons.lang3.SerializationUtils;
 
 import com.oracle.truffle.api.frame.Frame;
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.division.data.FileDescriptionEntryNode;
-import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.StartRuleVisitor;
 import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;
 
@@ -77,22 +70,22 @@ public class CobolContext {
 	public FileDescriptionEntryNode getFileDescriptorByRecord(String name) {
 		for (FileDescriptionEntryNode fd : fileDescriptor) {
 			for (DataDescriptionEntryNode entry : fd.getDataDescriptionEntry()) {
-				if (entry.getName().equals(name)) {
+				if (entry.getPicture().getName().equals(name)) {
 					return fd;
 				}
 			}
 		}
-		throw new RuntimeException("FileDescriptor ("+name+") nicht gefunden");
+		throw new RuntimeException("FileDescriptor (" + name + ") nicht gefunden");
 	}
 
 	/** Fügt dem Context einen File-Descriptor hinzu. */
 	public void addFileDescriptor(FileDescriptionEntryNode fileDescriptionEntryNode) {
 		this.fileDescriptor.add(fileDescriptionEntryNode);
 	}
-	
-	public void putDataDescriptionEntry(Frame frame, DataDescriptionEntryNode entry ) {
-		putPicture(frame, entry.getPicture(), entry.getOccurs());
-	}
+
+//	public void putDataDescriptionEntry(Frame frame, DataDescriptionEntryNode entry) {
+//		putPicture(frame, entry.getPicture(), entry.getOccurs());
+//	}
 
 	/**
 	 * Fügt ein Picture dem Datenspeicher hinzu. Dabei werden ggf. mehrere Slots
@@ -104,44 +97,28 @@ public class CobolContext {
 	 * @param frame
 	 * @param pic
 	 */
-	private void putPicture(Frame frame, List<Picture> pic, DataOccursClause occurs) {
+	public void putPicture(Frame frame, Picture picture) {
 		assert frame != null : "frame darf nicht null sein";
-		assert pic != null : "Picture muss angegeben werden";
-		final Picture[] storage = new Picture[occurs!=null?occurs.getOccurs():1];
+		assert picture != null : "Picture muss angegeben werden";
 
-		if(pic.get(0).isFiller()) {
+		if (picture.isFiller()) {
 			// Filler sind nicht zugreifbar
 			return;
 		}
-		
-		for(int i=0; i<storage.length; i++) { 
-			storage[i] = pic.get(i);
-		}	
 
-		// Aufbauen aller Zugriffspfade
-		List<String> pfade = new ArrayList<>();
-		Picture actPic = storage[0];
-		String actPfad = actPic.getName();
-		pfade.add(actPfad);
-		while (actPic.getParent() != null) {
-			actPic = actPic.getParent();
+		// Pictures mit allen Zugriffspfaden eintragen
+		String actPfad = picture.getName();
+		String subscript = picture.getSubscript();
+
+		FrameSlot slot = frame.getFrameDescriptor().addFrameSlot(actPfad + subscript);
+		frame.setObject(slot, picture);
+		while (picture.getParent() != null) {
+			picture = picture.getParent();
 			actPfad += " OF ";
-			actPfad += actPic.getName();
-			pfade.add(actPfad);
-		}
+			actPfad += picture.getName();
 
-		// Für jeden Pfad einen Slot anlegen. Vorher prüfen, ob er bereits existiert und
-		// ggf.
-		// durch ein AmbigousPicture (Merker) ersetzen.
-		for (String pfad : pfade) {
-			FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(pfad);
-			if (slot != null) {
-				Picture[] ambigius = {AmbigousPicture.INSTANCE};
-				frame.setObject(slot, ambigius);
-			} else {
-				slot = frame.getFrameDescriptor().addFrameSlot(pfad);
-				frame.setObject(slot, storage);
-			}
+			slot = frame.getFrameDescriptor().addFrameSlot(actPfad + subscript);
+			frame.setObject(slot, picture);
 		}
 	}
 
@@ -149,42 +126,42 @@ public class CobolContext {
 	 * Liefert das Picture zum Namen. Wenn der Name nicht eindeutig aufgelöst
 	 * wereden kann, wird eine Exception geworfen.
 	 * 
-	 * @param frame Ausführender Frame
-	 * @param name Name des Pictures, wie es in der Data Devision deklariert wurde
+	 * @param frame     Ausführender Frame
+	 * @param name      Name des Pictures, wie es in der Data Devision deklariert
+	 *                  wurde
 	 * @param subscript Tabellen-Index (mit 1 startend)
 	 * @return
 	 */
 	public Picture getPicture(Frame frame, String name, Number... subscript) {
 		assert frame != null : "frame darf nicht null sein";
 		assert name != null : "Name muss angegeben werden";
-		assert subscript.length <= 1: "Zur Zeit werden nur Arrays unterstützt";
-		
-		int idx = subscript.length>0?subscript[0].intValue()-1:0;
-		
-		FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(name);
-		if (slot == null) {
-			throw new RuntimeException("Picture existiert nicht (" + name + ")");
+		assert subscript.length <= 1 : "Zur Zeit werden nur Arrays unterstützt";
+
+		String fullname = name;
+		if (subscript.length > 0) {
+			fullname += "(" + subscript[0] + ")";
 		}
-		Picture[] pic = (Picture[]) FrameUtil.getObjectSafe(frame, slot);
-		if (pic[idx] == AmbigousPicture.INSTANCE) {
+		FrameSlot slot = frame.getFrameDescriptor().findFrameSlot(fullname);
+		if (slot == null) {
+			throw new RuntimeException("Picture existiert nicht (" + fullname + ")");
+		}
+		Picture pic = (Picture) FrameUtil.getObjectSafe(frame, slot);
+		if (pic == AmbigousPicture.INSTANCE) {
 			throw new RuntimeException("Picture nicht eindeutig. Benötigt Qualifizierung (" + name + ")");
 		}
-		if(pic.length > 1 && subscript.length==0) {
-			throw new RuntimeException("'"+name+"' requires one subscript");
-		}
-		return pic[idx];
+		return pic;
 	}
 
-	/** 
+	/**
 	 * @see #getPicture(Frame, String, int).
 	 * 
-	 * Subscript wird hierbei mit 1 belegt.
+	 *      Subscript wird hierbei mit 1 belegt.
 	 * 
 	 */
 	public Picture getPicture(Frame frame, String name) {
 		return getPicture(frame, name, 1);
 	}
-	
+
 	public void setProgramName(String programName) {
 		this.programName = programName;
 	}

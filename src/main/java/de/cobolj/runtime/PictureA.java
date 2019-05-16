@@ -15,8 +15,8 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 	
 	private String value = "";
 	
-	public PictureA(String name, int size, PictureGroup parent) {
-		super(name, size, parent);
+	public PictureA(int level, String name, int size ) {
+		super(level, name, size);
 	}
 
 	@Override

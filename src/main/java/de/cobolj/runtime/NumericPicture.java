@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public abstract class NumericPicture extends Picture {
 
-	public NumericPicture(String name, int size, PictureGroup parent) {
-		super(name, size, parent);
+	public NumericPicture(int level, String name, int size) {
+		super(level, name, size);
 	}
 	
 	public abstract BigDecimal getBigDecimal(); 

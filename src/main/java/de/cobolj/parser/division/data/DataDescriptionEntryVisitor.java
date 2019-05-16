@@ -30,7 +30,7 @@ public class DataDescriptionEntryVisitor extends Cobol85BaseVisitor<DataDescript
 		notImplemented(ctx.dataDescriptionEntryExecSql());
 
 		DataDescriptionEntryNode result = accept(ctx.dataDescriptionEntryFormat1(),
-				DataDescriptionEntryFormat1Visitor.INSTANCE);
+				new DataDescriptionEntryFormat1Visitor());
 
 		return result;
 	}

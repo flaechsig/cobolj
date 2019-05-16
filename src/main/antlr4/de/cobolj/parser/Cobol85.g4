@@ -1844,8 +1844,8 @@ dataDescriptionEntryFormat1
 		| dataName
 	)? dataRedefinesClause? dataExternalClause? dataBlankWhenZeroClause?
 	dataFormatClause? dataGlobalClause? dataJustifiedClause? dataOccursClause?
-	dataPictureClause?  dataOccursClause? dataSignClause? dataValueClause? dataSynchronizedClause?
-	dataTypeClause? dataUsageClause? DOT_FS
+	dataPictureClause? dataOccursClause? dataSignClause? dataValueClause?
+	dataSynchronizedClause? dataTypeClause? dataUsageClause? DOT_FS
 ;
 
 dataDescriptionEntryFormat2

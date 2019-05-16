@@ -20,21 +20,33 @@ import de.cobolj.phrase.SizeOverflowException;
 public abstract class Picture implements TruffleObject, Serializable {
 	/** Konstante für die Markierung eines Fillers. */
 	public final static String FILLER = "FILLER";
-	
+
 	/** Übergeodnete PictureGroup */
-	protected final PictureGroup parent;
+	protected PictureGroup parent;
+	/** Level-Nummer des Picture */
+	protected final int level;
 	/** Name des Pictures */
 	protected final String name;
 	/** Maximale Anzahl von Stellen, die die Instanz der Klasse abbilden kann */
 	protected final int size;
+	/** Subscript, wenn denn eins existiert */
+	protected Integer subscript;
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
-	public Picture(String name, int size, PictureGroup parent) {
+	public Picture(int level, String name, int size) {
+		this(level, name, size, null);
+	}
+
+	/**
+	 * @see {{@link #Pic9(short, boolean, long)}
+	 */
+	public Picture(int level, String name, int size, Integer subscript) {
+		this.level = level;
 		this.name = name;
 		this.size = size;
-		this.parent = parent;
+		this.subscript = subscript;
 	}
 
 	/**
@@ -93,16 +105,41 @@ public abstract class Picture implements TruffleObject, Serializable {
 	public int getSize() {
 		return size;
 	}
-	
+
 	public boolean isFiller() {
 		return FILLER.equals(name);
 	}
 
 	public String getQualifiedName() {
-		if(parent == null) {
+		if (parent == null) {
 			return name;
 		} else {
 			return name + " OF " + parent.getQualifiedName();
 		}
+	}
+
+	public String getSubscript() {
+		if (subscript == null && getParent() == null) {
+			return "";
+		} else if (subscript == null && getParent() != null) {
+			return getParent().getSubscript();
+		} else if (subscript != null && getParent() == null) {
+			return "(" + subscript + ")";
+		} else /* subscribe != null & parent != null */ {
+			return "(" + (getParent().getSubscript() + " " + subscript).trim() + ")";
+		}
+	}
+
+	public void setSubscript(int i) {
+		this.subscript = i;
+	}
+
+	public void setParent(PictureGroup parent) {
+		this.parent = parent;
+		parent.add(this.name, this);
+	}
+
+	public int getLevel() {
+			return this.level;
 	}
 }

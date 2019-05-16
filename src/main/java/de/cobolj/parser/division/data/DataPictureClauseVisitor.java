@@ -19,20 +19,18 @@ import de.cobolj.runtime.PictureGroup;
 public class DataPictureClauseVisitor extends Cobol85BaseVisitor<Picture> {
 	/** Name des Picture */
 	private final String name;
-	private final PictureGroup parent;
-	private final  DataOccursClause occurs;
+	private final int level;
 
-	public DataPictureClauseVisitor(String name, PictureGroup parent, DataOccursClause dataOccursClause) {
-		this.occurs = dataOccursClause;
+	public DataPictureClauseVisitor(int level, String name) {
+		this.level = level;
 		this.name = name;
-		this.parent = parent;
 	}
 
 	@Override
 	public Picture visitDataPictureClause(Cobol85Parser.DataPictureClauseContext ctx) {
 		String picString = ctx.pictureString().accept(new PictureStringVisitor());
 						
-		return PictureFactory.create(name, picString, parent); 
+		return PictureFactory.create(level, name, picString); 
 	}
 
 }

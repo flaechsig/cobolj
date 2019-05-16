@@ -3,7 +3,6 @@ package de.cobolj.parser.division.data;
 import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.nodes.WorkingStorageSectionNode;
