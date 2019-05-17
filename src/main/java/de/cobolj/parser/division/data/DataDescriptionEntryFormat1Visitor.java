@@ -60,7 +60,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		notImplemented(ctx.dataExternalClause());
 		notImplemented(ctx.dataGlobalClause());
 		notImplemented(ctx.dataTypeClause());
-		notImplemented(ctx.dataUsageClause());
+		// FIXME: notImplemented(ctx.dataUsageClause()); wird im Moment ignoriert
 		notImplemented(ctx.dataSignClause());
 		notImplemented(ctx.dataSynchronizedClause());
 		notImplemented(ctx.dataJustifiedClause());

@@ -1,9 +1,12 @@
 package de.cobolj.parser.division.data;
 
+import static de.cobolj.parser.ParserHelper.accept;
+import static de.cobolj.parser.ParserHelper.notImplemented;
+
 import de.cobolj.nodes.LiteralNode;
 import de.cobolj.nodes.LongNode;
+import de.cobolj.nodes.StringNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.FigurativeConstantContext;
 
 /**
@@ -18,10 +21,22 @@ import de.cobolj.parser.Cobol85Parser.FigurativeConstantContext;
 public class FigurativeConstantVisitor extends Cobol85BaseVisitor<LiteralNode> {
 	@Override
 	public LiteralNode visitFigurativeConstant(FigurativeConstantContext ctx) {
-		if(ctx.ZERO()!=null||ctx.ZEROS()!=null||ctx.ZEROES()!=null) {
+		notImplemented(ctx.ALL());
+		notImplemented(ctx.literal());
+		notImplemented(ctx.HIGH_VALUE());
+		notImplemented(ctx.HIGH_VALUES());
+		notImplemented(ctx.LOW_VALUE());
+		notImplemented(ctx.LOW_VALUES());
+		notImplemented(ctx.NULL());
+		notImplemented(ctx.NULLS());
+		notImplemented(ctx.QUOTE());
+		
+		if(accept(ctx.ZERO())||accept(ctx.ZEROS())||accept(ctx.ZEROES())) {
 			return new LongNode(0);
+		} else if(accept(ctx.SPACE()) || accept(ctx.SPACES())) {
+			return new StringNode("");
 		} else {
-			throw new RuntimeException("Not Implemented");
+			return null;
 		}
 	}
 }

@@ -14,22 +14,20 @@ import com.oracle.truffle.api.interop.TruffleObject;
 
 import de.cobolj.phrase.SizeOverflowException;
 
+@SuppressWarnings("serial")
 @MessageResolution(receiverType = Picture9V.class)
 public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	/** Kommazahl wird hier durch einen BigDecimal abgebildet. */
-	private BigDecimal value;
-	/** Kennzeichen, ob es sich um eine Vorzeichen behaftete Zahl handelt. */
-	private final boolean signed;
+	private BigDecimal value;	
 	/** Anzahl der Stellen vor dem Komma */
 	private final int precession;
 	/** Anzahl der Stellen nach dem Komma */
 	private final int scale;
 
-	public Picture9V(int level, String name, int precession, int scale, boolean signed) {
-		super(level, name, precession);
+	public Picture9V(int level, String name, int precession, int scale, boolean signed, boolean noPadding) {
+		super(level, name, precession, signed, noPadding);
 		this.precession = precession;
-		this.signed = signed;
 		this.scale = scale;
 		value = BigDecimal.ZERO;
 	}
@@ -98,7 +96,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 		df.setMinimumFractionDigits(scale);
 		df.setMaximumFractionDigits(scale);
 		df.setFormatWidth(precession + scale + (scale > 0 ? 1 : 0)); // Komma berücksichtigen
-		df.setPadCharacter('0');
+		df.setPadCharacter(paddingChar);
 		return sign + df.format(value.abs());
 	}
 

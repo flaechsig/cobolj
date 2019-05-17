@@ -2,7 +2,6 @@ package de.cobolj.runtime;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
@@ -27,11 +26,10 @@ import de.cobolj.phrase.SizeOverflowException;
  * @author flaechsig
  *
  */
+@SuppressWarnings("serial")
 @MessageResolution(receiverType = Picture9.class)
 public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
-	/** Kennzeichen, ob die Instanz der Klasse ein Vorzeichen führt */
-	private final boolean signed;
 	/** Aktueller Wert, der durch die Klasse abgebildet wird */
 	private long value = 0;
 
@@ -46,7 +44,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	 * @see {{@link #Pic9(short, boolean, long)}
 	 */
 	public Picture9(int level, String name, int size, boolean signed ) {
-		this(level, name, size, signed, 0);
+		this(level, name, size, signed, 0, false);
 	}
 
 	/**
@@ -59,10 +57,8 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 	 * @param signed Kennzeichen, ob diese Instanz ein Vorzeichen mit sich führt
 	 * @param value  Initialer Wert dieser Instanz
 	 */
-	public Picture9(int level, String name, int size, boolean signed, long value) {
-		super(level, name, size);
-		assert size <= 31 : "Der Parameter 'size' darf maximal 31 sein";
-		this.signed = signed;
+	public Picture9(int level, String name, int size, boolean signed, long value, boolean noPadding) {
+		super(level, name, size, signed, noPadding);
 		setValue(value);
 	}
 
@@ -134,7 +130,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 		if (signed) {
 			buf.append(value < 0 ? "-" : "+");
 		}
-		buf.append(StringUtils.leftPad(String.valueOf(Math.abs(value)), size, '0'));
+		buf.append(StringUtils.leftPad(String.valueOf(Math.abs(value)), size, paddingChar));
 		return buf.toString();
 	}
 

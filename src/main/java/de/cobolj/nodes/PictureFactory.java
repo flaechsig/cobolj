@@ -26,7 +26,7 @@ public class PictureFactory {
 		
 		if(StringUtils.containsOnly(picture, 'A')) {
 			return createAlphabeticPicuture(level, name, picture);
-		} else if(StringUtils.containsOnly(picture, '9', 'P', 'S', 'V')) {
+		} else if(StringUtils.containsOnly(picture, '9', 'P', 'S', 'V', 'Z')) {
 			return createNumericPicture(level, name, picture);
 		} else if(StringUtils.containsOnly(picture, '9', 'A', 'X')) {
 			return createAlphNumericPicuture(level, name, picture);
@@ -49,7 +49,9 @@ public class PictureFactory {
 		assert StringUtils.countMatches(picture, '9') <=18 : "Maximale Länge 18"; 
 		
 		boolean sign = StringUtils.contains(picture, 'S');
+		boolean noPadding = StringUtils.contains(picture, "Z");
 		int precission = StringUtils.countMatches(picture, '9');
+		precission += StringUtils.countMatches(picture, 'Z');
 		int scale = 0;
 		if(StringUtils.contains(picture, 'V')) {
 			int index = picture.indexOf('V');
@@ -57,6 +59,6 @@ public class PictureFactory {
 			precission = precission-scale;
 		}
 		
-		return new Picture9V(level, name, precission, scale, sign);
+		return new Picture9V(level, name, precission, scale, sign, noPadding);
 	}
 }

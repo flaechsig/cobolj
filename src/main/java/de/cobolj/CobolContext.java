@@ -11,6 +11,7 @@ import java.util.Map;
 import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
+import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.FileDescriptionEntryNode;
@@ -173,6 +174,31 @@ public class CobolContext {
 
 	public void setProgramName(String programName) {
 		this.programName = programName;
+	}
+	
+	/** 
+	 * 
+	 * @return Liefert die nächste freie Speicheradresse.
+	 */
+	private int getRamTop(VirtualFrame frame) {
+		int result = 0;
+		FrameSlot slot = frame.getFrameDescriptor().findFrameSlot("RAMTOP");
+		if(slot != null) {
+			result = FrameUtil.getIntSafe(frame, slot);
+		}
+		return result;
+	}
+	
+	/**
+	 * Setzt das aktuell obere Speicherende. Damit ist die Position, die hier angegeben wird
+	 * die nächste mögliche Speicherstelle.
+	 * 
+	 * @param frame aktueller Frame
+	 * @param ramtop neue Position
+	 */
+	private void setRamTop(VirtualFrame frame, int ramtop) {
+		FrameSlot slot = frame.getFrameDescriptor().findOrAddFrameSlot("RAMTOP");
+		frame.setInt(slot, ramtop);
 	}
 
 }
