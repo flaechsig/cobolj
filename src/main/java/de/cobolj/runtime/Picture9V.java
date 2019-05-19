@@ -18,18 +18,15 @@ import de.cobolj.phrase.SizeOverflowException;
 @MessageResolution(receiverType = Picture9V.class)
 public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
-	/** Kommazahl wird hier durch einen BigDecimal abgebildet. */
-	private BigDecimal value;	
 	/** Anzahl der Stellen vor dem Komma */
 	private final int precession;
 	/** Anzahl der Stellen nach dem Komma */
 	private final int scale;
 
 	public Picture9V(int level, String name, int precession, int scale, boolean signed, boolean noPadding) {
-		super(level, name, precession, signed, noPadding);
+		super(level, name, precession+(signed?1:0)+scale, signed, noPadding);
 		this.precession = precession;
 		this.scale = scale;
-		value = BigDecimal.ZERO;
 	}
 
 	@Override
@@ -39,6 +36,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public void setValue(Object object) {
+
 		String obj = object.toString();
 		String ganzzahl = obj;
 		String nachkomma = "";
@@ -53,17 +51,21 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 			nachkomma = obj.substring(idxDecimalPoint + 1);
 		}
 		ganzzahl = StringUtils.right(ganzzahl, precession);
-		setValue(new BigDecimal((sign==false?"":"-")+ganzzahl + "." + nachkomma));
+		BigDecimal newVal = new BigDecimal((sign==false?"":"-")+ganzzahl + "." + nachkomma);
+		newVal = newVal.setScale(scale, RoundingMode.FLOOR);
+		setValue(newVal);
 	}
 
 	public void setValue(BigDecimal object) {
-		value = object.setScale(scale, RoundingMode.FLOOR);
+		byte[] value = StringUtils.leftPad(""+object.unscaledValue().longValue(), size).getBytes();
+		System.arraycopy(value, 0, memory, memPointer, size);
+		
 	}
 
 	@Override
 	public void setValue(Object object, boolean sizeCheck) throws SizeOverflowException {
 		BigDecimal decimal = new BigDecimal(object.toString());
-		if (sizeCheck && decimal.precision() > size) {
+		if (sizeCheck && decimal.precision() > size-(signed?1:0)) {
 			throw new SizeOverflowException();
 		}
 		setValue(object);
@@ -71,7 +73,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public int compareTo(Picture9V o) {
-		return value.compareTo(o.value);
+		return getBigDecimal().compareTo(o.getBigDecimal());
 	}
 
 	/**
@@ -86,6 +88,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public String toString() {
+		BigDecimal value = getBigDecimal();
 		String sign = "";
 		if (this.signed) {
 			sign = value.floatValue() < 0 ? "-" : "+";
@@ -102,12 +105,15 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public Object getValue() {
-		return value;
+		byte[] value = new byte[size+(signed?1:0)];
+		System.arraycopy(memory, memPointer, value, 0, size);
+		BigDecimal bigValue = new BigDecimal(new String(value).trim());
+		return bigValue.movePointLeft(scale);
 	}
 
 	@Override
 	public BigDecimal getBigDecimal() {
-		return value;
+		return (BigDecimal) getValue();
 	}
 
 	@Override
@@ -122,7 +128,7 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 
 	@Override
 	public void clear() {
-		this.value = BigDecimal.ZERO;
+		setValue(BigDecimal.ZERO);
 	}
 
 }

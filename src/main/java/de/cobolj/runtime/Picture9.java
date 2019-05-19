@@ -31,7 +31,7 @@ import de.cobolj.phrase.SizeOverflowException;
 public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	/** Aktueller Wert, der durch die Klasse abgebildet wird */
-	private long value = 0;
+//	private long value = 0;
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
@@ -82,8 +82,11 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 		int oversize = tmpValue.length() - size;
 		value = Long.parseLong(tmpValue.substring(Math.max(0, oversize)));
 
-		this.value = mul * value;
+		byte[] memValue =StringUtils.leftPad(""+(mul * value), size, ' ').getBytes();
+		System.arraycopy(memValue, 0, memory, memPointer, size);
 	}
+
+
 
 	@Override
 	public void setValue(Object object) {
@@ -100,13 +103,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	@Override
 	public int compareTo(Picture9 o) {
-		if (value < o.value) {
-			return -1;
-		} else if (value == o.value) {
-			return 0;
-		} else {
-			return 1;
-		}
+		return getBigDecimal().compareTo(o.getBigDecimal());
 	}
 
 	@Override
@@ -126,6 +123,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	@Override
 	public String toString() {
+		long value = getBigDecimal().longValue();
 		StringBuffer buf = new StringBuffer();
 		if (signed) {
 			buf.append(value < 0 ? "-" : "+");
@@ -136,12 +134,14 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	@Override
 	public Object getValue() {
-		return BigDecimal.valueOf(value);
+		byte[] value = new byte[size];
+		System.arraycopy(memory, memPointer, value, 0, size);
+		return new BigDecimal(new String(value));
 	}
 
 	@Override
 	public BigDecimal getBigDecimal() {
-		return BigDecimal.valueOf(value);
+		return (BigDecimal) getValue();
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class Picture9 extends NumericPicture implements Comparable<Picture9> {
 
 	@Override
 	public void clear() {
-		this.value = 0;
+		setValue(0);
 	}
 
 }

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.Picture9V;
 import de.cobolj.runtime.PictureA;
-import de.cobolj.runtime.PictureGroup;
+import de.cobolj.runtime.PictureX;
 
 public class PictureFactory {
 	private PictureFactory() {	}
@@ -42,7 +42,7 @@ public class PictureFactory {
 	
 	private static Picture createAlphNumericPicuture(int level, String name, String picture) {
 		assert picture.length() < 256; // Maximale Lännge dieses Datentyps
-		return new PictureA(level, name, picture.length());
+		return new PictureX(level, name, picture.length());
 	}
 
 	private static Picture createNumericPicture(int level, String name, String picture) {

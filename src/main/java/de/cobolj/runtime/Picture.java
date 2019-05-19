@@ -31,6 +31,10 @@ public abstract class Picture implements TruffleObject, Serializable {
 	protected final int size;
 	/** Subscript, wenn denn eins existiert */
 	protected Integer subscript;
+	/** Referenz auf den statischen Speicher */
+	protected byte[] memory; // FIXME: später final
+	/** Referenz auf den Beginn des Speicherblocks */
+	protected int memPointer = Integer.MAX_VALUE; // FIXME: später final
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
@@ -141,5 +145,17 @@ public abstract class Picture implements TruffleObject, Serializable {
 
 	public int getLevel() {
 			return this.level;
+	}
+
+	public boolean isMemInitialized() {
+		return this.memPointer != Integer.MAX_VALUE;
+	}
+
+	public void setMemory(byte[] ram) {
+		this.memory = ram;
+	}
+
+	public void setMemoryPointer(int top) {
+		this.memPointer = top;
 	}
 }

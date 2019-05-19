@@ -13,7 +13,7 @@ import de.cobolj.phrase.SizeOverflowException;
 @MessageResolution(receiverType = PictureA.class)
 public class PictureA extends Picture implements Comparable<PictureA> {
 	
-	private String value = "";
+//	private String value = "";
 	
 	public PictureA(int level, String name, int size ) {
 		super(level, name, size);
@@ -26,7 +26,8 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 
 	@Override
 	public void setValue(Object object) {
-		this.value = StringUtils.truncate(object.toString(),size);
+		byte[] value = StringUtils.rightPad(object.toString(), size, " ").getBytes();
+		System.arraycopy(value, 0, memory, memPointer, size);
 	}
 	
 
@@ -40,7 +41,8 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 
 	@Override
 	public int compareTo(PictureA o) {
-		return value.compareTo(o.value);
+//		return value.compareTo(o.value);
+		return toString().compareTo(o.toString());
 	}
 
 	/**
@@ -55,17 +57,22 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 
 	@Override
 	public Object getValue() {
-		return value;
+//		return value;
+		byte[] value = new byte[size];
+		System.arraycopy(memory, memPointer, value, 0, size);
+		return new String(value);
 	}
 	
 	@Override
 	public String toString() {
-		return StringUtils.rightPad(value, size, ' ');
+//		return StringUtils.rightPad(value, size, ' ');
+		return (String) getValue();
 	}
 
 	@Override
 	public void clear() {
-		this.value = ""; 
+		byte[] value = StringUtils.rightPad("", size).getBytes();
+		System.arraycopy(value, 0, memory, memPointer, size);
 	}
 
 }

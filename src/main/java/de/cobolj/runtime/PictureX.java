@@ -13,8 +13,6 @@ import de.cobolj.phrase.SizeOverflowException;
 @MessageResolution(receiverType = PictureX.class)
 public class PictureX extends Picture implements Comparable<PictureX> {
 	
-	private String value = "";
-	
 	public PictureX(int level, String name, int size ) {
 		super(level, name, size);
 	}
@@ -26,7 +24,8 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 
 	@Override
 	public void setValue(Object object) {
-		this.value = StringUtils.truncate(object.toString(),size);
+		byte[] value = StringUtils.rightPad(object.toString(), size, " ").getBytes();
+		System.arraycopy(value, 0, memory, memPointer, size);
 	}
 	
 
@@ -40,7 +39,7 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 
 	@Override
 	public int compareTo(PictureX o) {
-		return value.compareTo(o.value);
+		return toString().compareTo(o.toString());
 	}
 
 	/**
@@ -55,17 +54,19 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 
 	@Override
 	public Object getValue() {
-		return value;
+		byte[] value = new byte[size];
+		System.arraycopy(memory, memPointer, value, 0, size);
+		return new String(value);
 	}
 	
 	@Override
 	public String toString() {
-		return StringUtils.rightPad(value, size, ' ');
+		return (String) getValue();
 	}
 
 	@Override
 	public void clear() {
-		this.value = ""; 
+		setValue("");
 	}
 
 }
