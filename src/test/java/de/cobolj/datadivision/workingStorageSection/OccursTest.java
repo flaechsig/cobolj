@@ -20,7 +20,7 @@ public class OccursTest extends CobolBaseTest {
 //		ArrayList<String> elements = new ArrayList<>();
 //		result.add(elements);
 //
-//		elements.add("occurs-5");
+//		elements.add("occurs-4");
 //		return result.toArray();
 //	}
 }

@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import org.apache.commons.lang3.SerializationUtils;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
@@ -15,12 +14,17 @@ import de.cobolj.runtime.PictureGroup;
 @NodeInfo(shortName = "DataDescriptionEntry")
 public abstract class DataDescriptionEntryNode extends CobolNode {
 
+	private final int level;
 	private final Picture picture;
 	protected final DataOccursClause occurs;
+	protected final Object value;
+	protected DataDescriptionEntryNode parent;
 
-	public DataDescriptionEntryNode(Picture picture, DataOccursClause dataOccursClause) {
+	public DataDescriptionEntryNode(Picture picture, DataOccursClause dataOccursClause, Object value) {
+		this.level = picture.getLevel();
 		this.picture = picture;
 		this.occurs = dataOccursClause;
+		this.value = value;
 	}
 
 	public Picture getPicture() {
@@ -88,5 +92,35 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 			}
 		}
 		return result;
+	}
+	
+	public static void buildHierarchie(DataDescriptionEntryNode[] entries) {
+		if(entries.length == 0) {
+			return;
+		}
+		entries[0].parent = null; // Per Definition hat das erste Element kein Parent
+		for(int i=1; i<entries.length; i++) {
+			DataDescriptionEntryNode actNode = entries[i];
+			for(int j=i-1; j>=0; j--) {
+				DataDescriptionEntryNode prevNode = entries[j];
+				if(actNode.level == prevNode.level) {
+					actNode.parent = prevNode.parent;
+					break;
+				} else if (prevNode.level < actNode.level) {
+					actNode.parent = prevNode;
+					break;
+				} else /* prevNode.level < actNode.level */ {
+					continue;
+				}
+			}
+		}
+	}
+	
+	public String getQualifiedName() {
+		return picture.getName() + (parent!=null?(" OF " +parent.getQualifiedName() ):"");
+	}
+
+	public Object getValue() {
+		return value;
 	}
 }

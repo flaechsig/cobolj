@@ -81,9 +81,6 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 			picture = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor(level, name));
 		}
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);
-		if (value != null) {
-			picture.setValue(value.toString());
-		}
-		return new DataDescriptionEntryFormat1Node(picture, dataOccursClause);
+		return new DataDescriptionEntryFormat1Node(picture, dataOccursClause, value);
 	}
 }

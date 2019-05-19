@@ -13,8 +13,8 @@ import de.cobolj.runtime.Picture;
 @NodeInfo(shortName = "DataDescriptionEntryFormat1")
 public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 
-	public DataDescriptionEntryFormat1Node(Picture picture, DataOccursClause occurs) {
-		super(picture, occurs);
+	public DataDescriptionEntryFormat1Node(Picture picture, DataOccursClause occurs, Object value) {
+		super(picture, occurs, value);
 	}
 
 	@Override

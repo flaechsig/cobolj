@@ -3,6 +3,9 @@ package de.cobolj.division.data;
 import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.HashedMap;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,9 +25,14 @@ public class LinkageSectionNode extends DataDivisionSectionNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 
+		DataDescriptionEntryNode.buildHierarchie(dataDescriptionEntries);
+		Map<String, Object> values = new HashedMap<>();
+		for(DataDescriptionEntryNode node : dataDescriptionEntries) {
+			values.put(node.getQualifiedName(), node.getValue());
+		}
 		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntries,0);
 		for (Picture pic : rootLevelPictures) {
-			addToStorage(frame, pic);
+			addToStorage(frame, pic, values);
 		}
 		
 		return this;
