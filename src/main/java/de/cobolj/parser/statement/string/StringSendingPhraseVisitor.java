@@ -3,8 +3,6 @@ package de.cobolj.parser.statement.string;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.antlr.v4.parse.ANTLRParser.element_return;
-
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.StringSendingPhraseContext;

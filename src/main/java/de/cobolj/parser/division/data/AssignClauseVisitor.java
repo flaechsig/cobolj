@@ -5,11 +5,9 @@ import static de.cobolj.parser.ParserHelper.notImplemented;
 
 import de.cobolj.division.data.AssignClauseNode;
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.nodes.StringNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.AssignClauseContext;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.util.StringLiteral;
 
 /**
  * assignClause : ASSIGN TO? ( DISK | DISPLAY | KEYBOARD | PORT | PRINTER |

@@ -3,7 +3,6 @@ package de.cobolj.parser.statement.move;
 import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.MoveToStatementNode;

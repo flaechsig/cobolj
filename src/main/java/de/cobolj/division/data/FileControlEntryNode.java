@@ -9,7 +9,6 @@ import de.cobolj.division.environment.OrganizationClause;
 import de.cobolj.division.environment.OrganizationClause.FileForm;
 import de.cobolj.division.environment.OrganizationClause.RecordForm;
 import de.cobolj.nodes.CobolNode;
-import de.cobolj.nodes.PictureNode;
 
 @NodeInfo(shortName = "FileControlEntry")
 public class FileControlEntryNode extends CobolNode {

@@ -6,9 +6,8 @@ import java.util.stream.Collectors;
 import de.cobolj.nodes.ParagraphNode;
 import de.cobolj.nodes.SentenceNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.StartRuleVisitor;
 import de.cobolj.parser.Cobol85Parser.ParagraphContext;
+import de.cobolj.parser.StartRuleVisitor;
 
 /**
  * 

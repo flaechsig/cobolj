@@ -6,12 +6,10 @@ import static de.cobolj.parser.ParserHelper.notImplemented;
 import de.cobolj.division.data.AssignClauseNode;
 import de.cobolj.division.data.FileControlEntryNode;
 import de.cobolj.division.environment.OrganizationClause;
-import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.FileControlEntryFormat1Context;
 import de.cobolj.parser.Cobol85Parser.FileControlEntryFormat4Context;
 import de.cobolj.parser.CobolWordVisitor;
-import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.division.environment.OrganizationClauseVisitor;
 
 /**

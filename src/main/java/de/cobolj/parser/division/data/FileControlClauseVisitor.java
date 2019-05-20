@@ -2,9 +2,8 @@ package de.cobolj.parser.division.data;
 
 import de.cobolj.division.data.FileControlClauseNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.FileControlClauseContext;
+import de.cobolj.parser.ParserHelper;
 
 /**
  * fileControlClause: assignClause | reserveClause | organizationClause |

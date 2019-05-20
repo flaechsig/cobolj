@@ -6,7 +6,6 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.division.data.InputOutputSectionParagraphNode;
-import de.cobolj.division.environtment.EnvironmentDivisionBodyNode;
 import de.cobolj.nodes.CobolNode;
 
 @NodeInfo(shortName="InputOutputSecion")

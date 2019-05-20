@@ -2,13 +2,10 @@ package de.cobolj.parser.division.data;
 
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
-import org.antlr.v4.runtime.RuleContext;
-
 import de.cobolj.nodes.LiteralNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.Cobol85Parser.LiteralContext;
 
 /**
  * 

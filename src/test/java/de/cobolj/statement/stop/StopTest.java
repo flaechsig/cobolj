@@ -1,7 +1,5 @@
 package de.cobolj.statement.stop;
 
-import org.testng.annotations.DataProvider;
-
 import de.cobolj.CobolBaseTest;
 
 /**

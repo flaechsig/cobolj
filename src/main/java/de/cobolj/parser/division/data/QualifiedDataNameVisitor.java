@@ -3,7 +3,6 @@ package de.cobolj.parser.division.data;
 import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
-import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;

@@ -7,7 +7,6 @@ import de.cobolj.nodes.DataDivisionNode;
 import de.cobolj.nodes.DataDivisionSectionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.DataDivisionContext;
 
 /**
  * 

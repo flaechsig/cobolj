@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.nodes.PictureNode;
-
 @NodeInfo(shortName = "OpenInput")
 public class OpenInputNode extends OpenInputOutputNode {
 

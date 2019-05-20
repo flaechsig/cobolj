@@ -4,9 +4,6 @@ import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureNode;

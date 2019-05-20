@@ -3,7 +3,6 @@ package de.cobolj.parser;
 import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85Parser.AtEndPhraseContext;
 import de.cobolj.parser.Cobol85Parser.NotAtEndPhraseContext;

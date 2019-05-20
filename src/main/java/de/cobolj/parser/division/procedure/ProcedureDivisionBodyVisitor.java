@@ -8,7 +8,6 @@ import de.cobolj.nodes.ProcedureDivisionBodyNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.Cobol85Parser.ProcedureDivisionBodyContext;
 
 /**
  * Die Anweisungen des Cobol-Programms

@@ -3,8 +3,6 @@ package de.cobolj.parser.division.environment;
 import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
-import org.antlr.runtime.RecognitionException;
-
 import de.cobolj.division.environment.OrganizationClause;
 import de.cobolj.division.environment.OrganizationClause.FileForm;
 import de.cobolj.division.environment.OrganizationClause.RecordForm;

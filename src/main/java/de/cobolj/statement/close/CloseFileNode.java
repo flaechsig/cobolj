@@ -9,7 +9,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.CobolNode;
-import de.cobolj.nodes.PictureNode;
 
 @NodeInfo(shortName="CloseFile")
 public class CloseFileNode extends CobolNode {

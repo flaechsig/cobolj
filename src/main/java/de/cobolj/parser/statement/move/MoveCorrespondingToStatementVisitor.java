@@ -3,9 +3,6 @@ package de.cobolj.parser.statement.move;
 import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.oracle.truffle.api.frame.FrameSlot;
 
 import de.cobolj.nodes.MoveCorrespondignToStatementNode;
 import de.cobolj.nodes.PictureNode;

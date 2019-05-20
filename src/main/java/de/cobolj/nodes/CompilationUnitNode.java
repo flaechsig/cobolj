@@ -1,6 +1,5 @@
 package de.cobolj.nodes;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;

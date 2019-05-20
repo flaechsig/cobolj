@@ -7,7 +7,6 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.nodes.CobolNode;
-import de.cobolj.nodes.PictureNode;
 
 /**
  * Repräsentation eines einzelen Files bzw. Input-Streams. Demnach liefert die

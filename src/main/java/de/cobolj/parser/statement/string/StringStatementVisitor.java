@@ -3,15 +3,14 @@ package de.cobolj.parser.statement.string;
 import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.StringStatementContext;
-import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
 import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.PhraseVisitor;
+import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.statement.string.StringSendingPhraseNode;
 import de.cobolj.statement.string.StringStatementNode;

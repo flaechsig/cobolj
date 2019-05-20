@@ -2,7 +2,6 @@ package de.cobolj.statement.read;
 
 import java.io.InputStream;
 
-import com.oracle.truffle.api.frame.FrameUtil;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 

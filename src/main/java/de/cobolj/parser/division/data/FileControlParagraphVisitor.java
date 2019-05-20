@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import de.cobolj.division.data.FileControlEntryNode;
 import de.cobolj.division.data.FileControlParagraphNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.FileControlParagraphContext;
 
 /**

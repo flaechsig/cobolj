@@ -1,13 +1,11 @@
 package de.cobolj.util;
 
-import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.NumberNode;
 import de.cobolj.nodes.NumberStorageNode;
-import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85Parser.IdentifierContext;
 import de.cobolj.parser.Cobol85Parser.LiteralContext;
-import de.cobolj.parser.division.data.LiteralVisitor;
 import de.cobolj.parser.IdentifierVisitor;
+import de.cobolj.parser.division.data.LiteralVisitor;
 
 /**
  * Separate Factory für arithmetische Werte.

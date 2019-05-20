@@ -8,7 +8,6 @@ import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
-import com.oracle.truffle.api.TruffleLanguage.ContextPolicy;
 
 import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.EvalRootNode;

@@ -4,13 +4,9 @@ import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
 import de.cobolj.division.identification.ProgramIdParagraphNode;
-import de.cobolj.nodes.LiteralNode;
-import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ProgramIdParagraphContext;
 import de.cobolj.parser.CobolWordVisitor;
-import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.division.data.LiteralVisitor;
 
 /**
  * programIdParagraph : PROGRAM_ID DOT_FS programName ( IS? ( COMMON | INITIAL |

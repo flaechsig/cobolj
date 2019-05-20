@@ -1,7 +1,6 @@
 package de.cobolj.parser.division.procedure;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.ProcedureNameContext;
 
 /**

@@ -1,13 +1,10 @@
 package de.cobolj.parser.division.data;
 
-import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.nodes.PictureFactory;
 import de.cobolj.nodes.PictureStringVisitor;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.DataPictureClauseContext;
 import de.cobolj.runtime.Picture;
-import de.cobolj.runtime.PictureGroup;
 
 /**
  * 

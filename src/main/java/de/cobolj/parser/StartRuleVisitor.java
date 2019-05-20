@@ -4,8 +4,6 @@ import static de.cobolj.parser.ParserHelper.accept;
 
 import java.util.LinkedList;
 
-import com.oracle.truffle.api.frame.FrameDescriptor;
-
 import de.cobolj.CobolLanguage;
 import de.cobolj.nodes.CompilationUnitNode;
 import de.cobolj.nodes.StartRuleNode;

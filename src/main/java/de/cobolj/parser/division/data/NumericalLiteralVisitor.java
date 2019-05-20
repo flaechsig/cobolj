@@ -8,7 +8,6 @@ import de.cobolj.nodes.NumberNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.IntegerLiteralContext;
-import de.cobolj.parser.Cobol85Parser.NumericLiteralContext;
 
 /**
  * 

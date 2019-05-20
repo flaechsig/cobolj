@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import de.cobolj.division.data.FileDescriptionEntryNode;
 import de.cobolj.division.data.FileSectionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.Cobol85Parser.FileSectionContext;
 
 /**

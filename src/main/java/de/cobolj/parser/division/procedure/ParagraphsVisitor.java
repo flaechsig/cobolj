@@ -7,7 +7,6 @@ import de.cobolj.nodes.ParagraphsNode;
 import de.cobolj.nodes.StructureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.ParagraphsContext;
 
 /**
  * Langsam wird es konkret. Diese Klasse bündelt Sentences und Paragraph

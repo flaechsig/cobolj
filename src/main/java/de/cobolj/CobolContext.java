@@ -11,7 +11,6 @@ import java.util.Map;
 import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameUtil;
-import com.oracle.truffle.api.frame.VirtualFrame;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.FileDescriptionEntryNode;

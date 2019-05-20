@@ -5,10 +5,7 @@ import static de.cobolj.CobolExec.By.value;
 import static org.testng.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.math.BigDecimal;
 
 import org.testng.Assert;

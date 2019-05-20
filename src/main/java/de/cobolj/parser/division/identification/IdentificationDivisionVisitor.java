@@ -1,7 +1,6 @@
 package de.cobolj.parser.division.identification;
 
 import static de.cobolj.parser.ParserHelper.accept;
-import static de.cobolj.parser.ParserHelper.notImplemented;
 
 import java.util.List;
 

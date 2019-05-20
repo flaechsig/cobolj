@@ -1,18 +1,12 @@
 package de.cobolj.util;
 
-import java.math.BigDecimal;
-
-import de.cobolj.nodes.BigDecimalNode;
 import de.cobolj.nodes.ExpressionNode;
-import de.cobolj.nodes.NumberNode;
-import de.cobolj.nodes.NumberStorageNode;
-import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85Parser.IdentifierContext;
 import de.cobolj.parser.Cobol85Parser.IntegerLiteralContext;
 import de.cobolj.parser.Cobol85Parser.LiteralContext;
+import de.cobolj.parser.IdentifierVisitor;
 import de.cobolj.parser.division.data.LiteralVisitor;
 import de.cobolj.parser.division.data.NumericalLiteralVisitor;
-import de.cobolj.parser.IdentifierVisitor;
 
 public class ExpressionNodeFactory {
 	private ExpressionNodeFactory() {

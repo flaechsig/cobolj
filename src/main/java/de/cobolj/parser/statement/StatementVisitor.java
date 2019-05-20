@@ -4,20 +4,6 @@ import org.antlr.v4.runtime.RuleContext;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.StatementContext;
-import de.cobolj.parser.statement.accept.AcceptStatementVisitor;
-import de.cobolj.parser.statement.add.AddStatementVisitor;
-import de.cobolj.parser.statement.compute.ComputeStatementVisitor;
-import de.cobolj.parser.statement.continuestmt.ContinueStatementVisitor;
-import de.cobolj.parser.statement.display.DisplayStatementVisitor;
-import de.cobolj.parser.statement.divide.DivideStatementVisitor;
-import de.cobolj.parser.statement.ifstmt.IfStatementVisitor;
-import de.cobolj.parser.statement.move.MoveStatementVisitor;
-import de.cobolj.parser.statement.multiply.MultiplyStatementVisitor;
-import de.cobolj.parser.statement.perform.PerformStatementVisitor;
-import de.cobolj.parser.statement.stop.StopStatementVisitor;
-import de.cobolj.parser.statement.string.StringStatementVisitor;
-import de.cobolj.parser.statement.subtract.SubtractStatementVisitor;
 import de.cobolj.statement.StatementNode;
 
 /**

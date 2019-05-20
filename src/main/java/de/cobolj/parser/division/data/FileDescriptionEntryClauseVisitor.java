@@ -4,7 +4,6 @@ import static de.cobolj.parser.ParserHelper.notImplemented;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.FileDescriptionEntryClauseContext;
-import de.cobolj.parser.Cobol85Parser.FileDescriptionEntryContext;
 
 /**
  * Siehe bei den einzelnen Methoden

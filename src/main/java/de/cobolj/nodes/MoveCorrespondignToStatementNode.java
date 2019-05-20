@@ -2,7 +2,6 @@ package de.cobolj.nodes;
 
 import java.util.List;
 
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 

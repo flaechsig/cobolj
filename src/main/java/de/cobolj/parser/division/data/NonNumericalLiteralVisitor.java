@@ -6,7 +6,6 @@ import de.cobolj.nodes.StringNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Lexer;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.NonNumericLiteralContext;
 import de.cobolj.util.HexNumber;
 import de.cobolj.util.StringLiteral;
 

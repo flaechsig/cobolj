@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.Cobol85Parser.PictureCardinalityContext;
 
 /**
  * 

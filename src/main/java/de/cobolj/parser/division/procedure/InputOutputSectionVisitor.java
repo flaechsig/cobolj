@@ -1,14 +1,11 @@
 package de.cobolj.parser.division.procedure;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.cobolj.division.data.InputOutputSectionParagraphNode;
-import de.cobolj.division.environtment.EnvironmentDivisionBodyNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.InputOutputSectionContext;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.statement.open.InputOutputSectionNode;
 
 /**

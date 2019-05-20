@@ -1,11 +1,9 @@
 package de.cobolj.parser.statement.write;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.WriteStatementContext;
 import de.cobolj.parser.CobolWordVisitor;
-import de.cobolj.parser.division.data.QualifiedDataNameVisitor;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.statement.write.WriteStatementNode;
 
 /**

@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.cobolj.parser.Cobol85BaseVisitor;
-import de.cobolj.parser.Cobol85Parser;
-import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.Cobol85Parser.OpenStatementContext;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.statement.open.OpenStatementElementNode;
 import de.cobolj.statement.open.OpenStatementNode;
 
