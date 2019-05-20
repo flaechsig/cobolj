@@ -134,17 +134,19 @@ public abstract class Picture implements TruffleObject, Serializable {
 		}
 	}
 
-	public void setSubscript(int i) {
+	public void setSubscript(Integer i) {
 		this.subscript = i;
 	}
 
 	public void setParent(PictureGroup parent) {
 		this.parent = parent;
-		parent.add(this.name, this);
+		if (parent != null) {
+			parent.add(this.name, this);
+		}
 	}
 
 	public int getLevel() {
-			return this.level;
+		return this.level;
 	}
 
 	public boolean isMemInitialized() {

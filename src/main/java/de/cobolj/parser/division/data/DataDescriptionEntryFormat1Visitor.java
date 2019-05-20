@@ -3,15 +3,10 @@ package de.cobolj.parser.division.data;
 import static de.cobolj.parser.ParserHelper.accept;
 import static de.cobolj.parser.ParserHelper.notImplemented;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.lang3.SerializationUtils;
-
 import de.cobolj.division.data.DataDescriptionEntryFormat1Node;
 import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.nodes.LiteralNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.runtime.Picture;
@@ -73,14 +68,16 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		} else {
 			name = accept(ctx.dataName(), new DataNameVisitor(null)).getSlot();
 		}
+		PictureNode dataRedefinesClause = accept(ctx.dataRedefinesClause(), new DataRedefinesClauseVistor());
 		DataOccursClause dataOccursClause = accept(ctx.dataOccursClause(0), new DataOccursClauseVisitor());
 		Picture picture;
+		String picutreString = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor2());
 		if (ctx.dataPictureClause() == null) {
 			picture = new PictureGroup(level, name);
 		} else {
 			picture = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor(level, name));
 		}
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);
-		return new DataDescriptionEntryFormat1Node(picture, dataOccursClause, value);
+		return new DataDescriptionEntryFormat1Node(picture, picutreString, dataRedefinesClause, dataOccursClause, value);
 	}
 }

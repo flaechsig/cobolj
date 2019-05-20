@@ -23,15 +23,8 @@ public class WorkingStorageSectionNode extends DataDivisionSectionNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		DataDescriptionEntryNode.buildHierarchie(entries);
-		Map<String, Object> values = new HashedMap<>();
 		for(DataDescriptionEntryNode node : entries) {
-			values.put(node.getQualifiedName(), node.getValue());
-		}
-		
-		// FIXME: Es sieht falsch aus, dass nicht über die executeGeneric-Methode gegangen wird
-		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(entries,0);
-		for (Picture pic : rootLevelPictures) {
-			addToStorage(frame, pic, values);
+			node.executeGeneric(frame);
 		}
 		return this;
 	}

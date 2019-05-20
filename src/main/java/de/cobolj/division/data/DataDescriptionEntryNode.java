@@ -8,21 +8,27 @@ import org.apache.commons.lang3.SerializationUtils;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;
 
 @NodeInfo(shortName = "DataDescriptionEntry")
 public abstract class DataDescriptionEntryNode extends CobolNode {
 
-	private final int level;
+	protected final int level;
+	protected final String name;
 	private final Picture picture;
 	protected final DataOccursClause occurs;
 	protected final Object value;
-	protected DataDescriptionEntryNode parent;
+	protected DataDescriptionEntryNode dataDescParent;
+	@Child
+	private PictureNode dataRedefinesClause;
 
-	public DataDescriptionEntryNode(Picture picture, DataOccursClause dataOccursClause, Object value) {
+	public DataDescriptionEntryNode(Picture picture, PictureNode dataRedefinesClause, DataOccursClause dataOccursClause, Object value) {
 		this.level = picture.getLevel();
+		this.name = picture.getName();
 		this.picture = picture;
+		this.dataRedefinesClause = dataRedefinesClause;
 		this.occurs = dataOccursClause;
 		this.value = value;
 	}
@@ -98,16 +104,16 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 		if(entries.length == 0) {
 			return;
 		}
-		entries[0].parent = null; // Per Definition hat das erste Element kein Parent
+		entries[0].dataDescParent = null; // Per Definition hat das erste Element kein Parent
 		for(int i=1; i<entries.length; i++) {
 			DataDescriptionEntryNode actNode = entries[i];
 			for(int j=i-1; j>=0; j--) {
 				DataDescriptionEntryNode prevNode = entries[j];
 				if(actNode.level == prevNode.level) {
-					actNode.parent = prevNode.parent;
+					actNode.dataDescParent = prevNode.dataDescParent;
 					break;
 				} else if (prevNode.level < actNode.level) {
-					actNode.parent = prevNode;
+					actNode.dataDescParent = prevNode;
 					break;
 				} else /* prevNode.level < actNode.level */ {
 					continue;
@@ -117,10 +123,14 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	}
 	
 	public String getQualifiedName() {
-		return picture.getName() + (parent!=null?(" OF " +parent.getQualifiedName() ):"");
+		return picture.getName() + (dataDescParent!=null?(" OF " +dataDescParent.getQualifiedName() ):"");
 	}
 
 	public Object getValue() {
 		return value;
+	}
+	
+	public DataDescriptionEntryNode getDataDescParent() {
+		return dataDescParent;
 	}
 }

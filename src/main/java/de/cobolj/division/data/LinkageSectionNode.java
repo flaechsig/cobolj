@@ -24,17 +24,10 @@ public class LinkageSectionNode extends DataDivisionSectionNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-
 		DataDescriptionEntryNode.buildHierarchie(dataDescriptionEntries);
-		Map<String, Object> values = new HashedMap<>();
 		for(DataDescriptionEntryNode node : dataDescriptionEntries) {
-			values.put(node.getQualifiedName(), node.getValue());
+			node.executeGeneric(frame);
 		}
-		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntries,0);
-		for (Picture pic : rootLevelPictures) {
-			addToStorage(frame, pic, values);
-		}
-		
 		return this;
 	}
 
