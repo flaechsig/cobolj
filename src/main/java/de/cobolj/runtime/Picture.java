@@ -160,4 +160,8 @@ public abstract class Picture implements TruffleObject, Serializable {
 	public void setMemoryPointer(int top) {
 		this.memPointer = top;
 	}
+
+	public int getMemPointer() {
+		return memPointer;
+	}
 }

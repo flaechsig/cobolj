@@ -49,18 +49,23 @@ public class FileDescriptionEntryNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		getContext().addFileDescriptor(this);
-
-		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntry,0);
-		// Die Liste enhält die First-Level-Elemente mit den Kindelementen,
-		// die in dem Speicher angelegt werden müssen
-		for (Picture pic : rootLevelPictures) {
-			addToStorage(frame, pic);
-		}
-
-		for(FileDescriptionEntryClauseNode fileDescription : fileDescriptionEntryClause) {
-			fileDescription.executeGeneric(frame);
+		
+		DataDescriptionEntryNode.buildHierarchie(dataDescriptionEntry);
+		for(DataDescriptionEntryNode node : dataDescriptionEntry) {
+			node.executeGeneric(frame);
 		}
 		return this;
+//		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntry,0);
+//		// Die Liste enhält die First-Level-Elemente mit den Kindelementen,
+//		// die in dem Speicher angelegt werden müssen
+//		for (Picture pic : rootLevelPictures) {
+//			addToStorage(frame, pic);
+//		}
+//
+//		for(FileDescriptionEntryClauseNode fileDescription : fileDescriptionEntryClause) {
+//			fileDescription.executeGeneric(frame);
+//		}
+//		return this;
 	}
 
 	public String getName() {

@@ -70,7 +70,7 @@ public class CobolContext {
 	public FileDescriptionEntryNode getFileDescriptorByRecord(String name) {
 		for (FileDescriptionEntryNode fd : fileDescriptor) {
 			for (DataDescriptionEntryNode entry : fd.getDataDescriptionEntry()) {
-				if (entry.getPicture().getName().equals(name)) {
+				if (name.equals(name)) {
 					return fd;
 				}
 			}

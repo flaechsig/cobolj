@@ -70,14 +70,9 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		}
 		PictureNode dataRedefinesClause = accept(ctx.dataRedefinesClause(), new DataRedefinesClauseVistor());
 		DataOccursClause dataOccursClause = accept(ctx.dataOccursClause(0), new DataOccursClauseVisitor());
-		Picture picture;
 		String picutreString = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor2());
-		if (ctx.dataPictureClause() == null) {
-			picture = new PictureGroup(level, name);
-		} else {
-			picture = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor(level, name));
-		}
+
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);
-		return new DataDescriptionEntryFormat1Node(picture, picutreString, dataRedefinesClause, dataOccursClause, value);
+		return new DataDescriptionEntryFormat1Node(level, name, picutreString, dataRedefinesClause, dataOccursClause, value);
 	}
 }

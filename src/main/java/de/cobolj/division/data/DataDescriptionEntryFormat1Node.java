@@ -11,11 +11,14 @@ import de.cobolj.runtime.PictureGroup;
 @NodeInfo(shortName = "DataDescriptionEntryFormat1")
 public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 
+	/** Aufgelöster PictureString, d.h. ohne Klammer-Schreibweise */
 	private final String pictureString;
+	/** Speicherpostion, an dem das Picture für diesen Node startet */
+	private int memStart;
 
-	public DataDescriptionEntryFormat1Node(Picture picture, String pictureString, PictureNode dataRedefinesClause,
+	public DataDescriptionEntryFormat1Node(int level, String name, String pictureString, PictureNode dataRedefinesClause,
 			DataOccursClause occurs, Object value) {
-		super(picture, dataRedefinesClause, occurs, value);
+		super(level, name, dataRedefinesClause, occurs, value);
 		this.pictureString = pictureString;
 	}
 
@@ -29,13 +32,16 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 			for (int i = 1; i <= occursNode; i++) {
 				Integer subscriptParent = occursParent>1?j:null;
 				Integer subscriptNode = occursNode>1?i:null;
-				createPictre(frame, subscriptParent, subscriptNode);
+				Picture pic = createPictre(frame, subscriptParent, subscriptNode);
+				if(i==1) {
+					memStart = pic.getMemPointer();
+				}
 			}
 		}
 		return this;
 	}
 
-	private void createPictre(VirtualFrame frame, Integer subscriptParent, Integer subscriptNode) {
+	private Picture createPictre(VirtualFrame frame, Integer subscriptParent, Integer subscriptNode) {
 		PictureGroup parent = null;
 		Picture nodePicture = PictureFactory.create(level, name, pictureString);
 		if (dataDescParent != null) {
@@ -47,5 +53,6 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 		if (value != null) {
 			nodePicture.setValue(value);
 		}
+		return nodePicture;
 	}
 }
