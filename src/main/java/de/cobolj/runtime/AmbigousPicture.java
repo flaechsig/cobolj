@@ -5,6 +5,7 @@ import com.oracle.truffle.api.interop.ForeignAccess;
 import de.cobolj.phrase.SizeOverflowException;
 
 /** Merker-Objekt ohne Funktionalität, um Uneindeutigkeiten zu markieren. */
+@SuppressWarnings("serial")
 public class AmbigousPicture extends Picture {
 	
 	public static AmbigousPicture INSTANCE = new AmbigousPicture();

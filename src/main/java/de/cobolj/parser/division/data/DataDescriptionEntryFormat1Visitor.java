@@ -10,7 +10,6 @@ import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.runtime.Picture;
-import de.cobolj.runtime.PictureGroup;
 
 /**
  * 

@@ -1,16 +1,9 @@
 package de.cobolj.division.data;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import org.apache.commons.lang3.SerializationUtils;
-
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.PictureNode;
-import de.cobolj.runtime.Picture;
-import de.cobolj.runtime.PictureGroup;
 
 @NodeInfo(shortName = "DataDescriptionEntry")
 public abstract class DataDescriptionEntryNode extends CobolNode {
@@ -74,5 +67,9 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 
 	public DataDescriptionEntryNode getDataDescParent() {
 		return dataDescParent;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

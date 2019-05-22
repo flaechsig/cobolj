@@ -2,6 +2,7 @@ package de.cobolj.runtime;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("serial")
 public abstract class NumericPicture extends Picture {
 
 	/** Kennzeichen, ob die Instanz der Klasse ein Vorzeichen führt */

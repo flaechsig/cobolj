@@ -52,6 +52,7 @@ public class CobolExec {
 			return value;
 		}
 
+		@SuppressWarnings("unchecked")
 		public <T> T getValue(T clazz) {
 			return (T) value;
 		}

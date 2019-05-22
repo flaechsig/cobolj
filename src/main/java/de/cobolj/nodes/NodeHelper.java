@@ -27,6 +27,7 @@ public class NodeHelper {
 	
 
 	/** @see #excecuteGeneric(CobolNode, Object, VirtualFrame) */
+	@SuppressWarnings("unchecked")
 	public static <T> T excecuteGeneric(CobolNode[] nodeArray, T oldResult, VirtualFrame frame) {
 		T result = oldResult;
 		for(CobolNode node : nodeArray) {
