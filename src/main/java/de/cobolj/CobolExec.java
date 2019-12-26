@@ -177,7 +177,10 @@ public class CobolExec {
 	public static void call(InputStream in, OutputStream out, String name, By... using) {
 		Context context = org.graalvm.polyglot.Context.newBuilder(CobolLanguage.ID).in(in).out(out).build();
 		Source program = PROGRAM_MAP.get(name.toUpperCase());
-		assert program != null : "Das angegebene Sub-Programm " + name + " wurde nicht registriert.";
+		
+		if(program == null) {
+			throw new RuntimeException("Das angegebene Sub-Programm " + name + " wurde nicht registriert.");
+		}
 
 		Value val = context.getPolyglotBindings();
 		val.putMember(USING_HOST, using);
