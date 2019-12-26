@@ -33,7 +33,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 	}
 
 	/**
-	 * dataDescriptionEntryFormat1 : ( INTEGERLITERAL | LEVEL_NUMBER_77 ) ( FILLER |
+	 * dataDescriptionEntryFormat1 : ( INTEGERLITERAL ) ( FILLER |
 	 * dataName )? dataRedefinesClause? dataExternalClause? dataBlankWhenZeroClause?
 	 * dataFormatClause? dataGlobalClause? dataJustifiedClause? dataOccursClause?
 	 * dataPictureClause? dataOccursClause? dataSignClause? dataValueClause?
