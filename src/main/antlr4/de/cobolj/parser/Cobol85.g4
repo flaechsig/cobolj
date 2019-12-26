@@ -1837,7 +1837,6 @@ dataDescriptionEntryFormat1
 :
 	(
 		INTEGERLITERAL
-		| LEVEL_NUMBER_77
 	)
 	(
 		FILLER
@@ -4622,7 +4621,6 @@ integerLiteral
 :
 	INTEGERLITERAL
 	| LEVEL_NUMBER_66
-	| LEVEL_NUMBER_77
 	| LEVEL_NUMBER_88
 ;
 
@@ -7546,11 +7544,6 @@ DBCSLITERAL
 LEVEL_NUMBER_66
 :
 	'66'
-;
-
-LEVEL_NUMBER_77
-:
-	'77'
 ;
 
 LEVEL_NUMBER_88

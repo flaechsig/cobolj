@@ -200,7 +200,7 @@
      10      FILLER                  REDEFINES  WB-COBOL-LINE.    
        15    WB-CHAR                 PIC X.                       
        15    WB-SEQ-2                PIC X(6).                    
-/                                                                 
+                                                                 
  01  WC-CURRENT-POP-RECORD.                                       
    05        WC-1.                                                
      10      WC-END-OF-POPFILE       PIC X(16).                   
@@ -397,7 +397,7 @@
      10      FILLER                  PIC X(3).                    
      10      WZ-VERSION-DATE         PIC X(11).                   
                                                                   
-/                                                                 
+                                                                
  PROCEDURE DIVISION.                                              
 *>==================                                               
 *>                                                                 
@@ -420,7 +420,7 @@
  A10-EXIT.                                                        
      EXIT.                                                        
                                                                   
-/                                                                 
+                                                               
  B10-INITIALISE SECTION.                                          
 *>======================                                           
 *>                                                                 

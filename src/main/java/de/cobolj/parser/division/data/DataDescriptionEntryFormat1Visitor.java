@@ -29,11 +29,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 	}
 
 	private Integer getLevelNumber(Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
-		if (ctx.LEVEL_NUMBER_77() != null) {
-			return Integer.valueOf(ctx.LEVEL_NUMBER_77().getText());
-		} else {
-			return Integer.valueOf(ctx.INTEGERLITERAL().getText());
-		}
+		return Integer.valueOf(ctx.INTEGERLITERAL().getText());
 	}
 
 	/**
@@ -48,8 +44,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 			Cobol85Parser.DataDescriptionEntryFormat1Context ctx) {
 		assert ctx.dataOccursClause()
 				.size() <= 1 : "DataOcurrsClaus ist in der Grammatik zweimal vorhanden darf aber nur einmal verwendet werden";
-
-		notImplemented(ctx.LEVEL_NUMBER_77());
+		
 		notImplemented(ctx.dataRedefinesClause());
 		notImplemented(ctx.dataExternalClause());
 		notImplemented(ctx.dataGlobalClause());
@@ -72,6 +67,7 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		String picutreString = accept(ctx.dataPictureClause(), new DataPictureClauseVisitor2());
 
 		LiteralNode value = accept(ctx.dataValueClause(), DataValueClauseVisitor.INSTANCE);
-		return new DataDescriptionEntryFormat1Node(level, name, picutreString, dataRedefinesClause, dataOccursClause, value);
+		return new DataDescriptionEntryFormat1Node(level, name, picutreString, dataRedefinesClause, dataOccursClause,
+				value);
 	}
 }

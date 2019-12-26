@@ -19,7 +19,7 @@ public class IntegerLiteralVisitor extends Cobol85BaseVisitor<IntegerNode> {
 	public IntegerNode visitIntegerLiteral(IntegerLiteralContext ctx) {
 
 		TerminalNode terminal = ObjectUtils.firstNonNull(ctx.INTEGERLITERAL(), ctx.LEVEL_NUMBER_66(),
-				ctx.LEVEL_NUMBER_77(), ctx.LEVEL_NUMBER_88());
+				 ctx.LEVEL_NUMBER_88());
 
 		Integer number = new Integer(terminal.getText());
 
