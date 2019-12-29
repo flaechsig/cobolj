@@ -19,7 +19,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	/** Vorgänger-Node auf selber Ebene */
 	protected DataDescriptionEntryNode dataDescPresessor;
 	@Child
-	private PictureNode dataRedefinesClause;
+	protected PictureNode dataRedefinesClause;
 
 	public DataDescriptionEntryNode(int level, String name, PictureNode dataRedefinesClause,
 			DataOccursClause dataOccursClause, Object value) {

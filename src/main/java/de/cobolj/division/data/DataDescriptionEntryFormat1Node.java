@@ -1,5 +1,7 @@
 package de.cobolj.division.data;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
@@ -44,6 +46,11 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 	private Picture createPictre(VirtualFrame frame, Integer subscriptParent, Integer subscriptNode) {
 		PictureGroup parent = null;
 		Picture nodePicture = PictureFactory.create(level, name, pictureString);
+		if(dataRedefinesClause!=null) {
+			Picture redefines = dataRedefinesClause.executeGeneric(frame);
+			nodePicture.setMemoryPointer(redefines.getMemPointer());
+			nodePicture.setMemory(redefines.getMemory());
+		}
 		if (dataDescParent != null) {
 			parent = (PictureGroup) getContext().getPicture(frame, dataDescParent.getQualifiedName()+(subscriptParent!=null?"("+subscriptParent+")":""));
 		}

@@ -45,7 +45,6 @@ public class DataDescriptionEntryFormat1Visitor extends Cobol85BaseVisitor<DataD
 		assert ctx.dataOccursClause()
 				.size() <= 1 : "DataOcurrsClaus ist in der Grammatik zweimal vorhanden darf aber nur einmal verwendet werden";
 		
-		notImplemented(ctx.dataRedefinesClause());
 		notImplemented(ctx.dataExternalClause());
 		notImplemented(ctx.dataGlobalClause());
 		notImplemented(ctx.dataTypeClause());

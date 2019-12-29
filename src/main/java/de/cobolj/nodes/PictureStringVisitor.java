@@ -26,6 +26,8 @@ public class PictureStringVisitor extends Cobol85BaseVisitor<String> {
 			String pictureChar = accept(ctx.pictureChars(i), (new PictureCharsVisitor()));
 			if (ctx.pictureCardinality(i) != null) {
 				fullString += accept(ctx.pictureCardinality(i), new PictureCarinalityVisitor(pictureChar));
+			} else {
+				fullString += pictureChar;
 			}
 		}
 		return fullString;
