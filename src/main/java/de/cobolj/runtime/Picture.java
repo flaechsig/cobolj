@@ -35,6 +35,8 @@ public abstract class Picture implements TruffleObject, Serializable {
 	protected byte[] memory; // FIXME: später final
 	/** Referenz auf den Beginn des Speicherblocks */
 	protected int memPointer = Integer.MAX_VALUE; // FIXME: später final
+	/** Kennzeichen, ob es sich bei dem Picture um ein REDEFINE handelt */
+	private boolean redefined = false;
 
 	/**
 	 * @see {{@link #Pic9(short, boolean, long)}
@@ -167,5 +169,24 @@ public abstract class Picture implements TruffleObject, Serializable {
 
 	public int getMemPointer() {
 		return memPointer;
+	}
+	
+	@Override
+	public String toString() {
+		return getName()+"("+getValue()+")";
+	}
+	
+	public boolean isRedefined() {
+		if(redefined) {
+			return true;
+		} else if(parent != null) {
+			return parent.isRedefined();
+		} else {
+			return false;
+		}
+	}
+	
+	public void setRedefined(boolean redefined) {
+		this.redefined = redefined;
 	}
 }

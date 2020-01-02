@@ -103,4 +103,13 @@ public class PictureGroup extends Picture {
 	public List<Picture> getChildren() {
 		return children;
 	}
+	
+	@Override
+	public int getSize() {
+		int result = 0; 
+		for(Picture pic : getChildren()) {
+			result += pic.getSize();
+		}
+		return result;
+	}
 }

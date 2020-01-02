@@ -41,7 +41,6 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 
 	@Override
 	public int compareTo(PictureA o) {
-//		return value.compareTo(o.value);
 		return toString().compareTo(o.toString());
 	}
 
@@ -57,7 +56,6 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 
 	@Override
 	public Object getValue() {
-//		return value;
 		byte[] value = new byte[size];
 		System.arraycopy(memory, memPointer, value, 0, size);
 		return new String(value);
@@ -65,14 +63,12 @@ public class PictureA extends Picture implements Comparable<PictureA> {
 	
 	@Override
 	public String toString() {
-//		return StringUtils.rightPad(value, size, ' ');
 		return (String) getValue();
 	}
 
 	@Override
 	public void clear() {
-		byte[] value = StringUtils.rightPad("", size).getBytes();
-		System.arraycopy(value, 0, memory, memPointer, size);
+		setValue("");
 	}
 
 }

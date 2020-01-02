@@ -8,3 +8,6 @@ MOVE
 StatementNode liefert StatementNode im execute?
 
 IdentifierVisitor liefert PicktureNode?
+
+FILLER kann nicht als Parent-Element verwendet werden, da kein Picture angelegt wird. Dadurch kann kein 
+Parent ermittelt werden

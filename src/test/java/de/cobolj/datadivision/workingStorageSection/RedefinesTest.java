@@ -14,7 +14,7 @@ public class RedefinesTest extends CobolBaseTest {
 //		ArrayList<String> elements = new ArrayList<>();
 //		result.add(elements);
 //
-//		elements.add("redefines-1");
+//		elements.add("redefines-5");
 //		return result.toArray();
 //	}
 }

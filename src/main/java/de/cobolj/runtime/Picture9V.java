@@ -107,7 +107,8 @@ public class Picture9V extends NumericPicture implements Comparable<Picture9V> {
 	public Object getValue() {
 		byte[] value = new byte[size+(signed?1:0)];
 		System.arraycopy(memory, memPointer, value, 0, size);
-		BigDecimal bigValue = new BigDecimal(new String(value).trim());
+		String number = StringUtils.firstNonEmpty(new String(value).trim(), "0");
+		BigDecimal bigValue = new BigDecimal(number);
 		return bigValue.movePointLeft(scale);
 	}
 
