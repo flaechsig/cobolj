@@ -1,7 +1,9 @@
 package de.cobolj.division.data;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -49,25 +51,52 @@ public class FileDescriptionEntryNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		getContext().addFileDescriptor(this);
-		
 		DataDescriptionEntryNode.buildHierarchie(dataDescriptionEntry);
-		for(DataDescriptionEntryNode node : dataDescriptionEntry) {
-			node.executeGeneric(frame);
+		
+		AtomicInteger pos = new AtomicInteger(0);
+		byte[] mem = new byte[1000];
+
+		DataDescriptionEntryNode.setMem(mem);
+		DataDescriptionEntryNode.setMemPointer(0);
+		while (pos.get() < dataDescriptionEntry.length) {
+			initializeMemory(frame, null, pos);
 		}
 		return this;
-//		List<Picture> rootLevelPictures = DataDescriptionEntryNode.buildPictureListTree(dataDescriptionEntry,0);
-//		// Die Liste enhält die First-Level-Elemente mit den Kindelementen,
-//		// die in dem Speicher angelegt werden müssen
-//		for (Picture pic : rootLevelPictures) {
-//			addToStorage(frame, pic);
-//		}
-//
-//		for(FileDescriptionEntryClauseNode fileDescription : fileDescriptionEntryClause) {
-//			fileDescription.executeGeneric(frame);
-//		}
-//		return this;
 	}
 
+	private void initializeMemory(VirtualFrame frame, PictureGroup parent, AtomicInteger pos) {
+		DataDescriptionEntryNode act = dataDescriptionEntry[pos.get()];
+		DataDescriptionEntryNode next = null;
+		Picture pic = null;
+		
+		if (pos.get() + 1 < dataDescriptionEntry.length) {
+			next = dataDescriptionEntry[pos.get() + 1];
+		}
+		
+		int occurs = act.getOccurs() == null ? 1 : act.getOccurs().getOccurs();
+		int oldPos = pos.get();
+		for (int i = 1; i <= occurs; i++) {
+			act.setParent(parent);
+			act.setSubscript(act.getOccurs()==null?null:i);
+			pic = (Picture) act.executeGeneric(frame);
+			
+			pos.set(pos.get() + 1);
+			
+			while (pos.get() < dataDescriptionEntry.length && next.getLevel() > act.getLevel()) {
+				PictureGroup group = (PictureGroup) pic;
+				initializeMemory(frame, group, pos);
+				if (pos.get() < dataDescriptionEntry.length) {
+					next = dataDescriptionEntry[pos.get()];
+				}
+			}
+			
+			// Pos zurücksetzen, wenn Occurs noch nicht abgearbeitet ist
+			if(act.getOccurs() != null && i < occurs) {
+				pos.set(oldPos);
+			}
+		}
+	}
+	
 	public String getName() {
 		return name;
 	}

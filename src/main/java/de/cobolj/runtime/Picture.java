@@ -143,7 +143,7 @@ public abstract class Picture implements TruffleObject, Serializable {
 	public void setParent(PictureGroup parent) {
 		this.parent = parent;
 		if (parent != null) {
-			parent.add(this.name, this);
+			parent.add(this);
 		}
 	}
 

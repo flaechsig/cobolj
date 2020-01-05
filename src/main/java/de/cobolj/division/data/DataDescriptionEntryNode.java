@@ -4,11 +4,13 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.PictureNode;
+import de.cobolj.runtime.PictureGroup;
 
 @NodeInfo(shortName = "DataDescriptionEntry")
 public abstract class DataDescriptionEntryNode extends CobolNode {
 
 	protected final int level;
+
 	protected final String name;
 	/** Array-Definition für den Node */
 	protected final DataOccursClause occurs;
@@ -20,6 +22,11 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	protected DataDescriptionEntryNode dataDescPresessor;
 	@Child
 	protected PictureNode dataRedefinesClause;
+	protected PictureGroup parent;
+
+	protected Integer subscript;
+	protected static byte[] mem;
+	protected static int memPointer;
 
 	public DataDescriptionEntryNode(int level, String name, PictureNode dataRedefinesClause,
 			DataOccursClause dataOccursClause, Object value) {
@@ -72,9 +79,29 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	public String getName() {
 		return name;
 	}
+
+	public int getLevel() {
+		return level;
+	}
 	
 	@Override
 	public String toString() {
 		return this.getName();
+	}
+
+	public static void setMem(byte[] mem) {
+		DataDescriptionEntryNode.mem = mem;
+	}
+
+	public static void setMemPointer(int memPointer) {
+		DataDescriptionEntryNode.memPointer = memPointer;
+	}
+
+	public void setParent(PictureGroup parent) {
+		this.parent = parent;
+	}
+	
+	public void setSubscript(Integer subscript) {
+		this.subscript = subscript;
 	}
 }
