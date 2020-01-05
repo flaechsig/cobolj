@@ -21,7 +21,7 @@ public class WorkingStorageSectionNode extends DataDivisionSectionNode {
 
 	public Object executeGeneric(VirtualFrame frame) {
 		AtomicInteger pos = new AtomicInteger(0);
-		byte[] mem = new byte[1000];
+		byte[] mem = new byte[10000];
 
 		DataDescriptionEntryNode.setMem(mem);
 		DataDescriptionEntryNode.setMemPointer(0);
