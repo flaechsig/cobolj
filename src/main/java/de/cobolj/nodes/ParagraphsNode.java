@@ -12,7 +12,7 @@ import de.cobolj.parser.statement.nextsentence.NextSentenceExcetion;
  * 
  */
 @NodeInfo(shortName = "Paragraphs")
-public class ParagraphsNode extends CobolNode {
+public class ParagraphsNode extends StructureNode {
 	@Children
 	private final CobolNode[] paragraphOrSentence;
 

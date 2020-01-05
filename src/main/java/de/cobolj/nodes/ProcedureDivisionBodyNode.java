@@ -9,10 +9,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 public class ProcedureDivisionBodyNode extends CobolNode {
 	// FIXME: Prüfen, ob die Struktur der Knoten sinnvoll aufgebaut ist
 	@Children
-	private final CobolNode[] paragraphsOrProcedureSection;
+	private final StructureNode[] paragraphsOrProcedureSection;
 
-	public ProcedureDivisionBodyNode(Collection<CobolNode> paragraphsOrProcedureSection) {
-		this.paragraphsOrProcedureSection = paragraphsOrProcedureSection.toArray(new CobolNode[] {});
+	public ProcedureDivisionBodyNode(Collection<StructureNode> paragraphsOrProcedureSection) {
+		this.paragraphsOrProcedureSection = paragraphsOrProcedureSection.toArray(new StructureNode[] {});
 	}
 
 	@Override

@@ -2207,7 +2207,7 @@ procedureDivisionBody
 
 procedureSection
 :
-	procedureSectionHeader DOT_FS paragraphs
+	(sectionName SECTION integerLiteral?) DOT_FS paragraphs
 ;
 
 paragraphs
