@@ -2,7 +2,6 @@ package de.cobolj.nodes;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.cobolj.division.data.DataOccursClause;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.Picture9V;
 import de.cobolj.runtime.PictureA;
