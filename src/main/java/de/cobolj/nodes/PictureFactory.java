@@ -26,7 +26,7 @@ public class PictureFactory {
 		assert StringUtils.countMatches(picture, "CR") <= 1 : "CR darf maximal einmal im Picture-String auftreten";
 		assert StringUtils.countMatches(picture, "DB") <= 1 : "DB darf maximal einmal im Picture-String auftreten";
 		
-		picture = picture.toUpperCase();
+		picture = picture==null?null:picture.toUpperCase();
 		if (picture == null) {
 			return new PictureGroup(level, name);
 		} else if (StringUtils.containsOnly(picture, 'A')) {
