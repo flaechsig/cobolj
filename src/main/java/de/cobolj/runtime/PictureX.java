@@ -1,5 +1,10 @@
 package de.cobolj.runtime;
 
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
@@ -12,9 +17,14 @@ import de.cobolj.phrase.SizeOverflowException;
 @SuppressWarnings("serial")
 @MessageResolution(receiverType = PictureX.class)
 public class PictureX extends Picture implements Comparable<PictureX> {
+	private String format; 
 	
-	public PictureX(int level, String name, int size ) {
-		super(level, name, size);
+	public PictureX(int level, String name, String picture ) {
+		super(level, name, picture.replace("B", "").length());
+		
+		String tmpFormat = picture.replace("X", "%c");
+		tmpFormat = tmpFormat.replace("B", " ");
+		format = tmpFormat;
 	}
 
 	@Override
@@ -53,15 +63,16 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 	}
 
 	@Override
-	public Object getValue() {
+	public String getValue() {
 		byte[] value = new byte[size];
 		System.arraycopy(memory, memPointer, value, 0, size);
-		return new String(value);
+		String tmpValue = new String(value);
+		return String.format(format, ArrayUtils.toObject(tmpValue.toCharArray()));
 	}
 	
 	@Override
 	public String toString() {
-		return (String) getValue();
+		return getValue();
 	}
 
 	@Override

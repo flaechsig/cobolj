@@ -25,14 +25,15 @@ public class PictureFactory {
 		assert StringUtils.countMatches(picture, ".") <= 1 : ". darf maximal einmal im Picture-String auftreten";
 		assert StringUtils.countMatches(picture, "CR") <= 1 : "CR darf maximal einmal im Picture-String auftreten";
 		assert StringUtils.countMatches(picture, "DB") <= 1 : "DB darf maximal einmal im Picture-String auftreten";
-
+		
+		picture = picture.toUpperCase();
 		if (picture == null) {
 			return new PictureGroup(level, name);
 		} else if (StringUtils.containsOnly(picture, 'A')) {
 			return createAlphabeticPicuture(level, name, picture);
 		} else if (StringUtils.containsOnly(picture, '9', 'P', 'S', 'V', 'Z')) {
 			return createNumericPicture(level, name, picture);
-		} else if (StringUtils.containsOnly(picture, '9', 'A', 'X')) {
+		} else if (StringUtils.containsOnly(picture, '9', 'A', 'X', 'B')) {
 			return createAlphNumericPicuture(level, name, picture);
 		} else {
 			throw new RuntimeException("Not implemented");
@@ -46,7 +47,7 @@ public class PictureFactory {
 
 	private static Picture createAlphNumericPicuture(int level, String name, String picture) {
 		assert picture.length() < 256; // Maximale Lännge dieses Datentyps
-		return new PictureX(level, name, picture.length());
+		return new PictureX(level, name, picture);
 	}
 
 	private static Picture createNumericPicture(int level, String name, String picture) {
