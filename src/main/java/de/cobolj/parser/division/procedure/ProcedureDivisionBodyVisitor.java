@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.ProcedureDivisionBodyNode;
 import de.cobolj.nodes.StructureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;

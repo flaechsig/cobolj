@@ -28,7 +28,7 @@ public class ParagraphVisitor extends Cobol85BaseVisitor<ParagraphNode> {
 		List<SentenceNode> sentences = ctx.sentence().stream().map(sentence -> sentence.accept(new SentenceVisitor()))
 				.collect(Collectors.toList());
 
-		return new ParagraphNode(StartRuleVisitor.language, name, sentences);
+		return new ParagraphNode(name, sentences);
 	}
 
 }

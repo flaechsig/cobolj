@@ -2,12 +2,11 @@ package de.cobolj.statement.perform;
 
 import java.util.List;
 
-import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-import de.cobolj.CobolCallableNode;
 import de.cobolj.nodes.ExpressionNode;
+import de.cobolj.nodes.StructureNode;
 
 /**
  * Führt eine Liste von Paragraphen oder Sections aus, die im Rahmen einer
@@ -38,11 +37,12 @@ public class PerformProcedureStatementNode extends ExpressionNode {
 	 */
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		List<RootCallTarget> targets = CobolCallableNode.findFromTo(startFunction, endFunction);
-		for (RootCallTarget target : targets) {
-			target.call();
+		List<StructureNode> paragraphs = StructureNode.findFromTo(startFunction, endFunction);
+		Object last = null;
+		for (StructureNode p : paragraphs) {
+			last = p.executeGeneric(frame);
 		}
-		return null;
+		return last;
 	}
 
 }

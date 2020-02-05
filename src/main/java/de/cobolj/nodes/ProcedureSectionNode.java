@@ -11,19 +11,17 @@ import de.cobolj.parser.StartRuleVisitor;
 
 
 public class ProcedureSectionNode extends StructureNode {
-	private final RootCallTarget callTarget;
+	@Child
+	private ParagraphsNode paragraphs;
 
 	public ProcedureSectionNode(String sectionName, ParagraphsNode paragraphs) {
-		List<CobolNode> para = new ArrayList<CobolNode>();
-		para.add(paragraphs);
-
-		new CobolCallableNode(StartRuleVisitor.language, sectionName, para); 
-		this.callTarget = CobolCallableNode.findByName(sectionName);
+		PARAGRAPH_REGISTRY.put(sectionName.toUpperCase(), this);
+		this.paragraphs = paragraphs;
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		return callTarget.call();
+		return paragraphs.executeGeneric(frame);
 	}
 
 }

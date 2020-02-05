@@ -7,7 +7,6 @@ import de.cobolj.division.data.AssignClauseNode;
 import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.AssignClauseContext;
-import de.cobolj.parser.IdentifierVisitor;
 
 /**
  * assignClause : ASSIGN TO? ( DISK | DISPLAY | KEYBOARD | PORT | PRINTER |
@@ -31,7 +30,7 @@ public class AssignClauseVisitor extends Cobol85BaseVisitor<AssignClauseNode> {
 		notImplemented(ctx.VIRTUAL());
 		
 		ExpressionNode node= null;
-		node = accept(node, ctx.assignmentName, IdentifierVisitor.INSTANCE);
+		node = accept(node, ctx.assignmentName, new AssignmentNameVisitor() );
 		node = accept(node, ctx.literal(), LiteralVisitor.INSTANCE);
 
 		return new AssignClauseNode(node);

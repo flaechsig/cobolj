@@ -20,7 +20,6 @@ public class PerformOneTimeNode extends PerformTypeNode {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
-		perform.executeGeneric(frame);
-		return null;
+		return perform.executeGeneric(frame);
 	}
 }

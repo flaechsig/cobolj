@@ -54,4 +54,9 @@ public class PictureNode extends ExpressionNode{
 	public String getSlot() {
 		return slot;
 	}
+	
+	@Override
+	public String toString()  {
+		return "PictureNode("+slot+", "+subscript+")";
+	}
 }
