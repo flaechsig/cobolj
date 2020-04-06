@@ -58,7 +58,10 @@ public abstract class CobolBaseTest {
 
 			// Error-Message
 			InputStream errorStream = this.getClass().getResourceAsStream(input.get(0) + ".err");
-			String error = IOUtils.toString(errorStream, Charset.defaultCharset());
+			String error = "";
+			if (errorStream != null) {
+				error = IOUtils.toString(errorStream, Charset.defaultCharset());
+			}
 
 			InputStream inputStream = this.getClass().getResourceAsStream(input.get(0) + ".in");
 			if (inputStream == null) {
@@ -84,7 +87,7 @@ public abstract class CobolBaseTest {
 		packageName = packageName.substring(0, idx);
 		packageName = packageName.replace('.', '/');
 		String startWith = this.getClass().getSimpleName();
-		startWith = startWith.substring(0, startWith.length()-4).toLowerCase();
+		startWith = startWith.substring(0, startWith.length() - 4).toLowerCase();
 
 		result = getResourceFiles(packageName, startWith);
 		return result.toArray();
