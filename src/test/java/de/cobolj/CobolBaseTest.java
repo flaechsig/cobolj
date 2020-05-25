@@ -74,6 +74,7 @@ public abstract class CobolBaseTest {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
+		CobolExec.unregisterAll();
 	}
 
 	/**

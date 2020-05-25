@@ -78,10 +78,10 @@ public class CallFromJavaTest {
 	public void testCallMitMehrParametern() {
 		CobolExec.register("/de/cobolj/statement/call/call-4.cob");
 		String vorname = "Hans";
-		String nachname = "Flächsig";
+		String nachname = "Flachsig";
 		Integer geburtsjahr = 1969;
 		CobolExec.call(System.in, out, "HELLO-WORLD", value(vorname), value(nachname), value(geburtsjahr));
-		Assert.assertEquals(out.toString(), "Hans      Flächsig  01969" + System.lineSeparator());
+		Assert.assertEquals(out.toString(), "Hans      Flachsig  01969" + System.lineSeparator());
 	}
 	
 	@Test

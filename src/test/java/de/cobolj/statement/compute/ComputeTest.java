@@ -1,6 +1,11 @@
 package de.cobolj.statement.compute;
 
 import de.cobolj.CobolBaseTest;
+import org.testng.annotations.DataProvider;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Testfälle für das COMPUTE Statement

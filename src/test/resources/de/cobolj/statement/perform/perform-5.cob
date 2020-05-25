@@ -12,7 +12,7 @@ PROCEDURE DIVISION.
         Perform 003-para thru 005-para 2 times.
         
     002-para.
-        display "002-para"
+        display "002-para".
         Stop Run.
         
     003-para.

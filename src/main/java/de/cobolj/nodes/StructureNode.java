@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 public abstract class StructureNode extends CobolNode {
 
 	public final static Map<String, StructureNode> PARAGRAPH_REGISTRY = new HashMap<>();
-	
+
 
 	public static List<StructureNode> findFromTo(String startFunction, String endFunction) {
 		List<StructureNode> result = new ArrayList<>();

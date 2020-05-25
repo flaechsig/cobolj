@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -21,7 +22,7 @@ import de.cobolj.CobolExec.By.Type;
 
 public class CobolExec {
 	/** Kennzeichnung, ob der Aufruf für ein Main- oder Sub-Programm erfolgte */
-	public enum ProgramType { MAIN, SUB };
+	public enum ProgramType { MAIN, SUB }
 	
 	/** Speicherplatz für die zu übergebenden Parameter */
 	public static final String USING_HOST = "usingHost";
@@ -38,7 +39,7 @@ public class CobolExec {
 	public static class By {
 		enum Type {
 			REFERENCE, VALUE
-		};
+		}
 
 		private final Type type;
 		private Object value;
@@ -68,8 +69,10 @@ public class CobolExec {
 			if (type == Type.VALUE) {
 				return;
 			}
-			if (obj instanceof BigDecimal) {
-				BigDecimal number = (BigDecimal) obj;
+
+
+			if (NumberUtils.isCreatable(obj.toString())) {
+				BigDecimal number = NumberUtils.createBigDecimal(obj.toString());
 				if (Integer.class == value.getClass()) {
 					value = number.intValue();
 				} else if (Long.class == value.getClass()) {
@@ -81,6 +84,8 @@ public class CobolExec {
 				} else {
 					value = number;
 				}
+			} else {
+				value = obj.toString();
 			}
 		}
 
@@ -126,7 +131,7 @@ public class CobolExec {
 	}
 
 	/**
-	 * @see #call(InputStream, OutputStream, String, Object...)
+	 * @see #call(InputStream, OutputStream, String, By...) 
 	 */
 	public static void callByValue(String name, Object... using) {
 		List<By> byValue = new ArrayList<>();
@@ -167,9 +172,6 @@ public class CobolExec {
 	 *              Javatypen mit Pictures nicht kompatibel sind muss sichergestellt
 	 *              sein, dass die übergebenen Objekte in den Ziel-Pictures
 	 *              augenommen werden können.
-	 * @return Bei dieser Aufrufart werden alle <code>using</using> als Referenz
-	 *         übergeben. D.h. das Cobol-Subprogramm ändert direkt die Werte und
-	 *         nach der Rückkehr stehen die neuen Werte in den Parametern.
 	 * @throws RuntimeException, wenn die <code>using</code> nicht zu den Picture
 	 *                           der LINKAGE SEKTION kompatibel sind.
 	 * 
@@ -219,9 +221,8 @@ public class CobolExec {
 			if (is == null) {
 				throw new RuntimeException("Angegebenes Cobol-Programm existiert nicht");
 			}
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			// FIXME: Ressourcen aufräumen
-			try {
+
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 				String line;
 				String progName = null;
 				while ((line = br.readLine()) != null) {
@@ -263,9 +264,13 @@ public class CobolExec {
 										new InputStreamReader(CobolExec.class.getResourceAsStream(program)), progName)
 										.build());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	public static void unregisterAll() {
+		CobolExec.PROGRAM_MAP.clear();
+
 	}
 }

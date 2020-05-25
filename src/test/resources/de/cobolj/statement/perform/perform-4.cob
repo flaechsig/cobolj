@@ -1,6 +1,6 @@
 
 IDENTIFICATION DIVISION.
-PROGRAM-ID. HELLO.
+PROGRAM-ID. Perform4.
 
 DATA DIVISION.
    WORKING-STORAGE SECTION.
@@ -12,7 +12,7 @@ PROCEDURE DIVISION.
         Perform 003-para thru 005-para.
         
     002-para.
-        display "002-para"
+        display "002-para".
         Stop Run.
         
     003-para.

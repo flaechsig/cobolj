@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.oracle.truffle:truffle-dsl-processor:1.0.0-rc7">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/truffle/truffle-dsl-processor/1.0.0-rc7/truffle-dsl-processor-1.0.0-rc7.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/truffle/truffle-dsl-processor/1.0.0-rc7/truffle-dsl-processor-1.0.0-rc7-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/truffle/truffle-dsl-processor/1.0.0-rc7/truffle-dsl-processor-1.0.0-rc7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

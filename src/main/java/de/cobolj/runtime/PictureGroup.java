@@ -21,33 +21,26 @@ public class PictureGroup extends Picture {
 	}
 
 	@Override
-	public ForeignAccess getForeignAccess() {
-		return PictureGroupForeign.ACCESS;
-	}
-
-	@Override
 	public void setValue(Object object) {
-		setValue(object, false);
+		PictureGroup group = (PictureGroup) object;
+		byte[] tmpArray = new byte[getSize()];
+		System.arraycopy(group.getMemory(), group.getMemPointer(), tmpArray, 0, Math.min(group.getSize(), getSize()));
+		setValue(tmpArray);
 	}
 
 	@Override
 	public void setValue(Object object, boolean sizeCheck) throws SizeOverflowException {
-		PictureGroup other = (PictureGroup) object;
-		
 		clear();
-		for(Picture otherPicture : other.children) {
-			for(Picture childPicture : children) {
-				if(otherPicture.name.equals(childPicture.getName()))  {
-					childPicture.setValue(otherPicture.getValue());
-					break;
-				}
-			}
-		}
+		setValue(object, false);
 	}
 
 	@Override
-	public Collection<Picture> getValue() {
-		return children;
+	public String getValue() {
+		StringBuffer buf = new StringBuffer();
+		for (Picture pic : children) {
+			buf.append(pic.getValue());
+		}
+		return buf.toString();
 	}
 
 	/**
@@ -65,16 +58,12 @@ public class PictureGroup extends Picture {
 
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (Picture pic : getValue()) {
-			buf.append(pic.toString());
-		}
-		return buf.toString();
+		return getValue();
 	}
 
 	@Override
 	public void clear() {
-		for(Picture pic : getValue()) {
+		for(Picture pic : children) {
 			pic.clear();
 		}
 	}
@@ -85,7 +74,7 @@ public class PictureGroup extends Picture {
 	@Override
 	public int parse(InputStream is) {
 		int result = 0;
-		for(Picture pic : getValue()) {
+		for(Picture pic : children) {
 			int readSize = pic.parse(is);
 			if(readSize == -1) {
 				result = -1;
@@ -108,5 +97,10 @@ public class PictureGroup extends Picture {
 			result += pic.getSize();
 		}
 		return result;
+	}
+
+	@Override
+	public ForeignAccess getForeignAccess() {
+		return PictureGroupForeign.ACCESS;
 	}
 }

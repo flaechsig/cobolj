@@ -15,7 +15,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	/** Array-Definition für den Node */
 	protected final DataOccursClause occurs;
 	/** Initialwert des Node */
-	protected final Object value;
+	protected final CobolNode value;
 	/** Übergeordnete Node (mit kleineren Level) */
 	protected DataDescriptionEntryNode dataDescParent;
 	/** Vorgänger-Node auf selber Ebene */
@@ -29,7 +29,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	protected static int memPointer;
 
 	public DataDescriptionEntryNode(int level, String name, PictureNode dataRedefinesClause,
-			DataOccursClause dataOccursClause, Object value) {
+			DataOccursClause dataOccursClause, CobolNode value) {
 		this.level = level;
 		this.name = name;
 		this.dataRedefinesClause = dataRedefinesClause;
@@ -68,7 +68,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 		return name + (dataDescParent != null ? (" OF " + dataDescParent.getQualifiedName()) : "");
 	}
 
-	public Object getValue() {
+	public CobolNode getValue() {
 		return value;
 	}
 

@@ -3,6 +3,7 @@ package de.cobolj.division.data;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import de.cobolj.nodes.CobolNode;
 import de.cobolj.nodes.PictureFactory;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.Picture;
@@ -14,7 +15,7 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 	private final String pictureString;
 
 	public DataDescriptionEntryFormat1Node(int level, String name, String pictureString,
-			PictureNode dataRedefinesClause, DataOccursClause occurs, Object value) {
+			PictureNode dataRedefinesClause, DataOccursClause occurs, CobolNode value) {
 		super(level, name, dataRedefinesClause, occurs, value);
 		this.pictureString = pictureString;
 	}
@@ -36,7 +37,7 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 				pic.clear();
 			}
 			if (getValue() != null) {
-				pic.setValue(getValue());
+				pic.setValue(getValue().executeGeneric(frame));
 			}
 		}
 

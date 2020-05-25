@@ -14,6 +14,7 @@ import com.oracle.truffle.api.frame.FrameUtil;
 
 import de.cobolj.division.data.DataDescriptionEntryNode;
 import de.cobolj.division.data.FileDescriptionEntryNode;
+import de.cobolj.nodes.StructureNode;
 import de.cobolj.runtime.AmbigousPicture;
 import de.cobolj.runtime.Picture;
 import de.cobolj.runtime.PictureGroup;
@@ -36,6 +37,8 @@ public class CobolContext {
 	private Map<String, List<Picture>> records = new HashMap<>();
 	/** Name des Cobol-Programms */
 	private String programName;
+	/** Registry für alle Paragraphen des Programms */
+	public final Map<String, StructureNode> paragraphRegistry = new HashMap<>();
 
 	public CobolContext(InputStream in, OutputStream out) {
 		assert in != null : "in darf nicht null sein";
@@ -225,6 +228,8 @@ public class CobolContext {
 			frame.setObject(slot, result);
 		}
 		return result;
-		
 	}
+
+
+
 }

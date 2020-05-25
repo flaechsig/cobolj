@@ -31,7 +31,6 @@ public abstract class CobolNode extends Node {
 	 * @param frame Frame, in dem die Methode ausgeführt wird
 	 * @param expression Ausdruck, aus dem der Wert ermittelt wird
 	 * @return BigDecimal-Wert, der über den Ausdruck beschrieben wird.
-	 * @throws RuntimeExceoption, wenn aus der Expression kein numerischer Wert erzeugt werden kann.
 	 */
 	protected BigDecimal valueOf(VirtualFrame frame, ExpressionNode expression) {
 		Object value = expression.executeGeneric(frame);

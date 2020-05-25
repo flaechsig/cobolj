@@ -23,7 +23,6 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 		format = tmpFormat;
 	}
 
-	@Override
 	public ForeignAccess getForeignAccess() {
 		return PictureXForeign.ACCESS;
 	}
@@ -49,7 +48,7 @@ public class PictureX extends Picture implements Comparable<PictureX> {
 	}
 
 	/**
-	 * Prüft, ob das übergebene Object ebenfalls vom Typ PictureA ist
+	 * Prüft, ob das übergebene Object ebenfalls vom Typ PictureX ist
 	 * 
 	 * @param obj Zu prüfendes Objekt
 	 * @return true, wenn das übergebene Objekt auch Pic9 ist.

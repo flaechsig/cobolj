@@ -39,14 +39,14 @@ public abstract class Picture implements TruffleObject, Serializable {
 	private boolean redefined = false;
 
 	/**
-	 * @see {{@link #Pic9(short, boolean, long)}
+	 * @see {{@link #Picture9(short, boolean, long)}
 	 */
 	public Picture(int level, String name, int size) {
 		this(level, name, size, null);
 	}
 
 	/**
-	 * @see {{@link #Pic9(short, boolean, long)}
+	 * @see {{@link #Picture9(short, boolean, long)}
 	 */
 	public Picture(int level, String name, int size, Integer subscript) {
 		this.level = level;
@@ -61,7 +61,19 @@ public abstract class Picture implements TruffleObject, Serializable {
 	 * 
 	 * @param object Zu setzender Wert.
 	 */
-	public abstract void setValue(Object object);
+	public  void setValue(Object object) {
+		byte[] tmpArray = new byte[size];
+		System.arraycopy(object.toString().getBytes(),0, tmpArray, 0, size);
+		setValue(tmpArray);
+	}
+
+	/** Setzt den übergebenen Wert in den Memory-Bereich des Datenfeldes
+	 *
+	 * @param value Byte-Array für den Wert des Datenfeldes
+	 */
+	public void setValue(byte[] value) {
+		System.arraycopy(value, 0, memory, memPointer, getSize());
+	}
 
 	/**
 	 * Setzt den Wert eines Pictures auf den übergebenen Wert. Hierbei wird ein
