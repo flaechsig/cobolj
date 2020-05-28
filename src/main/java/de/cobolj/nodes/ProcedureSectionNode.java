@@ -11,12 +11,18 @@ import de.cobolj.parser.StartRuleVisitor;
 
 
 public class ProcedureSectionNode extends StructureNode {
+	private final String name;
 	@Child
 	private ParagraphsNode paragraphs;
 
 	public ProcedureSectionNode(String sectionName, ParagraphsNode paragraphs) {
-		PARAGRAPH_REGISTRY.put(sectionName.toUpperCase(), this);
+		this.name = sectionName;
 		this.paragraphs = paragraphs;
+	}
+
+	public void register() {
+		getContext().registerParagraph(name, this);
+		paragraphs.register();
 	}
 
 	@Override

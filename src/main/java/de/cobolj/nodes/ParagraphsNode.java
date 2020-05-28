@@ -1,6 +1,7 @@
 package de.cobolj.nodes;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -14,18 +15,29 @@ import de.cobolj.parser.statement.nextsentence.NextSentenceExcetion;
 @NodeInfo(shortName = "Paragraphs")
 public class ParagraphsNode extends StructureNode {
 	@Children
-	private final CobolNode[] paragraphOrSentence;
+	private final SentenceNode[] sentences;
+	@Children
+	private final ParagraphNode[] paragraphs;
 
-	public ParagraphsNode(Collection<? extends StructureNode> paragraphOrSentence) {
-		this.paragraphOrSentence = paragraphOrSentence.toArray(new CobolNode[] {});
+	public ParagraphsNode(List<SentenceNode> sentenceList, List<ParagraphNode> paragraphList) {
+		this.sentences = sentenceList.toArray(new SentenceNode[] {});
+		this.paragraphs = paragraphList.toArray(new ParagraphNode[] {});
 	}
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		Object last = null;
-		for (CobolNode childNode : paragraphOrSentence) {
+		for (SentenceNode sentence : sentences) {
 			try {
-				last = childNode.executeGeneric(frame);
+				last = sentence.executeGeneric(frame);
+			} catch (NextSentenceExcetion e) {
+				continue;
+			}
+		}
+
+		for (ParagraphNode paragraph : paragraphs) {
+			try {
+				last = paragraph.executeGeneric(frame);
 			} catch (NextSentenceExcetion e) {
 				continue;
 			}
@@ -33,4 +45,9 @@ public class ParagraphsNode extends StructureNode {
 		return last;
 	}
 
+	public void register() {
+		for( ParagraphNode paragraph : paragraphs) {
+			paragraph.register();
+		}
+	}
 }

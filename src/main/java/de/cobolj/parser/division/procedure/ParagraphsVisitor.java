@@ -3,7 +3,9 @@ package de.cobolj.parser.division.procedure;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.nodes.ParagraphNode;
 import de.cobolj.nodes.ParagraphsNode;
+import de.cobolj.nodes.SentenceNode;
 import de.cobolj.nodes.StructureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
@@ -21,16 +23,14 @@ public class ParagraphsVisitor extends Cobol85BaseVisitor<ParagraphsNode> {
 	@Override
 	public ParagraphsNode visitParagraphs(Cobol85Parser.ParagraphsContext ctx) {
 		SentenceVisitor visitor = new SentenceVisitor();
-		List<StructureNode> paragraphOrSentence = ctx.sentence()
+		List<SentenceNode> sentenceList = ctx.sentence()
 			.stream()
 			.map(sentence -> sentence.accept(visitor))
 			.collect(Collectors.toList());
-		paragraphOrSentence.addAll(
-				ctx.paragraph()
+		List<ParagraphNode> paragraphList =	ctx.paragraph()
 					.stream()
 					.map(para -> para.accept(new ParagraphVisitor()))
-					.collect(Collectors.toList())
-				);
-		return new ParagraphsNode(paragraphOrSentence);
+					.collect(Collectors.toList());
+		return new ParagraphsNode(sentenceList, paragraphList);
 	}
 }

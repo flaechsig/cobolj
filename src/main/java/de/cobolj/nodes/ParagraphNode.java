@@ -18,11 +18,12 @@ import com.oracle.truffle.api.nodes.NodeInfo;
  */
 @NodeInfo(shortName = "Paragraph")
 public class ParagraphNode extends StructureNode {
+    private final String name;
 	@Children
 	private final SentenceNode[] sentences;
 	
 	public ParagraphNode(String name, List<SentenceNode> sentences ) {
-		PARAGRAPH_REGISTRY.put(name.toUpperCase(), this);
+	    this.name = name;
 		this.sentences = sentences.toArray(new SentenceNode[] {});
 	}
 
@@ -34,4 +35,8 @@ public class ParagraphNode extends StructureNode {
 		}
 		return last;
 	}
+
+    public void register() {
+	    getContext().registerParagraph(name, this);
+    }
 }

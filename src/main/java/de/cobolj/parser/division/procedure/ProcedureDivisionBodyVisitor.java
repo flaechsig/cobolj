@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.cobolj.nodes.ParagraphsNode;
 import de.cobolj.nodes.ProcedureDivisionBodyNode;
+import de.cobolj.nodes.ProcedureSectionNode;
 import de.cobolj.nodes.StructureNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
@@ -22,12 +24,11 @@ public class ProcedureDivisionBodyVisitor extends Cobol85BaseVisitor<ProcedureDi
 
 	@Override
 	public ProcedureDivisionBodyNode visitProcedureDivisionBody(Cobol85Parser.ProcedureDivisionBodyContext ctx) {
-		List<StructureNode> paragraphsOrProcedureSection = new ArrayList<>();
-		paragraphsOrProcedureSection.add(ParserHelper.accept(ctx.paragraphs(), new ParagraphsVisitor()));
+		ParagraphsNode paragraphs = ParserHelper.accept(ctx.paragraphs(), new ParagraphsVisitor());
 
-		paragraphsOrProcedureSection.addAll(ctx.procedureSection().stream()
+		List<ProcedureSectionNode> sectionNodes = new ArrayList<>(ctx.procedureSection().stream()
 				.map(para -> para.accept(new ProcedureSectionVisitor())).collect(Collectors.toList()));
 
-		return new ProcedureDivisionBodyNode(paragraphsOrProcedureSection);
+		return new ProcedureDivisionBodyNode(paragraphs, sectionNodes);
 	}
 }

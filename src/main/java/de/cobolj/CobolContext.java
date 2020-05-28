@@ -86,10 +86,6 @@ public class CobolContext {
 		this.fileDescriptor.add(fileDescriptionEntryNode);
 	}
 
-//	public void putDataDescriptionEntry(Frame frame, DataDescriptionEntryNode entry) {
-//		putPicture(frame, entry.getPicture(), entry.getOccurs());
-//	}
-
 	/**
 	 * Fügt ein Picture dem Datenspeicher hinzu. Dabei werden ggf. mehrere Slots
 	 * angelegt, um die unterschiedlichen Zugriffspfade abzubilden. Dabei ist es
@@ -98,7 +94,7 @@ public class CobolContext {
 	 * quitiert wird.
 	 * 
 	 * @param frame
-	 * @param pic
+	 * @param picture
 	 */
 	public void putPicture(Frame frame, Picture picture) {
 		assert frame != null : "frame darf nicht null sein";
@@ -176,7 +172,7 @@ public class CobolContext {
 	}
 
 	/**
-	 * @see #getPicture(Frame, String, int).
+	 * @see #getPicture(Frame, String, Number...).
 	 * 
 	 *      Subscript wird hierbei mit 1 belegt.
 	 * 
@@ -230,6 +226,17 @@ public class CobolContext {
 		return result;
 	}
 
+    /** Registriert einen Paragraphen im Context
+     *
+     * @param name Name des Paragraphen
+     * @param node Code des Paragraphen
+     */
+    public void registerParagraph(String name, StructureNode node) {
+	    this.paragraphRegistry.put(name.toUpperCase(), node);
+    }
 
 
+	public Map<String, StructureNode> getParagraphRegistry() {
+    	return paragraphRegistry;
+	}
 }
