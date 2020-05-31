@@ -1,10 +1,7 @@
 package de.cobolj.division.environtment;
 
-import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
-
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-
 import de.cobolj.division.environment.ConfigurationSectionNode;
 import de.cobolj.division.environment.SpecialNamesParagraphNode;
 import de.cobolj.nodes.CobolNode;
@@ -29,9 +26,16 @@ public class EnvironmentDivisionBodyNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		Object result = null;
-		result = excecuteGeneric(configurationSection, result, frame);
-		result = excecuteGeneric(specialNamesParagraph, result, frame);
-		result = excecuteGeneric(inputOutputSection, result, frame);
+		if(configurationSection != null) {
+			result = configurationSection.executeGeneric(frame);
+		}
+		if(specialNamesParagraph!=null) {
+			result = specialNamesParagraph.executeGeneric(frame);
+		}
+		if(inputOutputSection!=null) {
+			inputOutputSection.executeGeneric(frame);
+		}
+
 		return null;
 	}
 

@@ -56,17 +56,19 @@ public class StatementVisitor extends Cobol85BaseVisitor<StatementNode> {
 				"de.cobolj.parser.statement."+statementPackage+"stmt.",
 				"de.cobolj.parser."
 		};
+		String fullName = "";
 		try {
 			Class visitorClass = null;
 			for(String packageName : packages) {
 			  try {
-				visitorClass = Class.forName(packageName+visitorName);
+			  	fullName = packageName.toLowerCase()+visitorName;
+				visitorClass = Class.forName(fullName);
 		      } catch (ClassNotFoundException e){}
 			}
 			visitor = (Cobol85BaseVisitor<?>) visitorClass.newInstance();
 			return (StatementNode) ctx2.accept(visitor);
 		} catch (NullPointerException | InstantiationException | IllegalAccessException e) {
-			throw new RuntimeException("Unbekanntes Statement: " + statementName, e);
+			throw new RuntimeException("Unbekanntes Statement: " + statementName + "("+fullName+")", e);
 		}
 	}
 }

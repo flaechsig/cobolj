@@ -1,11 +1,11 @@
 package de.cobolj.nodes;
 
-import java.util.List;
-
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-
 import de.cobolj.statement.StatementNode;
+import de.cobolj.statement.gotostmt.GotoException;
+
+import java.util.List;
 
 /**
  * Ansammlung von Statements, die ausgeführt werden. Diese Klasse ist damit sehr ähnlich zu SentenceNode.
@@ -17,14 +17,14 @@ import de.cobolj.statement.StatementNode;
 public class BlockNode extends StructureNode {
 	
 	@Children
-	protected final StatementNode statements[];
+	protected final StatementNode[] statements;
 	
 	public BlockNode(List<StatementNode> statements) {
 		this.statements = statements.toArray(new StatementNode[] {});
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Object executeGeneric(VirtualFrame frame) throws GotoException {
 		for(StatementNode stmt : statements) {
 			stmt.executeGeneric(frame);
 		}

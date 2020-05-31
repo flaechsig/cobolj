@@ -2,6 +2,7 @@ package de.cobolj.statement.string;
 
 import java.util.List;
 
+import de.cobolj.statement.gotostmt.GotoException;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -35,7 +36,7 @@ public class StringStatementNode extends StatementNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Object executeGeneric(VirtualFrame frame) throws GotoException {
 		StringBuffer buf = new StringBuffer();
 		
 		NumericPicture pointer = null;

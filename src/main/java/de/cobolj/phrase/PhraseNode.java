@@ -7,6 +7,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
 import de.cobolj.statement.StatementNode;
+import de.cobolj.statement.gotostmt.GotoException;
 
 /**
  * Eine Instanz dieser Klasse ist bei arithmetischen Funktionen optional und
@@ -30,7 +31,7 @@ public class PhraseNode extends CobolNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Object executeGeneric(VirtualFrame frame) throws GotoException {
 		Object last = null;
 		for (StatementNode stmt : statements) {
 			last = stmt.executeGeneric(frame);

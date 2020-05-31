@@ -7,6 +7,7 @@ import de.cobolj.nodes.ParagraphNode;
 import de.cobolj.nodes.SentenceNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser.ParagraphContext;
+import de.cobolj.parser.ParserHelper;
 import de.cobolj.parser.StartRuleVisitor;
 
 /**
@@ -20,9 +21,7 @@ public class ParagraphVisitor extends Cobol85BaseVisitor<ParagraphNode> {
 
 	@Override
 	public ParagraphNode visitParagraph(ParagraphContext ctx) {
-		if (ctx.alteredGoTo() != null) {
-			throw new RuntimeException("altered GO TO not supported yet (or ever)");
-		}
+		ParserHelper.notImplemented(ctx.alteredGoTo());
 
 		String name = ctx.paragraphName().accept(new ParagraphNameVisitor());
 		List<SentenceNode> sentences = ctx.sentence().stream().map(sentence -> sentence.accept(new SentenceVisitor()))

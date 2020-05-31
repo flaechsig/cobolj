@@ -4,6 +4,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureFactory;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.Picture;
@@ -15,7 +16,7 @@ public class DataDescriptionEntryFormat1Node extends DataDescriptionEntryNode {
 	private final String pictureString;
 
 	public DataDescriptionEntryFormat1Node(int level, String name, String pictureString,
-			PictureNode dataRedefinesClause, DataOccursClause occurs, CobolNode value) {
+			PictureNode dataRedefinesClause, DataOccursClause occurs, ExpressionNode value) {
 		super(level, name, dataRedefinesClause, occurs, value);
 		this.pictureString = pictureString;
 	}
