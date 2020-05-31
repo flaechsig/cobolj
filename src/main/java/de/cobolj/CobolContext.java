@@ -3,10 +3,7 @@ package de.cobolj;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.oracle.truffle.api.frame.Frame;
 import com.oracle.truffle.api.frame.FrameSlot;
@@ -38,7 +35,7 @@ public class CobolContext {
 	/** Name des Cobol-Programms */
 	private String programName;
 	/** Registry für alle Paragraphen des Programms */
-	public final Map<String, StructureNode> paragraphRegistry = new HashMap<>();
+	public final Map<String, StructureNode> paragraphRegistry = new LinkedHashMap<>();
 
 	public CobolContext(InputStream in, OutputStream out) {
 		assert in != null : "in darf nicht null sein";

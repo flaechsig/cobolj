@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import de.cobolj.parser.statement.nextsentence.NextSentenceExcetion;
+import de.cobolj.statement.gotostmt.GotoException;
 
 /**
  * Diese Klasse bildet einen einzelnen Paragraphen eines Cobol-Programms ab.
@@ -18,7 +20,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
  */
 @NodeInfo(shortName = "Paragraph")
 public class ParagraphNode extends StructureNode {
-    private final String name;
+	private final String name;
 	@Children
 	private final SentenceNode[] sentences;
 	
@@ -28,10 +30,24 @@ public class ParagraphNode extends StructureNode {
 	}
 
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	@Override
+	public Object executeGeneric(VirtualFrame frame) throws GotoException{
 		Object last = null;
 		for (SentenceNode s : sentences) {
-			last = s.executeGeneric(frame);
+			try {
+				last = s.executeGeneric(frame);
+			} catch (NextSentenceExcetion e) {
+				continue;
+			}
 		}
 		return last;
 	}

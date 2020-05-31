@@ -29,12 +29,20 @@ public class ProgramUnitNode extends CobolNode {
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
 		Object result = null;
-		
-		result = NodeHelper.excecuteGeneric(identificationDivision, result, frame);
-		result = NodeHelper.excecuteGeneric(dataDivision, result, frame);
-		result = NodeHelper.excecuteGeneric(environmentDivision, result, frame);
-		result = NodeHelper.excecuteGeneric(procedureDivision, result, frame);
-		
+
+		if(identificationDivision!=null) {
+			result = identificationDivision.executeGeneric(frame);
+		}
+		if(dataDivision != null) {
+			result = dataDivision.executeGeneric(frame);
+		}
+		if(environmentDivision!=null) {
+			result = environmentDivision.executeGeneric(frame);
+		}
+		if(procedureDivision != null) {
+			result = procedureDivision.executeGeneric(frame);
+		}
+
 		return result;
 	}
 }

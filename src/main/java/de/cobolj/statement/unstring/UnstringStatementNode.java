@@ -1,18 +1,16 @@
 package de.cobolj.statement.unstring;
 
-import static de.cobolj.nodes.NodeHelper.excecuteGeneric;
-
-import java.util.List;
-
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.parser.statement.unstring.UnstringStatementVisitor;
 import de.cobolj.phrase.PhraseNode;
 import de.cobolj.runtime.NumericPicture;
 import de.cobolj.runtime.Picture;
 import de.cobolj.statement.StatementNode;
+import de.cobolj.statement.gotostmt.GotoException;
+
+import java.util.List;
 
 /**
  * @see UnstringStatementVisitor
@@ -67,7 +65,7 @@ public class UnstringStatementNode extends StatementNode {
 	 * und zugewiesen.
 	 */
 	@Override
-	public StatementNode executeGeneric(VirtualFrame frame) {
+	public StatementNode executeGeneric(VirtualFrame frame) throws GotoException {
 		for (UnstringDelimitNode delimit : delimiters) {
 			// initialisierung
 			delimit.executeGeneric(frame);
@@ -93,9 +91,15 @@ public class UnstringStatementNode extends StatementNode {
 		quelle = quelle.substring(position);
 
 		for (int i=0; i<dataReceivingField.length; i++) {
-			Picture receiving = (Picture) excecuteGeneric(dataReceivingField[i], frame);
-			Picture delimiter = (Picture) excecuteGeneric(delimiterReceivingField[i], frame);
-			Picture counter = (Picture) excecuteGeneric(dataCountField[i], frame);
+			Picture receiving = (Picture) dataReceivingField[i].executeGeneric(frame);
+			Picture delimiter = null;
+			if(delimiterReceivingField[i]!=null) {
+				delimiter = (Picture) delimiterReceivingField[i].executeGeneric(frame);
+			}
+			Picture counter = null;
+			if(dataCountField[i]!=null) {
+				counter = (Picture) dataCountField[i].executeGeneric(frame);
+			}
 			
 			int size;
 			if(delimiters.length==0) {

@@ -1,10 +1,13 @@
 package de.cobolj.division.data;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 import de.cobolj.nodes.CobolNode;
+import de.cobolj.nodes.ExpressionNode;
 import de.cobolj.nodes.PictureNode;
 import de.cobolj.runtime.PictureGroup;
+import de.cobolj.statement.gotostmt.GotoException;
 
 @NodeInfo(shortName = "DataDescriptionEntry")
 public abstract class DataDescriptionEntryNode extends CobolNode {
@@ -15,7 +18,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	/** Array-Definition für den Node */
 	protected final DataOccursClause occurs;
 	/** Initialwert des Node */
-	protected final CobolNode value;
+	protected final ExpressionNode value;
 	/** Übergeordnete Node (mit kleineren Level) */
 	protected DataDescriptionEntryNode dataDescParent;
 	/** Vorgänger-Node auf selber Ebene */
@@ -29,7 +32,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 	protected static int memPointer;
 
 	public DataDescriptionEntryNode(int level, String name, PictureNode dataRedefinesClause,
-			DataOccursClause dataOccursClause, CobolNode value) {
+			DataOccursClause dataOccursClause, ExpressionNode value) {
 		this.level = level;
 		this.name = name;
 		this.dataRedefinesClause = dataRedefinesClause;
@@ -68,7 +71,7 @@ public abstract class DataDescriptionEntryNode extends CobolNode {
 		return name + (dataDescParent != null ? (" OF " + dataDescParent.getQualifiedName()) : "");
 	}
 
-	public CobolNode getValue() {
+	public ExpressionNode getValue() {
 		return value;
 	}
 

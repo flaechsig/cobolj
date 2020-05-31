@@ -1,6 +1,8 @@
 package de.cobolj.parser.division.procedure;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import de.cobolj.nodes.ParagraphNode;
@@ -22,15 +24,22 @@ public class ParagraphsVisitor extends Cobol85BaseVisitor<ParagraphsNode> {
 
 	@Override
 	public ParagraphsNode visitParagraphs(Cobol85Parser.ParagraphsContext ctx) {
+		List<ParagraphNode> paragraphList = new ArrayList<>();
 		SentenceVisitor visitor = new SentenceVisitor();
+
+		// Pseudo-Paragraph für die ersten Sentences
 		List<SentenceNode> sentenceList = ctx.sentence()
 			.stream()
 			.map(sentence -> sentence.accept(visitor))
 			.collect(Collectors.toList());
-		List<ParagraphNode> paragraphList =	ctx.paragraph()
+		if(!sentenceList.isEmpty()) {
+			paragraphList.add(new ParagraphNode("TMP_"+ new Random().nextInt(), sentenceList));
+		}
+
+		paragraphList.addAll(ctx.paragraph()
 					.stream()
 					.map(para -> para.accept(new ParagraphVisitor()))
-					.collect(Collectors.toList());
-		return new ParagraphsNode(sentenceList, paragraphList);
+					.collect(Collectors.toList()));
+		return new ParagraphsNode(paragraphList);
 	}
 }

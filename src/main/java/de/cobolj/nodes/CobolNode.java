@@ -11,11 +11,12 @@ import de.cobolj.CobolContext;
 import de.cobolj.CobolLanguage;
 import de.cobolj.CobolTypes;
 import de.cobolj.runtime.NumericPicture;
+import de.cobolj.statement.gotostmt.GotoException;
 
 @TypeSystemReference(CobolTypes.class)
 @NodeInfo(language = "Cobol")
 public abstract class CobolNode extends Node {
-	public abstract Object executeGeneric(VirtualFrame frame);
+	public abstract Object executeGeneric(VirtualFrame frame) ;
 
 	/**
 	 * @return Liefert den Context für das auszuführende Programm

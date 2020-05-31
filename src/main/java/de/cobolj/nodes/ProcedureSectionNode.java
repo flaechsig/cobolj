@@ -1,13 +1,7 @@
 package de.cobolj.nodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.frame.VirtualFrame;
-
-import de.cobolj.CobolCallableNode;
-import de.cobolj.parser.StartRuleVisitor;
+import de.cobolj.statement.gotostmt.GotoException;
 
 
 public class ProcedureSectionNode extends StructureNode {
@@ -20,13 +14,24 @@ public class ProcedureSectionNode extends StructureNode {
 		this.paragraphs = paragraphs;
 	}
 
+	@Override
+	public String getName() {
+		return name;
+	}
+
 	public void register() {
 		getContext().registerParagraph(name, this);
 		paragraphs.register();
 	}
 
+	/**
+	 * Führt die Pargraphen der Section aus
+	 * @param frame Kontext des Aufrufs
+	 * @return Letzte Ausgeführte Komando
+	 * @throws GotoException Wird geworfen, wenn ein Goto den Paragraphen nicht im Kontext finden konnte
+	 */
 	@Override
-	public Object executeGeneric(VirtualFrame frame) {
+	public Object executeGeneric(VirtualFrame frame) throws GotoException {
 		return paragraphs.executeGeneric(frame);
 	}
 
