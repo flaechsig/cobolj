@@ -1,15 +1,9 @@
 package de.cobolj.parser.statement.gotostmt;
 
-import de.cobolj.division.data.IntegerNode;
-import de.cobolj.nodes.ParagraphNode;
 import de.cobolj.nodes.PictureNode;
-import de.cobolj.nodes.StringNode;
 import de.cobolj.parser.Cobol85BaseVisitor;
 import de.cobolj.parser.Cobol85Parser;
 import de.cobolj.parser.IdentifierVisitor;
-import de.cobolj.parser.ParserHelper;
-import de.cobolj.parser.division.data.IntegerLiteralVisitor;
-import de.cobolj.parser.division.data.NonNumericalLiteralVisitor;
 import de.cobolj.parser.division.procedure.ParagraphNameVisitor;
 import de.cobolj.statement.gotostmt.GotoStatementNode;
 
